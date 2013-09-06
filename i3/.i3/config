@@ -143,9 +143,9 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 bindsym $mod+Tab exec python3 ~/.i3/scripts/nextfind.py
-bindsym $mod+z exec ~/.local/bin/node ~/.i3/scripts/cycle_workspace.js
-bindsym $mod+x exec ~/.local/bin/node ~/.i3/scripts/cycle_monitor.js
-bindsym $mod+n exec ~/.local/bin/node ~/.i3/scripts/new_workspace.js
+bindsym $mod+z exec python ~/.i3/scripts/cycle_workspace.py
+bindsym $mod+x exec python ~/.i3/scripts/cycle_monitor.py
+bindsym $mod+n exec python ~/.i3/scripts/new_workspace.py
 
 for_window [class="^Chrome$" title=" - Chromium$"] border none
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
