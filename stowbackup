@@ -1,0 +1,104 @@
+#!/usr/bin/python
+
+import subprocess
+import sys
+import os
+import shutil
+
+module = ""
+backupFolder = ""
+
+def init():
+    global module
+
+    if len(sys.argv) != 2:
+        sys.exit("This command should be called with exactly one argument.")
+        
+    module = sys.argv[1]
+    print "Attempting to stow " + module + "..."
+    print ""
+
+    try:
+        output = subprocess.check_output(["stow", module], stderr=subprocess.STDOUT)
+        print "Stowed " + module + " successfully"
+    except subprocess.CalledProcessError as e:
+        output = e.output.split('\n')
+
+        if output[0] != 'WARNING! stowing ' + module + ' would cause conflicts:':
+            print 'Unknown error happened...'
+            print ''
+            print e.output
+        else:
+            print 'Backing up existing files...'
+            
+            # make sure backup folder exists
+            try:
+                os.mkdir("_backup")
+            except OSError:
+                pass
+
+            createBackupFolder("_backup/" + module)
+
+            # Solve conflicts.
+            # Turns:
+            #   * existing target is neither a link nor a directory: .gitattributes
+            #   * existing target is neither a link nor a directory: .gitconfig
+            # Into:
+            # solveConflict(.gitattributes)
+            # solveConflict(.gitconfig)
+            conflictFiles = [f for f in output if f[:4] == '  * ']
+            for conflictFile in conflictFiles:
+                path = conflictFile.split(': ')[1]
+                if path.find('/') != -1:
+                    solveConflictDirectory(path.split('/')[0])
+                else:
+                    solveConflict(path)
+
+            # Run again for success
+            init()
+
+
+def solveConflict(filename, moveToName=''):
+    if not moveToName:
+        moveToName = filename
+    if os.path.lexists("../" + filename):
+        if os.path.lexists(backupFolder + "/" + moveToName):
+            solveConflict(filename, iterFilename(filename, moveToName))
+        else:
+            shutil.move("../" + filename, backupFolder + "/" + moveToName)
+            print "moved ../" + filename + " to " + backupFolder + "/" + moveToName
+
+
+def solveConflictDirectory(directory, moveToName=''):
+    if not moveToName:
+        moveToName = directory
+    if os.path.lexists("../" + directory):
+        if os.path.lexists(backupFolder + "/" + moveToName):
+            solveConflict(directory, iterName(directory, moveToName))
+        else:
+            shutil.copytree("../" + directory, backupFolder + "/" + moveToName)
+            shutil.rmtree("../" + directory)
+            print "moved ../" + directory + " to " + backupFolder + "/" + moveToName
+
+
+def iterName(originalName, currentName):
+    if originalName == currentName:
+        return originalName + ".1"
+    else:
+        nameParts = currentName.split('.')
+        number = nameParts.pop()
+        nameParts.append(str(int(number) + 1))
+        return ".".join(nameParts)
+
+def createBackupFolder(originalName, currentName=''):
+    global backupFolder
+    if not currentName:
+        currentName = originalName
+    try:
+        os.mkdir(currentName)
+        backupFolder = currentName
+    except OSError:
+        createBackupFolder(originalName, itername(currentName))
+
+
+init()
