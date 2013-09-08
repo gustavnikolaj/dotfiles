@@ -145,6 +145,7 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Tab exec python3 ~/.i3/scripts/nextfind.py
 bindsym $mod+z exec python ~/.i3/scripts/cycle_workspace.py
 bindsym $mod+x exec python ~/.i3/scripts/cycle_monitor.py
+bindsym $mod+Shift+x exec python ~/.i3/scripts/cycle_monitor.py move
 bindsym $mod+n exec python ~/.i3/scripts/new_workspace.py
 bindsym $mod+Shift+n exec python ~/.i3/scripts/new_workspace.py window
 
