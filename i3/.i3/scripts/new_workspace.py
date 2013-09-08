@@ -1,17 +1,41 @@
 import json
 import subprocess
+import sys
+
 
 I3MSG = '/usr/bin/i3-msg'
 
-result = subprocess.Popen([I3MSG, '-t', 'get_workspaces'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-result = result.communicate()[0]
-data = json.loads(result)
 
-numbers = map(lambda x: x['num'], data)
+def parse():
+    mode = False
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "window":
+            mode = sys.argv[1]
+        else:
+            sys.exit("invalid parameter given")
+    return mode
 
-lowest = 1
 
-while lowest in numbers:
-    lowest = lowest + 1
+def main(mode):
+    result = subprocess.Popen([I3MSG, '-t', 'get_workspaces'],
+                              stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    result = result.communicate()[0]
+    data = json.loads(result)
 
-subprocess.call([I3MSG, 'workspace', str(lowest)])
+    numbers = map(lambda x: x['num'], data)
+
+    lowest = 1
+
+    while lowest in numbers:
+        lowest = lowest + 1
+
+    if mode == "window":
+        subprocess.call([I3MSG, 'move container to workspace', str(lowest)])
+
+    subprocess.call([I3MSG, 'workspace', str(lowest)])
+
+
+if __name__ == '__main__':
+    args = parse()
+    main(args)
+
