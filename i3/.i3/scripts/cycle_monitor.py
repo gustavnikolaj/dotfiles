@@ -1,5 +1,6 @@
 import json
 import subprocess
+import sys
 
 
 I3MSG = '/usr/bin/i3-msg'
@@ -15,7 +16,7 @@ def parse():
     return mode
 
 
-def main():
+def main(mode):
     result = subprocess.Popen([I3MSG, '-t', 'get_workspaces'],
                               stdout=subprocess.PIPE,
                               stdin=subprocess.PIPE)
@@ -38,4 +39,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    args = parse()
+    main(args)
