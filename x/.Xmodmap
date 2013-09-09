@@ -1,0 +1,24 @@
+! backslash on altgr + shift + 7 macstyle
+! orig: keycode  16 = 7 slash 7 slash braceleft division braceleft
+keycode  16 = 7 slash 7 slash braceleft backslash braceleft
+! macstyle braces
+! orig: keycode  17 = 8 parenleft 8 parenleft bracketleft guillemotleft bracketleft
+keycode  17 = 8 parenleft 8 parenleft bracketleft braceleft bracketleft
+! macstyle braces
+! orig: keycode  18 = 9 parenright 9 parenright bracketright guillemotright bracketright
+keycode  18 = 9 parenright 9 parenright bracketright braceright bracketright
+! altgr+i should produce the pipe char | like on mac
+! orig: keycode  31 = i I i I rightarrow idotless rightarrow
+keycode  31 = i I i I bar idotless rightarrow
+! tilde should just produce tilde, not dead_tilde. if dead_tilde you have to press space
+! to activate it. it's meant for signs like ñ in spanish.
+! orig: keycode  35 = dead_diaeresis dead_circumflex dead_diaeresis dead_circumflex dead_tilde dead_caron dead_tilde
+! experiment - make tilde on std button press
+! keycode  35 = dead_diaeresis dead_circumflex dead_diaeresis dead_circumflex asciitilde dead_caron dead_tilde
+keycode  35 = asciitilde dead_circumflex dead_diaeresis dead_circumflex asciitilde dead_caron dead_tilde
+! ½ button to the left of 1 on danish keyboards should be $ like on mac
+! orig: keycode  49 = onehalf section onehalf section threequarters paragraph threequarters
+keycode  49 = dollar section onehalf section threequarters paragraph threequarters
+! altgr + ' should yield the @ sign like on mac.
+! orig: keycode  51 = apostrophe asterisk apostrophe asterisk dead_doubleacute multiply dead_doubleacute
+keycode  51 = apostrophe asterisk apostrophe asterisk at multiply dead_doubleacute
