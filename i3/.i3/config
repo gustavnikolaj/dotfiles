@@ -147,6 +147,8 @@ bindsym $mod+Shift+n exec python ~/.i3/scripts/new_workspace.py window
 
 bindsym F1 exec python ~/.i3/scripts/next_window.py "Chrome$" google-chrome
 bindsym F2 exec python ~/.i3/scripts/next_window.py "Sublime Text 2$" sublime-text
+bindsym F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
+bindsym F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
 for_window [class="^Chrome$" title=" - Chromium$"] border none
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
