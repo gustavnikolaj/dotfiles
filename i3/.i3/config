@@ -145,14 +145,10 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+minus scratchpad show
 
-#bindsym $mod+Tab exec python3 ~/.i3/scripts/nextfind.py
 bindsym $mod+Tab workspace back_and_forth
-#bindsym $mod+z exec python ~/.i3/scripts/cycle_workspace.py
 bindsym $mod+z workspace next_on_output
 bindsym $mod+Shift+z workspace prev_on_output
-#bindsym $mod+x exec python ~/.i3/scripts/cycle_monitor.py
 bindsym $mod+x focus output right
-#bindsym $mod+Shift+x exec python ~/.i3/scripts/cycle_monitor.py move
 bindsym $mod+Shift+x move workspace to output right
 bindsym $mod+n exec python ~/.i3/scripts/new_workspace.py
 bindsym $mod+Shift+n exec python ~/.i3/scripts/new_workspace.py window
