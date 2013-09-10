@@ -33,6 +33,11 @@ let g:ctrlp_cmd = 'CtrlP'
 " Vim fugitive
 Bundle 'tpope/vim-fugitive'
 
+" jellybean colorscheme
+Bundle 'nanotech/jellybeans.vim'
+
+color jellybeans
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
