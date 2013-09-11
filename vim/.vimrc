@@ -26,7 +26,6 @@ filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CtrlP
 Bundle 'kien/ctrlp.vim'
-
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
@@ -38,6 +37,21 @@ Bundle 'nanotech/jellybeans.vim'
 
 color jellybeans
 
+" git gutter diff
+Bundle 'airblade/vim-gitgutter'
+let g:gitgutter_escape_grep = 1
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntax highlightning customizations
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" knockout.js templates
+au BufNewFile,BufRead *.ko set filetype=html
+
+" disable underline between a opening and end tags.
+let html_no_rendering=1
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -46,6 +60,9 @@ set nocompatible
 
 " History length
 set history=100
+
+" Update time:
+set updatetime=750
 
 " Enable filetype plugins
 filetype plugin on
@@ -57,6 +74,8 @@ set expandtab
 
 " Auto read when a file is changed from outside of vim
 set autoread
+
+set hidden
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
