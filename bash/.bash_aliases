@@ -81,3 +81,8 @@ alias fs="stat -c \"%s bytes\""
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+
+# convenience aliases for shutdown, reboot and such
+
+alias reboot="sudo shutdown -r now"
+alias shutdown="sudo shutdown -h now"
