@@ -43,11 +43,17 @@ let g:gitgutter_escape_grep = 1
 let g:gitgutter_realtime = 1
 let g:gitgutter_eager = 1
 
+" less syntax highlightning
+Bundle 'groenewege/vim-less'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlightning customizations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " knockout.js templates
 au BufNewFile,BufRead *.ko set filetype=html
+
+" less files
+au BufNewFile,BufRead *.less set filetype=less
 
 " disable underline between a opening and end tags.
 let html_no_rendering=1
