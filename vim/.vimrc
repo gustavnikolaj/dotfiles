@@ -28,6 +28,7 @@ filetype plugin indent on
 Bundle 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = 'node_modules\|bower_components'
 
 " Vim fugitive
 Bundle 'tpope/vim-fugitive'
@@ -51,6 +52,9 @@ Bundle 'groenewege/vim-less'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " knockout.js templates
 au BufNewFile,BufRead *.ko set filetype=html
+
+" eco templates
+au BufNewFile,BufRead *.eco set filetype=html
 
 " less files
 au BufNewFile,BufRead *.less set filetype=less
