@@ -150,7 +150,7 @@ bindsym F2 exec python ~/.i3/scripts/next_window.py "Sublime Text 2$" sublime-te
 bindsym F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
-for_window [class="^Chrome$" title=" - Chromium$"] border none
+for_window [class="^Chrome$" title=" - Google Chrome$"] border none
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
 for_window [class="Gnome-control-center"] floating enable
