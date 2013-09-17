@@ -90,17 +90,15 @@ set hidden
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader="ø"
 map <c-i> <Esc>
+
+" Map <Space> to / (search) 
+map <space> /
+map <leader>n :noh<cr>
 
 "Use æ for :
 map æ :
-vmap æ :
-cmap æ :
-
-" Use ø for Enter
-map ø <ENTER>
-vmap ø <ENTER>
-cmap ø <ENTER>
 
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
@@ -191,9 +189,6 @@ set wrap "Wrap lines
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Moving around, tabs, windows and buffers
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) 
-map <space> /
-
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
