@@ -47,6 +47,15 @@ let g:gitgutter_eager = 1
 " less syntax highlightning
 Bundle 'groenewege/vim-less'
 
+" less files
+au BufNewFile,BufRead *.less set filetype=less
+
+" coffee script syntax highlightning
+Bundle 'kchmck/vim-coffee-script'
+
+" coffee script files
+au BufNewFile,BufRead *.coffee set filetype=coffee
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlightning customizations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -55,9 +64,6 @@ au BufNewFile,BufRead *.ko set filetype=html
 
 " eco templates
 au BufNewFile,BufRead *.eco set filetype=html
-
-" less files
-au BufNewFile,BufRead *.less set filetype=less
 
 " disable underline between a opening and end tags.
 let html_no_rendering=1
