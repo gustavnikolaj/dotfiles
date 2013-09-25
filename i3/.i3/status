@@ -3,9 +3,11 @@ general {
         interval = 1
 }
 
+order += "disk /"
 order += "cpu_temperature 0"
 order += "load"
 order += "tztime local"
+order += "volume master"
 
 
 tztime local {
@@ -13,11 +15,11 @@ tztime local {
 }
 
 load {
-        format = "%5min"
+        format = "%1min %5min"
 }
 
 cpu_temperature 0 {
-        format = "T: %degrees °C"
+        format = "%degrees °C"
         path = "/sys/devices/platform/coretemp.0/temp1_input"
 }
 
