@@ -38,12 +38,6 @@ Bundle 'nanotech/jellybeans.vim'
 
 color jellybeans
 
-" git gutter diff
-Bundle 'airblade/vim-gitgutter'
-let g:gitgutter_escape_grep = 1
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 1
-
 " less syntax highlightning
 Bundle 'groenewege/vim-less'
 
@@ -55,6 +49,13 @@ Bundle 'kchmck/vim-coffee-script'
 
 " coffee script files
 au BufNewFile,BufRead *.coffee set filetype=coffee
+
+" Add SnipMate
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+
+Bundle 'honza/vim-snippets'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlightning customizations
@@ -78,7 +79,7 @@ set nocompatible
 set history=100
 
 " Update time:
-set updatetime=750
+"set updatetime=750
 
 " Enable filetype plugins
 filetype plugin on
@@ -136,7 +137,8 @@ set ignorecase
 set smartcase
 
 " highlight search results
-set hlsearch
+"set hlsearch
+set nohlsearch
 
 " Make search act like search in browsers
 set incsearch
