@@ -55,7 +55,11 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 
-Bundle 'honza/vim-snippets'
+" Personal vim-snippets
+Bundle "gustavnikolaj/vim-snippets"
+
+" Improved javascript mode
+Bundle "pangloss/vim-javascript"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlightning customizations
