@@ -14,6 +14,17 @@ function mkd() {
 	mkdir -p "$@" && cd "$@"
 }
 
+# Emulate OSX's open on Linux
+if [ `uname` == 'Linux' ] ; then
+    function open() {
+        if [ $* > 0 ] ; then
+            xdg-open $@ &>/dev/null
+        else
+            xdg-open . &>/dev/null
+        fi
+    }
+fi
+
 # Use Git’s colored diff when available
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
