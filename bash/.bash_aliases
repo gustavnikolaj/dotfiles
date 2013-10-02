@@ -14,17 +14,17 @@ fi
 
 # Shortcuts
 alias p="cd ~/Projects"
-alias g="git"
-alias s="subl"
-alias oo="nautilus ."
+#alias g="git"
+#alias s="subl"
+#alias oo="nautilus ."
 alias reload_bash='source ~/.bashrc'
 
 # Git aliases
-alias ga="git add"
-alias gc="git commit -m "
-alias gs="git s"
-alias gh="git hist"
-alias gd="git diff"
+#alias ga="git add"
+#alias gc="git commit -m "
+#alias gs="git s"
+#alias gh="git hist"
+#alias gd="git diff"
 
 # pretty print json
 alias pjson="python -mjson.tool"
