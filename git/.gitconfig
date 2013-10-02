@@ -5,28 +5,22 @@
 [alias]
 	# View the SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph
-	# View the current working tree status using the short format
+    # View the current working tree status using the short format
 	s = status -s
+	st = status
 	# Diff
 	d = diff --patch-with-stat
-	# Pull in remote changes for the current repository and all its submodules
-	p = !"git pull; git submodule foreach git pull origin master"
-	# Clone a repository including all submodules
-	c = clone --recursive
-	# Commit all changes
-	ca = !git add -A && git commit -av
-	# Switch to a branch, creating it if necessary
-	go = checkout -B
+    # commit
+    ci = commit
+    # commit with message
+    cm = commit -m
 	# checkout
 	co = checkout
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
-	# Credit an author on the latest commit
-	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-	# Undo a `git push`
-	undopush = push -f origin HEAD^:master
+    # pretty history
 	hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
 
 [pull]
