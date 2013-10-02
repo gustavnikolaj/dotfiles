@@ -28,7 +28,9 @@ filetype plugin indent on
 Bundle 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = 'node_modules\|bower_components'
+let g:ctrlp_custom_ignore = '\.git/\|node_modules\|bower_components'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_working_path_mode = 'ra'
 
 " Vim fugitive
 Bundle 'tpope/vim-fugitive'
@@ -97,6 +99,15 @@ set expandtab
 set autoread
 
 set hidden
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" gVim settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("gui_running")
+    set guioptions-=M
+    set guioptions-=T
+    set guioptions-=r
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
