@@ -26,6 +26,15 @@ alias reload_bash='source ~/.bashrc'
 #alias gh="git hist"
 #alias gd="git diff"
 
+# git insults
+alias lazybumbum="echo && figlet 'IM  A  LAZY  BUM!' && echo"
+alias g=lazybumbum
+alias ga=lazybumbum
+alias gc=lazybumbum
+alias gs=lazybumbum
+alias gh=lazybumbum
+alias gd=lazybumbum
+
 # pretty print json
 alias pjson="python -mjson.tool"
 
