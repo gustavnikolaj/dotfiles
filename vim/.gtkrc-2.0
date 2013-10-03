@@ -1,0 +1,5 @@
+# http://stackoverflow.com/questions/12763692/paddings-around-the-actual-vim-window-in-gvim#answer-12763801
+style "vimfix" {
+    bg[NORMAL] = "#000000"    
+}
+widget "vim-main-window.*GtkForm" style "vimfix"

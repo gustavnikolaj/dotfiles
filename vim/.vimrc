@@ -36,9 +36,13 @@ let g:ctrlp_working_path_mode = 'ra'
 Bundle 'tpope/vim-fugitive'
 
 " jellybean colorscheme
-Bundle 'nanotech/jellybeans.vim'
+"Bundle 'nanotech/jellybeans.vim'
+"color jellybeans
 
-color jellybeans
+" solarized colorscheme
+Bundle 'altercation/vim-colors-solarized'
+color solarized
+set background=light
 
 " less syntax highlightning
 Bundle 'groenewege/vim-less'
@@ -104,9 +108,12 @@ set hidden
 " gVim settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-    set guioptions-=M
-    set guioptions-=T
-    set guioptions-=r
+    set guioptions+=LlRrb " Add all scrollbars
+    set guioptions-=LlRrb " Remove all scrollbars
+    set guioptions-=M     " Remove Menu
+    set guioptions-=T     " Remove Toolbar
+    set guioptions-=t     " Remove tearoffmenus
+    set guifont=Monaco\ 12
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
