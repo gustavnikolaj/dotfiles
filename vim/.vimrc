@@ -36,13 +36,14 @@ let g:ctrlp_working_path_mode = 'ra'
 Bundle 'tpope/vim-fugitive'
 
 " jellybean colorscheme
-"Bundle 'nanotech/jellybeans.vim'
-"color jellybeans
+Bundle 'nanotech/jellybeans.vim'
+color jellybeans
+set background=dark
 
 " solarized colorscheme
-Bundle 'altercation/vim-colors-solarized'
-color solarized
-set background=light
+"Bundle 'altercation/vim-colors-solarized'
+"color solarized
+"set background=light
 
 " less syntax highlightning
 Bundle 'groenewege/vim-less'
