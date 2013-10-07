@@ -137,6 +137,8 @@ map k gk
 " Open new tab
 map <c-t> :tabe<cr>:<backspace><esc>
 
+map <leader>e :Ex<cr>
+map <leader>r :b#<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim UI
