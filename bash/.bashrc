@@ -25,3 +25,5 @@ done
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
 export EDITOR=vim
+
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
