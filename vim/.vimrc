@@ -114,7 +114,7 @@ if has("gui_running")
     set guioptions-=M     " Remove Menu
     set guioptions-=T     " Remove Toolbar
     set guioptions-=t     " Remove tearoffmenus
-    set guifont=Monaco\ 12
+    set guifont=Monaco\ 10
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
