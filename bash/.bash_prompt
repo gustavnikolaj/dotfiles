@@ -48,11 +48,11 @@ function parse_git_branch() {
 }
 
 function parse_dir_name() {
-    if [ "$HOME" == `pwd` ]
+    if [ "$HOME" == "`pwd`" ]
     then
         echo "~"   
     else
-        basename $PWD
+        basename "$PWD"
     fi
 }
 
@@ -64,7 +64,7 @@ cd() {
     else
         builtin cd "$@"
     fi
-    echo -e "   \033[1;30m"`pwd`"\033[0m"
+    echo -e "   \033[1;30m`pwd`\033[0m"
 }
 
 export PS1=" \[${BOLD}\]\[$GREEN\]\$(parse_dir_name)\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\] \$ \[$RESET\]"
