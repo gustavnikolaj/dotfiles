@@ -157,6 +157,8 @@ bindsym $mod+F2 exec python ~/.i3/scripts/next_window.py "emacs@(.*)$" emacs
 bindsym $mod+F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
+bindsym $mod+m [class="Pidgin" title="(?!Buddy List)"] focus
+
 for_window [class="^Chrome$" title=" - Google Chrome$"] border none
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
