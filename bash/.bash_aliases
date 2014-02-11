@@ -74,7 +74,7 @@ else
 fi
 
 # Enable aliases to be sudo’ed
-alias sudo='sudo '
+#alias sudo='sudo '
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
