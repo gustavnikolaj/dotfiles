@@ -146,7 +146,7 @@ bindsym $mod+n exec python ~/.i3/scripts/new_workspace.py
 bindsym $mod+Shift+n exec python ~/.i3/scripts/new_workspace.py window
 
 bindsym $mod+F1 exec python ~/.i3/scripts/next_window.py "Chrome$" google-chrome
-bindsym $mod+F2 exec python ~/.i3/scripts/next_window.py " - GVIM$" gvim
+bindsym $mod+F2 exec python ~/.i3/scripts/next_window.py "emacs@(.*)$" emacs
 bindsym $mod+F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
@@ -163,3 +163,14 @@ bar {
 }
 
 focus_follows_mouse no
+
+set $powermanagermode System (l) lock, (e) logout, (r) reboot, (Shift+s) shutdown
+mode "$powermanagermode" {
+    bindsym l exec gnome-screensaver-command -l, mode "default"
+    bindsym e exec i3-msg exit, mode "default"
+
+    # escape mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+F12 mode "$powermanagermode"
