@@ -10,6 +10,8 @@
 	st = status
 	# Diff
 	d = diff --patch-with-stat
+    cdiff = diff --cached --patch-with-stat
+    cd = diff --cached --patch-with-stat
     # commit
     ci = commit
     # commit with message
@@ -22,13 +24,15 @@
 	remotes = remote -v
     # pretty history
 	hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+    # simple silent amend
+    amend = commit --amend --no-edit
 
 [pull]
     # Only pull branches that have been set up to track a remote branch.
     default = current
 [push]
     # Only push branches that have been set up to track a remote branch.
-    default = current
+    default = simple
 
 [core]
 	# Use custom `.gitignore` and `.gitattributes`
@@ -75,5 +79,3 @@
 	pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
-[push]
-	default = matching
