@@ -163,7 +163,3 @@ bar {
 }
 
 focus_follows_mouse no
-
-# Startup
-
-exec --no-startup-id gnome-sound-applet
