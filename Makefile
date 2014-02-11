@@ -25,3 +25,8 @@ vim:
 	@echo ""
 	@echo ""
 	@echo "Done!"
+
+.PHONY: i3-xsession
+i3-xsession:
+	sudo rm -f /usr/share/xsessions/i3.desktop
+	sudo cp i3/.i3/i3.desktop /usr/share/xsessions/i3.desktop
