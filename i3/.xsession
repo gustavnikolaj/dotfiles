@@ -12,4 +12,6 @@ nm-applet &
 
 xsetroot -solid "#333333"
 
+[ -r "~/.Xmodmap" ] xmodmap ~/.Xmodmap
+
 exec i3
