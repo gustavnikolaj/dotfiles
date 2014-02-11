@@ -22,3 +22,6 @@ keycode  49 = dollar section onehalf section threequarters paragraph threequarte
 ! altgr + ' should yield the @ sign like on mac.
 ! orig: keycode  51 = apostrophe asterisk apostrophe asterisk dead_doubleacute multiply dead_doubleacute
 keycode  51 = apostrophe asterisk apostrophe asterisk at multiply dead_doubleacute
+keycode  26 = e E e E ae AE
+keycode  32 = o O o O oslash Oslash
+keycode  38 = a A a A aring Aring
