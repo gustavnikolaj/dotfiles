@@ -5,6 +5,8 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
 
+alias npm-official="npm --userconfig ~/.npm-official "
+
 # pbcopy / pbpaste for linux
 ####
 if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy

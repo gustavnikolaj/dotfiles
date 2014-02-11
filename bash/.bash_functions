@@ -8,6 +8,10 @@ function zonefile() {
     fi
 }
 
+function onegit() {
+    git clone git.one.com:/git/${1}.git $2
+}
+
 
 # Create a new directory and enter it
 function mkd() {
