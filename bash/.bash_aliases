@@ -28,6 +28,12 @@ alias reload_bash='source ~/.bashrc'
 #alias gh="git hist"
 #alias gd="git diff"
 
+# Notification aliases
+alias notify-green="notify-send -h string:bgcolor:#11ad00 "
+alias notify-blue="notify-send -h string:bgcolor:#336699 "
+alias notify-red="notify-send -h string:bgcolor:#aa3333 "
+alias notify-orange="notify-send -h string:bgcolor:#ffa700 "
+
 # git insults
 alias lazybumbum="echo && figlet 'IM  A  LAZY  BUM!' && echo"
 alias g=lazybumbum
