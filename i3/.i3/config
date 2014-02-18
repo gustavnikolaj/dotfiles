@@ -160,7 +160,8 @@ bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensibl
 bindsym $mod+m [class="Pidgin" title="(?!Buddy List)"] focus
 bindsym $mod+e [class="Emacs24"] focus
 
-for_window [class="Google-chrome"] border none
+for_window [class="Google-chrome"] border pixel 2
+for_window [class="Firefox"] border pixel 2
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
 for_window [class="Gnome-control-center"] floating enable
