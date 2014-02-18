@@ -110,7 +110,7 @@ bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+E exit
 # lock screen
-bindsym Control+Mod1+l exec gnome-screensaver-command -l
+bindsym Control+Mod1+l exec i3lock -c 000000
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
