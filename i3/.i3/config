@@ -158,6 +158,7 @@ bindsym $mod+F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
 bindsym $mod+m [class="Pidgin" title="(?!Buddy List)"] focus
+bindsym $mod+e [class="Emacs24"] focus
 
 for_window [class="Google-chrome"] border none
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
