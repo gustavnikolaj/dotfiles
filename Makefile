@@ -30,3 +30,11 @@ vim:
 i3-xsession:
 	sudo rm -f /usr/share/xsessions/i3.desktop
 	sudo cp i3/.i3/i3.desktop /usr/share/xsessions/i3.desktop
+
+.PHONY: i3-disable-desktop
+i3-disable-desktop:
+	gsettings set org.gnome.desktop.background show-desktop-icons false
+
+.PHONY: i3-enable-desktop
+i3-enable-desktop:
+	gsettings set org.gnome.desktop.background show-desktop-icons true
