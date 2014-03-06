@@ -157,7 +157,7 @@ bindsym $mod+F2 exec python ~/.i3/scripts/next_window.py "emacs@(.*)$" emacs
 bindsym $mod+F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
-bindsym $mod+m [class="Pidgin" title="(?!Buddy List)"] focus
+bindsym $mod+m [class="Pidgin" window_role="conversation"] focus
 bindsym $mod+e [class="Emacs24"] focus
 
 for_window [class="Google-chrome"] border pixel 2
