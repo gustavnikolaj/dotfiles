@@ -2,6 +2,10 @@
 default:
 	@echo "makescript for dotfiles"
 
+.PHONY: setup
+setup:
+	mkdir -p ~/.local/bin ~/.local/share ~/.local/lib
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
