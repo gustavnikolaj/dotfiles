@@ -28,3 +28,6 @@ export EDITOR=vim
 
 # add local file if present
 [ -f ~/.bash_local ] && source ~/.bash_local
+
+# add z library if present
+[ -f ~/.local/lib/z/z.sh ] && source ~/.local/lib/z/z.sh

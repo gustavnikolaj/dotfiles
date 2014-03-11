@@ -42,3 +42,8 @@ i3-disable-desktop:
 .PHONY: i3-enable-desktop
 i3-enable-desktop:
 	gsettings set org.gnome.desktop.background show-desktop-icons true
+
+.PHONY: z
+z: setup
+	rm -f ~/.local/lib/z
+	ln -t ~/.local/lib -s `pwd`/modules/z
