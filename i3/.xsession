@@ -10,7 +10,7 @@ nm-applet &
 
 xsetroot -solid "#333333"
 
-if [ -a ~/.bash_path ]; then source ~/.bash_path; fi
+if [ -a ~/.bashrc ]; then source ~/.bashrc; fi
 if [ -r ~/.Xmodmap ]; then xmodmap ~/.Xmodmap; fi
 
 exec i3
