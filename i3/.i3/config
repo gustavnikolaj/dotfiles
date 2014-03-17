@@ -21,7 +21,6 @@ popup_during_fullscreen smart
 
 # start a terminal
 bindsym $mod+Return exec gnome-terminal
-bindsym $mod+t exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+Q kill
@@ -159,6 +158,8 @@ bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensibl
 
 bindsym $mod+m [class="Pidgin" window_role="conversation"] focus
 bindsym $mod+e [class="Emacs24"] focus
+bindsym $mod+c [class="Google-chrome"] focus
+bindsym $mod+t [class="Gnome-terminal"] focus
 
 for_window [class="Google-chrome"] border pixel 2
 for_window [class="Firefox"] border pixel 2
