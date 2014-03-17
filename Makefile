@@ -20,6 +20,11 @@ inputrc:
 	rm -f ${HOME}/.inputrc
 	ln -s `pwd`/inputrc.sh ${HOME}/.inputrc
 
+.PHONY: xmodmap
+xmodmap:
+	rm -f ${HOME}/.Xmodmap
+	ln -s `pwd`/Xmodmap ${HOME}/.Xmodmap
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
