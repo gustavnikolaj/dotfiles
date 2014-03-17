@@ -181,10 +181,14 @@ bar {
 
 focus_follows_mouse no
 
-set $powermanagermode System (l) lock, (e) logout, (r) reboot, (Shift+s) shutdown
+set $powermanagermode System (l) lock, (e) logout, (Shift+r) reboot, (Shift+s) shutdown, (h) hibernate, (s) suspend
 mode "$powermanagermode" {
     bindsym l exec gnome-screensaver-command -l, mode "default"
     bindsym e exec i3-msg exit, mode "default"
+    bindsym Shift+s exec sudo shutdown now
+    bindsym Shift+r exex sudo shutdown -r now
+    bindsym h exec bash ~/.i3/scripts/suspend.sh, mode "default"
+    bindsym s exec i3lock -c 000000 && sudo /usr/sbin/pm-suspend, mode "default"
 
     # escape mode
     bindsym Return mode "default"
