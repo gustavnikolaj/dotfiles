@@ -52,6 +52,11 @@ dunst: setup
 	rm -rf ${HOME}/.config/dunst/dunstrc
 	ln -s ${PWD}/dunstc ${HOME}/.config/dunst/dunstrc
 
+.PHONY: xsession
+xsession: setup
+	rm -rf ${HOME}/.xsession
+	ln -s ${PWD}/xsession ${HOME}/.xsession
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
