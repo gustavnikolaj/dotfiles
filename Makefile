@@ -12,18 +12,18 @@ setup:
 .PHONY: bash
 bash: setup inputrc
 	rm -f ${HOME}/.bashrc ${HOME}/.config/bash.d
-	ln -s `pwd`/bashrc.sh ${HOME}/.bashrc
-	ln -t ${HOME}/.config -s `pwd`/bash.d
+	ln -s ${PWD}/bashrc.sh ${HOME}/.bashrc
+	ln -t ${HOME}/.config -s ${PWD}/bash.d
 
 .PHONY: inputrc
 inputrc:
 	rm -f ${HOME}/.inputrc
-	ln -s `pwd`/inputrc.sh ${HOME}/.inputrc
+	ln -s ${PWD}/inputrc.sh ${HOME}/.inputrc
 
 .PHONY: xmodmap
 xmodmap:
 	rm -f ${HOME}/.Xmodmap
-	ln -s `pwd`/Xmodmap ${HOME}/.Xmodmap
+	ln -s ${PWD}/Xmodmap ${HOME}/.Xmodmap
 
 .PHONY: vim
 vim:
@@ -65,4 +65,4 @@ i3-enable-desktop:
 .PHONY: z
 z: setup
 	rm -f ~/.local/lib/z
-	ln -t ~/.local/lib -s `pwd`/modules/z
+	ln -t ~/.local/lib -s ${PWD}/modules/z
