@@ -76,7 +76,7 @@ i3-disable-desktop:
 i3-enable-desktop:
 	gsettings set org.gnome.desktop.background show-desktop-icons true
 
-.PHONY: z
 z: setup
+	git clone git@github.com:rupa/z.git
 	rm -f ~/.local/lib/z
 	ln -t ~/.local/lib -s ${PWD}/modules/z
