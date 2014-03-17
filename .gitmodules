@@ -1,3 +1,7 @@
 [submodule "z"]
 	path = modules/z
 	url = https://github.com/rupa/z.git
+[submodule "evil-config"]
+	path = evil-config
+	url = git@github.com:gustavnikolaj/evil-config.git
+	branch = master
