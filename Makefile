@@ -4,7 +4,21 @@ default:
 
 .PHONY: setup
 setup:
-	mkdir -p ~/.local/bin ~/.local/share ~/.local/lib
+	mkdir -p ~/.local/bin
+	mkdir -p ~/.local/share
+	mkdir -p ~/.local/lib
+	mkdir -p ~/.config
+
+.PHONY: bash
+bash: setup inputrc
+	rm -f ${HOME}/.bashrc ${HOME}/.config/bash.d
+	ln -s `pwd`/bashrc.sh ${HOME}/.bashrc
+	ln -t ${HOME}/.config -s `pwd`/bash.d
+
+.PHONY: inputrc
+inputrc:
+	rm -f ${HOME}/.inputrc
+	ln -s `pwd`/inputrc.sh ${HOME}/.inputrc
 
 .PHONY: vim
 vim:
