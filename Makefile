@@ -25,6 +25,12 @@ xmodmap:
 	rm -f ${HOME}/.Xmodmap
 	ln -s ${PWD}/Xmodmap ${HOME}/.Xmodmap
 
+.PHONY: evil-config
+evil-config:
+	echo "export DOTFILESPATH=${PWD}" >> ${HOME}/.bash_local
+	rm -f ${HOME}/.emacs
+	ln -s ${PWD}/evil-config/emacs.el ${HOME}/.emacs
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
