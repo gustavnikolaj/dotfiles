@@ -57,6 +57,16 @@ xsession: setup
 	rm -rf ${HOME}/.xsession
 	ln -s ${PWD}/xsession ${HOME}/.xsession
 
+.PHONY: i3
+i3: setup xsession dunst xmodmap i3-xsession
+	mkdir -p ${HOME}/.i3
+	rm -rf ${HOME}/.i3/config
+	rm -rf ${HOME}/.i3/scripts
+	rm -rf ${HOME}/.i3/status
+	ln -s ${PWD}/i3/config ${HOME}/.i3/config
+	ln -s ${PWD}/i3/scripts ${HOME}/.i3/scripts
+	ln -s ${PWD}/i3/status ${HOME}/.i3/status
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
@@ -84,7 +94,7 @@ vim:
 .PHONY: i3-xsession
 i3-xsession:
 	sudo rm -f /usr/share/xsessions/i3.desktop
-	sudo cp i3/.i3/i3.desktop /usr/share/xsessions/i3.desktop
+	sudo cp i3/i3.desktop /usr/share/xsessions/i3.desktop
 
 .PHONY: i3-disable-desktop
 i3-disable-desktop:
