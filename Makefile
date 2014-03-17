@@ -25,11 +25,19 @@ xmodmap:
 	rm -f ${HOME}/.Xmodmap
 	ln -s ${PWD}/Xmodmap ${HOME}/.Xmodmap
 
-.PHONY: evil-config
 evil-config:
+	git clone git@github.com:gustavnikolaj/evil-config.git
 	echo "export DOTFILESPATH=${PWD}" >> ${HOME}/.bash_local
 	rm -f ${HOME}/.emacs
 	ln -s ${PWD}/evil-config/emacs.el ${HOME}/.emacs
+
+.PHONY: evil-config-clean
+evil-config-clean:
+	rm -rf evil-config
+
+.PHONY: evil-config-update
+evil-config-update:
+	cd evil-config && git pull --rebase origin master
 
 .PHONY: vim
 vim:
