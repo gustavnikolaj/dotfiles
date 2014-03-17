@@ -46,6 +46,12 @@ git:
 	ln -s ${PWD}/gitconfig ${HOME}/.gitconfig
 	ln -s ${PWD}/gitattriibutes ${HOME}/.gitattriibutes
 
+.PHONY: dunst
+dunst: setup
+	mkdir -p ${HOME}/.config/dunst
+	rm -rf ${HOME}/.config/dunst/dunstrc
+	ln -s ${PWD}/dunstc ${HOME}/.config/dunst/dunstrc
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
