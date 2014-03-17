@@ -39,6 +39,13 @@ evil-config-clean:
 evil-config-update:
 	cd evil-config && git pull --rebase origin master
 
+.PHONY: git
+git:
+	rm -rf ${HOME}/.gitconfig
+	rm -rf ${HOME}/.gitattributes
+	ln -s ${PWD}/gitconfig ${HOME}/.gitconfig
+	ln -s ${PWD}/gitattriibutes ${HOME}/.gitattriibutes
+
 .PHONY: vim
 vim:
 	@# remove previously installed bundles
