@@ -156,10 +156,11 @@ bindsym $mod+F2 exec python ~/.i3/scripts/next_window.py "emacs@(.*)$" emacs
 bindsym $mod+F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
-bindsym $mod+m [class="Pidgin" window_role="conversation"] focus
-bindsym $mod+e [class="Emacs24"] focus
-bindsym $mod+c [class="Google-chrome"] focus
-bindsym $mod+t [class="Gnome-terminal"] focus
+bindsym $mod+m exec i3-run-or-raise -c "Pidgin" -n "^(?!Buddy List)$" pidgin
+bindsym $mod+Shift+m exec i3-run-or-raise -c "Pidgin" -n "Buddy List" pidgin
+bindsym $mod+e exec i3-run-or-raise -c "Emacs24" emacs
+bindsym $mod+c exec i3-run-or-raise -c "Google-chrome" google-chrome
+bindsym $mod+t exec i3-run-or-raise -c "Gnome-terminal" gnome-terminal
 
 for_window [class="Google-chrome"] border pixel 2
 for_window [class="Firefox"] border pixel 2

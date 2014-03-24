@@ -108,3 +108,19 @@ z: setup
 	git clone git@github.com:rupa/z.git
 	rm -f ~/.local/lib/z
 	ln -t ~/.local/lib -s ${PWD}/modules/z
+
+.PHONY: i3-run-or-raise
+i3-run-or-raise: setup
+	git clone git@github.com:gustavnikolaj/i3-run-or-raise.git modules/i3-run-or-raise
+	cd modules/i3-run-or-raise && npm install
+	rm -f ~/.local/bin/i3-run-or-raise
+	ln -t ~/.local/bin -s ${PWD}/modules/i3-run-or-raise/bin/i3-run-or-raise
+
+.PHONY: i3-run-or-raise-update
+i3-run-or-raise-update:
+	cd modules/i3-run-or-raise && git pull && npm install
+
+.PHONY: i3-run-or-raise-clean
+i3-run-or-raise-clean:
+	rm -rf modules/i3-run-or-raise
+	rm -f ~/.local/bin/i3-run-or-raise
