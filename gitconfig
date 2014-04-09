@@ -24,8 +24,8 @@
 	remotes = remote -v
     # pretty history
 	hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
-    # simple silent amend
-    amend = commit --amend --no-edit
+    amend = commit --amend
+    amendf = commit --amend --no-edit
 
 [pull]
     # Only pull branches that have been set up to track a remote branch.
