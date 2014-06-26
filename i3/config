@@ -156,7 +156,7 @@ bindsym $mod+F2 exec python ~/.i3/scripts/next_window.py "emacs@(.*)$" emacs
 bindsym $mod+F3 exec python ~/.i3/scripts/next_window.py "^Buddy List$" pidgin
 bindsym $mod+F4 exec python ~/.i3/scripts/next_window.py "^Terminal$" i3-sensible-terminal
 
-bindsym $mod+m exec i3-run-or-raise -c "Pidgin" -n "^(?!Buddy List)$" pidgin
+bindsym $mod+m exec i3-run-or-raise -c "Pidgin" pidgin
 bindsym $mod+Shift+m exec i3-run-or-raise -c "Pidgin" -n "Buddy List" pidgin
 bindsym $mod+e exec i3-run-or-raise -c "Emacs24" emacs
 bindsym $mod+c exec i3-run-or-raise -c "Google-chrome" google-chrome
