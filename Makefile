@@ -58,7 +58,7 @@ xsession: setup
 	ln -s ${PWD}/xsession ${HOME}/.xsession
 
 .PHONY: i3
-i3: setup xsession dunst xmodmap i3-xsession
+i3: setup xsession dunst xmodmap 
 	mkdir -p ${HOME}/.i3
 	rm -rf ${HOME}/.i3/config
 	rm -rf ${HOME}/.i3/scripts
