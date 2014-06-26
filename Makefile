@@ -50,7 +50,7 @@ git:
 dunst: setup
 	mkdir -p ${HOME}/.config/dunst
 	rm -rf ${HOME}/.config/dunst/dunstrc
-	ln -s ${PWD}/dunstc ${HOME}/.config/dunst/dunstrc
+	ln -s ${PWD}/dunstrc ${HOME}/.config/dunst/dunstrc
 
 .PHONY: xsession
 xsession: setup
