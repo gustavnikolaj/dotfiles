@@ -62,9 +62,6 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 
-" Personal vim-snippets
-Bundle "gustavnikolaj/vim-snippets"
-
 " Improved javascript mode
 Bundle "pangloss/vim-javascript"
 
