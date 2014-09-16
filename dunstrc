@@ -205,6 +205,10 @@
 #    summary = *signed off*
 #    urgency = low
 #
+[disableSpotify]
+    appname = Spotify
+    format = ""
+
 [says]
     appname = Pidgin
     urgency = critical
