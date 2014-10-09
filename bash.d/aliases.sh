@@ -15,7 +15,7 @@ if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
 fi
 
 # Shortcuts
-alias p="cd ~/Projects"
+#alias p="cd ~/Projects"
 #alias g="git"
 #alias s="subl"
 #alias oo="nautilus ."

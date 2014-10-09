@@ -12,6 +12,19 @@ function onegit() {
     git clone git.one.com:/git/${1}.git $2
 }
 
+function p() {
+    if [ -z $1 ]; then
+        cd ~/Projects
+    else
+        local projects="`find ~/Projects/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \;`"
+        for arg in $@
+        do
+            local projects="`echo "$projects" | grep "$arg"`"
+        done
+        cd ~/Projects/`echo "$projects" | head -n 1`
+    fi
+}
+
 
 # Create a new directory and enter it
 function mkd() {
