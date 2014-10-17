@@ -1,4 +1,5 @@
 # Load the shell dotfiles:
+export DOTFILES="/home/gustav/dotfiles"
 for file in ~/.config/bash.d/* ; do
     [ -r "$file" ] && source "$file"
 done
