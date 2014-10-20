@@ -32,7 +32,7 @@
     default = current
 [push]
     # Only push branches that have been set up to track a remote branch.
-    default = simple
+    default = matching
 
 [core]
 	# Use custom `.gitignore` and `.gitattributes`
