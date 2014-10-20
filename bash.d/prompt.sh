@@ -15,16 +15,6 @@ function parse_dir_name() {
     fi
 }
 
-# Print working directory after a cd.
-cd() {
-    if [[ $@ == '-' ]]
-    then
-        builtin cd "$@" > /dev/null
-    else
-        builtin cd "$@"
-    fi
-    echo -e "   \033[1;30m`pwd`\033[0m"
-}
 bold=`tput bold`
 normal=`tput sgr0`
 
