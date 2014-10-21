@@ -39,9 +39,8 @@ let g:ctrlp_working_path_mode = 'ra'
 " Vim fugitive
 Bundle 'tpope/vim-fugitive'
 
-" jellybean colorscheme
-Bundle 'nanotech/jellybeans.vim'
-color jellybeans
+Bundle 'quanganhdo/grb256'
+color grb256
 set background=dark
 
 " solarized colorscheme
