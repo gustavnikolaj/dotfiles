@@ -2,6 +2,7 @@
 " Vundle Configuration
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
+set t_Co=256
 
 set ttyfast
 set lazyredraw
