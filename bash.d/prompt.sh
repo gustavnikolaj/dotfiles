@@ -15,8 +15,8 @@ function parse_dir_name() {
     fi
 }
 
-bold=`tput bold`
-normal=`tput sgr0`
+bold=`echo -e "\033[1m"`
+normal=`echo -e "\033[0m"`
 
-export PS1=" ${bold}\$(parse_dir_name)\$([[ -n \$(git branch 2> /dev/null) ]] && echo '${normal} on ${bold}')\$(parse_git_branch) \$${normal} "
+export PS1=" \[$bold\]\$(parse_dir_name)\$([[ -n \$(git branch 2> /dev/null) ]] && echo '\[$normal\] on \[$bold\]')\$(parse_git_branch) \$\[$normal\] "
 export PS2="→ "
