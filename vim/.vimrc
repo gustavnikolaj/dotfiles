@@ -3,6 +3,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
 
+set ttyfast
+set lazyredraw
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
