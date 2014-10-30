@@ -34,6 +34,13 @@ function p() {
     fi
 }
 
+function _projects_complete_() {
+    local word=${COMP_WORDS[COMP_CWORD]}
+    local projectdirs=$(find ~/Projects/ -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | tr '\n' ' ')
+    COMPREPLY=($(compgen -W "$projectdirs" -- "${word}"))
+}
+complete -F _projects_complete_ p
+
 
 # Create a new directory and enter it
 function mkd() {
