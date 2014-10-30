@@ -1,4 +1,4 @@
-export PROJECTSS_DIR=~/Projects
+export PROJECTS_DIR=~/Projects
 
 function p() {
     if [ -z $1 ]; then
