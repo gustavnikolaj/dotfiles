@@ -17,6 +17,16 @@ function mkd() {
 	mkdir -p "$@" && cd "$@"
 }
 
+# lorem ipsum to clipboard
+function loremipsum() {
+    if [ -z $1 ] ; then
+        local num=3
+    else
+        local num=$1
+    fi
+    curl -s "lipsum.com/feed/json?start=false&amount=$num" | jq .feed.lipsum | perl -pe 's/\\n/\n\n/g' | perl -pe 's/(^"|"$)//' | pbcopy
+}
+
 # Emulate OSX's open on Linux
 if [ `uname` == 'Linux' ] ; then
     function open() {
