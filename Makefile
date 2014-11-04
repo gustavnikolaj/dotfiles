@@ -30,6 +30,7 @@ evil-config:
 	echo "export DOTFILESPATH=${PWD}" >> ${HOME}/.bash_local
 	rm -f ${HOME}/.emacs
 	ln -s ${PWD}/evil-config/emacs.el ${HOME}/.emacs
+	ln -s ${PWD}/bin/runtests ${HOME}/.local/bin/runtests
 
 .PHONY: evil-config-clean
 evil-config-clean:
