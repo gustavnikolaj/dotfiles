@@ -103,3 +103,6 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 
 alias reboot="sudo shutdown -r now"
 alias shutdown="sudo shutdown -h now"
+
+# evil alias
+alias evil="emacsclient -t"
