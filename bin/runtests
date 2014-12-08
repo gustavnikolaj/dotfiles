@@ -7,7 +7,9 @@ then
     QUERY=$(node -e "console.log(decodeURIComponent($description))")
     cd $rootDir
     ./node_modules/mocha-phantomjs/bin/mocha-phantomjs -R dot http-pub/test/index.html?grep=$QUERY | sed s#file://##
+    exitStatus=${PIPESTATUS[0]}
     cd $currentDir
+    exit $exitStatus
 else
     $rootDir/node_modules/mocha/bin/mocha -b -R dot --colors $*
 fi
