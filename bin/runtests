@@ -2,11 +2,10 @@
 rootDir="$(git rev-parse --show-toplevel)"
 if grep -qm 1 defineTest $1
 then
-    description="$(grep -m 1 "describe(" $1 | sed 's/\s*describe(//' | sed 's/, function.*//')"
     currentDir="$(pwd)"
-    QUERY=$(node -e "console.log(decodeURIComponent($description))")
+    FILE=$(node -e "console.log(decodeURIComponent('$1'))")
     cd $rootDir
-    ./node_modules/mocha-phantomjs/bin/mocha-phantomjs -R dot http-pub/test/index.html?grep=$QUERY | sed s#file://##
+    ./node_modules/mocha-phantomjs/bin/mocha-phantomjs --bail -R dot http-pub/test/index.html?file=$FILE | sed s#file://##
     exitStatus=${PIPESTATUS[0]}
     cd $currentDir
     exit $exitStatus
