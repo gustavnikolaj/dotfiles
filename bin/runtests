@@ -1,14 +1,16 @@
 #!/bin/bash
 rootDir="$(git rev-parse --show-toplevel)"
+currentDir="$(pwd)"
+cd $rootDir
+
 if grep -qm 1 defineTest $1
 then
-    currentDir="$(pwd)"
     FILE=$(node -e "console.log(decodeURIComponent('$1'))")
-    cd $rootDir
     ./node_modules/mocha-phantomjs/bin/mocha-phantomjs --bail -R dot http-pub/test/index.html?file=$FILE | sed s#file://##
-    exitStatus=${PIPESTATUS[0]}
-    cd $currentDir
-    exit $exitStatus
 else
     $rootDir/node_modules/mocha/bin/mocha -b -R dot --colors $*
 fi
+
+exitStatus=${PIPESTATUS[0]}
+cd $currentDir
+exit $exitStatus
