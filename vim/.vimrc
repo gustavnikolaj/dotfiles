@@ -253,3 +253,47 @@ set laststatus=2
 " Format the status line
 set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ %{fugitive#statusline()}
 
+
+" Run a given vim command on the results of fuzzy selecting from a given shell
+" command. See usage below.
+function! SelectaCommand(choice_command, selecta_args, vim_command)
+    try
+        let selection = system(a:choice_command . " | selecta " . a:selecta_args)
+    catch /Vim:Interrupt/
+        " Swallow the ^C so that the redraw below happens; otherwise there will be
+        " leftovers from selecta on the screen
+        redraw!
+        return
+    endtry
+    redraw!
+    exec a:vim_command . " " . selection
+endfunction
+
+" Find all files in all n
+" Fuzzy select one of those. Open the selected file with :e.
+nnoremap <leader>p :call SelectaCommand("git ls-files", "", ":e")<cr>
+
+" find all files in project
+function! FindProject()
+    try
+        let selection = system("find ~/Projects -type d -maxdepth 1 -mindepth 1 | selecta")
+    catch /Vim:Interrupt/
+        " Swallow the ^C so that the redraw below happens; otherwise there will be
+        " leftovers from selecta on the screen
+        redraw!
+        return
+    endtry
+    redraw!
+    exec ":cd " . selection
+    call SelectaCommand("git ls-files", "", ":e")
+endfunction
+nnoremap <leader>g :call FindProject()<cr>
+
+" find buffer
+function! SelectaBuffer()
+    let buffers = map(range(1, bufnr("$")), 'bufname(bufnr(v:val))')
+    call SelectaCommand('echo "' . join(buffers, "\n") . '"', "", ":b")
+endfunction
+
+" Fuzzy select a buffer. Open the selected buffer with :b.
+nnoremap <leader>b :call SelectaBuffer()<cr>
