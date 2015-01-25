@@ -127,6 +127,10 @@ endif
 let mapleader=","
 map <c-i> <Esc>
 
+" map { to å
+map å {
+map ø }
+
 " Map <Space> to / (search) 
 map <space> /
 map <leader>n :noh<cr>
