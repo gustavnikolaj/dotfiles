@@ -57,6 +57,10 @@ au BufNewFile,BufRead *.less set filetype=less
 " coffee script syntax highlightning
 Bundle 'kchmck/vim-coffee-script'
 
+" json syntax highlighting
+au BufNewFile,BufRead *.json set ft=javascript
+au BufNewFile,BufRead *.cjson set ft=javascript
+
 " coffee script files
 au BufNewFile,BufRead *.coffee set filetype=coffee
 
