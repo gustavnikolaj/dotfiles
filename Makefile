@@ -135,3 +135,7 @@ i3-run-or-raise-update:
 i3-run-or-raise-clean:
 	rm -rf modules/i3-run-or-raise
 	rm -f ~/.local/bin/i3-run-or-raise
+
+.PHONY: bin/runtests
+bin/runtests:
+	curl -s https://raw.githubusercontent.com/sunesimonsen/dotfiles/master/bin/runtests > bin/runtests
