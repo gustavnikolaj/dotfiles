@@ -106,3 +106,7 @@ alias shutdown="sudo shutdown -h now"
 
 # evil alias
 alias evil="emacsclient -t"
+
+function title {
+    printf "\033]0;%s\007" "$1"
+}
