@@ -78,4 +78,6 @@
     pushInsteadOf = "gist:"
     pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
-    insteadOf = "gist:"
+	insteadOf = "gist:"
+[credential]
+	helper = cache
