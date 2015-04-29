@@ -196,7 +196,6 @@ mode "$powermanagermode" {
 }
 bindsym $mod+F12 mode "$powermanagermode"
 
-exec --no-startup-id feh --bg-scale ~/.i3/wallpapers/Fabric.png
 exec --no-startup-id ck-launch-session nm-applet
 #exec --no-startup-id ck-launch-session gnome-sound-applet
 exec --no-stattup-id ck-launch-session pasystray
