@@ -18,11 +18,6 @@ load {
         format = "%1min %5min"
 }
 
-cpu_temperature 0 {
-        format = "%degrees °C"
-        path = "/sys/devices/platform/coretemp.0/temp1_input"
-}
-
 disk "/" {
         format = "%free"
 }
