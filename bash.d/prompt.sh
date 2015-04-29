@@ -22,4 +22,4 @@ green=`echo -e "\033[32m"`
 export PS1=" \[$bold\]\$(parse_dir_name)\$([[ -n \$(git branch 2> /dev/null) ]] && echo '\[$normal\] on \[$bold\]')\$(parse_git_branch) \[$green\]\$\[$normal\] "
 export PS2="→ "
 
-export PS1="\[\033[1m\033[90m\033[38m\]\$(parse_dir_name)\[\033[39m\033[22m\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo ' on '\[\033[1m\033[90m\033[38m\]\$(parse_git_branch))\[\033[39m\033[22m\] \[\033[32m\033[1m\]$\[\033[22m\033[39m\] "
+export PS1=" \[\033[1m\033[90m\033[38m\]\$(parse_dir_name)\[\033[39m\033[22m\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo ' on '\[\033[1m\033[90m\033[38m\]\$(parse_git_branch))\[\033[39m\033[22m\] \[\033[32m\033[1m\]$\[\033[22m\033[39m\] "
