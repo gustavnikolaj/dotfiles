@@ -107,7 +107,7 @@ i3-enable-desktop:
 
 .PHONY: z
 z: setup
-	git clone git@github.com:rupa/z.git modules/z
+	git clone https://github.com/rupa/z.git modules/z
 	rm -f ~/.local/lib/z
 	ln -t ~/.local/lib -s ${PWD}/modules/z
 
