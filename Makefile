@@ -2,6 +2,10 @@
 default:
 	@echo "makescript for dotfiles"
 
+.PHONY: less
+less:
+	lesskey -o ~/.less -- ./lesskey
+
 .PHONY: setup
 setup:
 	mkdir -p ~/.local/bin
