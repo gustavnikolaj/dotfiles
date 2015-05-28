@@ -110,3 +110,5 @@ alias evil="emacsclient -t"
 function title {
     printf "\033]0;%s\007" "$1"
 }
+
+alias volume="pactl set-sink-volume @DEFAULT_SINK@ -- "
