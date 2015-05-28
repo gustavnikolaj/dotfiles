@@ -38,14 +38,6 @@ if [ `uname` == 'Linux' ] ; then
     }
 fi
 
-# Use Git’s colored diff when available
-hash git &>/dev/null
-if [ $? -eq 0 ]; then
-	function diff() {
-		git diff --no-index --color-words "$@"
-	}
-fi
-
 # Create a data URL from a file
 function dataurl() {
 	local mimeType=$(file --mime-type "$1" | cut -d ' ' -f2)
