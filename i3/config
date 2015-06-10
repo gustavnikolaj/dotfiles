@@ -64,6 +64,7 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
+bindsym XF86Explorer layout toggle
 # change container layout (stacked, tabbed, default)
 bindsym $mod+o layout stacking
 bindsym $mod+i layout tabbed
