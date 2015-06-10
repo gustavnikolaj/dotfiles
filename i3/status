@@ -3,6 +3,8 @@ general {
         interval = 1
 }
 
+order += "battery 1"
+order += "battery 0"
 order += "disk /"
 order += "cpu_temperature 0"
 order += "load"
@@ -15,7 +17,7 @@ tztime local {
 }
 
 load {
-        format = "%1min %5min"
+        format = "%1min"
 }
 
 disk "/" {
@@ -27,4 +29,12 @@ volume master {
         device = "default"
         mixer = "Master"
         mixer_idx = 0
+}
+
+battery 1 {
+	format = "%status %percentage %remaining"
+}
+
+battery 0 {
+	format = "%status %percentage %remaining"
 }
