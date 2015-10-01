@@ -184,6 +184,7 @@ for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
 for_window [class="Gnome-control-center"] floating enable
 for_window [class="Gcr-prompter"] floating enable
+for_window [class="keepass-reader"] floating enable
 
 # Source of rofi: https://github.com/DaveDavenport/rofi
 #bindsym $mod+Tab exec rofi -now -font "snap-10" -fg "#f1f1f1" -bg "#333333" -hlfg "#ffffff" -hlbg "#336699" -o 85
