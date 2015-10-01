@@ -176,7 +176,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute 2 toggle
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
-for_window [class="Google-chrome"] border pixel 2
+for_window [class="Google-chrome"] border none
+for_window [class="google-chrome"] border none
+for_window [class="google-chrome-beta"] border none
 for_window [class="Firefox"] border pixel 2
 for_window [class="^Chromium-browser$" title=" - Chromium$"] border none
 for_window [class="Xfce4-notifyd"] floating enable; border none; focus mode_toggle
