@@ -50,6 +50,7 @@ $if mode=emacs
 "\e\e[D": backward-word
 
 $if term=rxvt
+"\e[7~": beginning-of-line
 "\e[8~": end-of-line
 "\eOc": forward-word
 "\eOd": backward-word
