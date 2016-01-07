@@ -28,6 +28,7 @@ function p() {
                 z $@
             fi
         else
+            printf "\033]0;%s\007" "$destination" # Set the terminal title
             cd $PROJECTS_DIR/$destination
         fi
     fi
