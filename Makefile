@@ -49,7 +49,7 @@ git:
 	rm -rf ${HOME}/.gitconfig
 	rm -rf ${HOME}/.gitattributes
 	ln -s ${PWD}/gitconfig ${HOME}/.gitconfig
-	ln -s ${PWD}/gitattributes ${HOME}/.gitattriibutes
+	ln -s ${PWD}/gitattributes ${HOME}/.gitattributes
 
 .PHONY: dunst
 dunst: setup

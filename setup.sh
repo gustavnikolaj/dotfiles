@@ -70,12 +70,12 @@ fi
 hr
 
 APT_PACKAGES="
-	nautilus-dropbox \
-	keepass2 \
-	pidgin \
-	pidgin-otr \
-	git \
-	vim \
+	nautilus-dropbox
+	keepass2
+	pidgin
+	pidgin-otr
+	git
+	vim
 "
 
 for p in $APT_PACKAGES ; do
@@ -86,11 +86,11 @@ for p in $APT_PACKAGES ; do
 done
 
 ATOM_PACKAGES="
-	linter \
-	linter-eslint \
-	language-cjson \
-	language-babel \
-	editorconfig \
+	linter
+	linter-eslint
+	language-cjson
+	language-babel
+	editorconfig
 "
 
 # install atom plugin if not already installed
@@ -100,5 +100,21 @@ for p in $ATOM_PACKAGES ; do
 	else
 		apm install $p
 	fi
+	hr
+done
+
+echo Setup Dotfiles
+
+hr
+
+MAKE_TARGETS="
+	bash
+	git
+	less
+"
+
+for t in $MAKE_TARGETS ; do
+	echo Setting up: $t
+	make $t
 	hr
 done
