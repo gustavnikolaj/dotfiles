@@ -24,13 +24,6 @@ shouldInstall () {
 	fi
 }
 
-# install apt package if not already installed
-maybeAptInstall () {
-	if shouldInstall $1 ; then
-		sudo apt-get install -y $1
-	fi
-}
-
 # prompt for sudo before starting
 
 sudo echo Installing base setup.
@@ -50,27 +43,17 @@ fi
 
 hr
 
-maybeAptInstall nautilus-dropbox -y
-
-hr
-
-maybeAptInstall keepass2
-
-hr
-
-maybeAptInstall pidgin
-
-hr
-
-maybeAptInstall pidgin-otr
-
-hr
-
-maybeAptInstall git
-
-hr
-
-maybeAptInstall vim
+# Installing spotify client from testing repository instead of
+# stable, because of a dependency on libgcrypt.so.11 not shipped
+# with ubuntu 15.10
+# source: http://ubuntuhandbook.org/index.php/2015/09/install-spotify-client-ubuntu-15-10/
+if shouldInstall spotify-client ; then
+	echo deb http://repository.spotify.com testing non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2C19886
+	sudo apt-get update
+	sudo apt-get install spotify-client
+	echo Done: spotify-client
+fi
 
 hr
 
@@ -86,16 +69,36 @@ fi
 
 hr
 
-# Installing spotify client from testing repository instead of
-# stable, because of a dependency on libgcrypt.so.11 not shipped
-# with ubuntu 15.10
-# source: http://ubuntuhandbook.org/index.php/2015/09/install-spotify-client-ubuntu-15-10/
-if shouldInstall spotify-client ; then
-	echo deb http://repository.spotify.com testing non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D2C19886
-	sudo apt-get update
-	sudo apt-get install spotify-client
-	echo Done: spotify-client
-fi
+APT_PACKAGES="
+	nautilus-dropbox \
+	keepass2 \
+	pidgin \
+	pidgin-otr \
+	git \
+	vim \
+"
 
-hr
+for p in $APT_PACKAGES ; do
+	if shouldInstall $p ; then
+		sudo apt-get install -y $p
+	fi
+	hr
+done
+
+ATOM_PACKAGES="
+	linter \
+	linter-eslint \
+	language-cjson \
+	language-babel \
+	editorconfig \
+"
+
+# install atom plugin if not already installed
+for p in $ATOM_PACKAGES ; do
+	if [ -d ~/.atom/packages/$p ] ; then
+		echo "Skipping atom plugin: $p (already installed)"
+	else
+		apm install $p
+	fi
+	hr
+done
