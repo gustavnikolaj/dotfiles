@@ -59,7 +59,7 @@ hr
 
 # Installing docker for ubuntu
 # Source: https://docs.docker.com/linux/step_one/
-if ! shouldInstall docker-engine ; then
+if shouldInstall docker-engine ; then
 	wget -qO- https://get.docker.com/ | sh
 
 	echo Done: docker-engine
