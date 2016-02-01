@@ -133,3 +133,8 @@ for t in $MAKE_TARGETS ; do
 	make $t
 	hr
 done
+
+echo 'Creating Projects folder if it does not exist.'
+mkdir -p ~/Projects
+
+hr
