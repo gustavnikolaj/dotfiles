@@ -57,6 +57,21 @@ fi
 
 hr
 
+# Installing docker for ubuntu
+# Source: https://docs.docker.com/linux/step_one/
+if ! shouldInstall docker-engine ; then
+	wget -qO- https://get.docker.com/ | sh
+
+	echo Done: docker-engine
+
+	echo 'Adding "'`whoami`'" to the docker group.'
+	sudo usermod -aG docker `whoami`
+
+	echo "You need to log out for docker to be available without being root."
+fi
+
+hr
+
 if shouldInstall atom ; then
 	mkdir -p ~/Sources/
 	wget https://atom.io/download/deb \
