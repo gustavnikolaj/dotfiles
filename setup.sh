@@ -91,6 +91,7 @@ APT_PACKAGES="
 	pidgin-otr
 	git
 	vim
+	curl
 "
 
 for p in $APT_PACKAGES ; do
@@ -117,6 +118,18 @@ for p in $ATOM_PACKAGES ; do
 	fi
 	hr
 done
+
+echo Setup nvm
+
+for p in build-essential libssl-dev ; do
+	if shouldInstall $p ; then
+		sudo apt-get install -y $p
+	fi
+done
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash
+
+hr
 
 echo Setup Dotfiles
 
