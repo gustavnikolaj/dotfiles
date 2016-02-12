@@ -107,6 +107,7 @@ ATOM_PACKAGES="
 	language-cjson
 	language-babel
 	editorconfig
+	git-control
 "
 
 # install atom plugin if not already installed
