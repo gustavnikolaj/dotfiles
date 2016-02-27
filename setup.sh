@@ -35,7 +35,7 @@ if shouldInstall google-chrome-stable ; then
 	wget \
 		-nv \
 		--show-progress \
-		-O google-chrome-stable_current_amd64.deb \
+		-O ~/Sources/google-chrome-stable_current_amd64.deb \
 		https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg -i ~/Sources/google-chrome-stable_current_amd64.deb
 	echo Done: google-chrome-stable
