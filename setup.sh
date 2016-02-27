@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# TODO Post Install
+#
+# 1. disable online interactions in unity
+# 2. gnome-tweak-tool: set caps lock as additional control
+# 3. setup dropbox (setup launches automaticly
+# 4. setup keepass2
+# 5. setup ssh-keys
+
 # hr: create a line of dashes as wide as your terminal.
 #
 # adopted from: https://github.com/LuRsT/hr/blob/master/hr
