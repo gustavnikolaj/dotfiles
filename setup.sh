@@ -92,6 +92,7 @@ APT_PACKAGES="
 	git
 	vim
 	curl
+	gnome-tweak-tool
 "
 
 for p in $APT_PACKAGES ; do
