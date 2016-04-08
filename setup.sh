@@ -113,8 +113,11 @@ done
 ATOM_PACKAGES="
 	linter
 	linter-eslint
+    linter-docker
+    language-docker
 	language-cjson
 	language-babel
+    language-todotxt
 	editorconfig
 	git-control
 "
