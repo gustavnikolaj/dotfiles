@@ -1,4 +1,17 @@
 export PROJECTS_DIR=~/Projects
+export PHOOK_CD=p_set_title:$PHOOK_CD
+
+function p_set_title() {
+    printf "\033]0;%s\007" `basename $1` # Set the terminal title
+}
+
+function p_cd() {
+    cd $1
+    if [ "$PHOOK_CD" != "" ] ; then
+        local mails=$(echo $PHOOK_CD | tr ":" "\n")
+        for hook in $mails; do eval $hook $1 ; done
+    fi
+}
 
 function p() {
     if [ -z $1 ]; then
@@ -23,13 +36,18 @@ function p() {
             # If we dont have a match use z to try to make a guess of what you meant
             # and if the z command is not defined, just go to the projects dir.
             if [ -z "`type -t z`" ]; then
-                cd $PROJECTS_DIR
+                p_cd $PROJECTS_DIR
             else
-                z $@
+                local z_guess=$(z -e $@)
+                if [ -z $z_guess ] ; then
+                    echo "No match for: $@"
+                else
+                    echo "Jumping to z-match: $z_guess"
+                    p_cd $z_guess
+                fi
             fi
         else
-            printf "\033]0;%s\007" "$destination" # Set the terminal title
-            cd $PROJECTS_DIR/$destination
+            p_cd $PROJECTS_DIR/$destination
         fi
     fi
 }
