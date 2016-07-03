@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DEVICEID=`xinput | grep 'Synaptics TouchPad' | sed 's/^.*id=//' | sed 's/[ \t].*$//'`
+
+if [ "`xinput list $DEVICEID | grep 'This device is disabled'`" == "" ] ; then
+    echo "disabling touchpad"
+    xinput disable $DEVICEID
+else
+    echo "enabling touchpad"
+    xinput "enable" $DEVICEID
+fi
+
