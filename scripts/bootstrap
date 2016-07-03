@@ -1,0 +1,18 @@
+#!/bin/bash
+DIRNAME=$(cd $(dirname $(readlink -f ${BASH_SOURCE[0]})) && pwd)
+
+echo ""
+echo "+--------------------+"
+echo "| Running installers |"
+echo "+--------------------+"
+echo ""
+
+source $DIRNAME/install
+
+echo ""
+echo "+---------------------+"
+echo "| Setting up symlinks |"
+echo "+---------------------+"
+echo ""
+
+source $DIRNAME/symlink
