@@ -16,3 +16,10 @@ echo "+---------------------+"
 echo ""
 
 source $DIRNAME/symlink
+
+echo ""
+echo "+----------------------------+"
+echo "| Running post install hooks |"
+echo "+----------------------------+"
+
+source $DIRNAME/postinstall
