@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=i3
-Comment=A Gnome session using i3 as the window manager.
-Exec=/etc/X11/Xsession
-#Exec=i3
-#TryExec=i3
-Icon=
-Type=Application
