@@ -10,4 +10,4 @@ curl
 gnome-tweak-tool
 "
 
-apt-get install -y $APT_PACKAGES
+sudo apt-get install -y $APT_PACKAGES
