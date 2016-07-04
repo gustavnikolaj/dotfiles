@@ -1,0 +1,9 @@
+DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd .. && pwd)
+for file in $(find $DOTFILES_DIR -type f -name "*postinstall.sh") ; do
+  echo ""
+  echo ""
+  echo "----------------------------------------------------------------------"
+  echo "RUNNING: $file"
+  echo ""
+  source $file
+done
