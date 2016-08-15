@@ -77,6 +77,9 @@ Bundle "garbas/vim-snipmate"
 " Improved javascript mode
 Bundle "pangloss/vim-javascript"
 
+" vim tmux integration
+Bundle 'christoomey/vim-tmux-navigator'
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlightning customizations
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

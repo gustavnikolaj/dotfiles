@@ -1,0 +1,35 @@
+# Inspired by https://github.com/mguterl/dotfiles/blob/master/tmux.conf
+
+# 256 colors for vim
+set -g default-terminal "screen-256color"
+
+# Smart pane switching with awareness of Vim splits.
+# See: https://github.com/christoomey/vim-tmux-navigator
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+bind-key -n C-h if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
+bind-key -n C-j if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
+bind-key -n C-k if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
+bind-key -n C-l if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
+bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+
+# As C-l is rebound for pane navigation above, assign C-b C-l to clear term
+bind C-l send-keys 'C-l'
+
+# Mouse works as expected
+set -g mouse on
+
+# Scrolling works as expected
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+
+
+# toggle zoom for a given area: C-b z
+# new window : C-b c
+# next window: C-b n
+
+# Cycle panes with C-b C-b
+unbind ^B
+bind ^B select-pane -t :.+
+
+# Start window numbering at 1
+set-option -g base-index 1
+set-window-option -g pane-base-index 1
