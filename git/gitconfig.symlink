@@ -81,3 +81,8 @@
 	insteadOf = "gist:"
 [credential]
 	helper = cache
+
+[remote "origin"]
+    prune = true
+[remote]
+    prune = true
