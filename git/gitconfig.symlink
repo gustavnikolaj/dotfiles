@@ -82,7 +82,5 @@
 [credential]
 	helper = cache
 
-[remote "origin"]
-    prune = true
-[remote]
+[fetch]
     prune = true
