@@ -47,14 +47,16 @@ function ps1_node_version {
     then
         if [ "$projectVersion" != "" ]
         then
-            if [ "$nvmVersion" == "$projectVersion" ]
+            if [ "$nvmVersion" != "$projectVersion" ]
             then
-                echo "\[\033[1m\033[90m\033[38m\] $nvmVersion\[\033[39m\033[22m\]"
-            else
-                echo "\[\033[1m\033[31m\033[38m\] $nvmVersion\[\033[39m\033[22m\]"
+                echo "\[\033[1m\033[31m\033[38m\] node $nvmVersion\[\033[39m\033[22m\]"
+# Uncomment the following lines to show the node version when it is correct
+#            else
+#                echo "\[\033[1m\033[90m\033[38m\] $nvmVersion\[\033[39m\033[22m\]"
             fi
-        else
-            echo "\[\033[1m\033[90m\033[38m\] $nvmVersion\[\033[39m\033[22m\]"
+# Uncomment the following lines to display node version on non .nvmrc subtrees.
+#        else
+#            echo "\[\033[1m\033[90m\033[38m\] $nvmVersion\[\033[39m\033[22m\]"
         fi
     fi
 }
