@@ -14,7 +14,15 @@ function nr() {
 
 function _nr_complete_() {
     local word=${COMP_WORDS[COMP_CWORD]}
-    local nrbins=$(find $(npm bin) -maxdepth 1 -mindepth 1 -type l -exec basename {} \; | tr '\n' ' ')
-    COMPREPLY=($(compgen -W "$nrbins" -- "${word}"))
+    if [ "$COMP_CWORD" == "1" ] ; then
+        local nrbins=$(find $(npm bin) -maxdepth 1 -mindepth 1 -type l -exec basename {} \; | tr '\n' ' ')
+        COMPREPLY=($(compgen -W "$nrbins" -- "${word}"))
+    else
+        COMPREPLY=()
+    fi
 }
-complete -F _nr_complete_ nr
+complete -o default -F _nr_complete_ nr
+
+# reverting to default options when setting COMPREPLY to (). See the following
+# stack overflow answer for more details:
+# http://stackoverflow.com/a/19062943
