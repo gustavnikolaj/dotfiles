@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Custom git script for helping out with managing multiple profiles. Currently
+# has my own profiles hardcoded.
+#
+# Depends on fzf: https://github.com/junegunn/fzf
+
+source "$(git --exec-path)/git-sh-setup"
+
+function _profile() {
+    # checking that we're in a git repo.
+    git status --porcelain > /dev/null
+    local status=$?
+    if [ $status -ne 0 ]; then
+        echo "Not a git repository." >&2
+        return 128;
+    fi
+
+    # If a single argument show is given, print currently used profile
+    if [ "$1" == "show" ] ; then
+        git config user.email
+        return 0
+    fi
+
+    local selectedProfile=$1
+
+    # If no arguments are given, allow user to select an option
+    if [ -z $1 ] ; then
+        local personalDisplayName='Personal: gustavnikolaj@gmail.com'
+        local workDisplayName='Work: gno@one.com'
+
+        local options="${workDisplayName}\n${personalDisplayName}"
+
+        selectedProfile=`
+            printf "%s\n" "${workDisplayName}" "${personalDisplayName}" \
+            | fzf --height 2
+        `
+
+        if [ "$selectedProfile" == "$workDisplayName" ] ; then
+            selectedProfile='work'
+        elif [ "$selectedProfile" == "$personalDisplayName" ]; then
+            selectedProfile='personal'
+        fi
+    else
+        selectedProfile=$1
+    fi
+
+    if [ "$selectedProfile" == "personal" ] ; then
+        echo Setting up personal profile.
+
+        git config user.email 'gustavnikolaj@gmail.com'
+
+        return 0
+    elif [ "$selectedProfile" == "work" ] ; then
+        echo Setting up work profile.
+        
+        git config user.email 'gno@one.com'
+
+        return 0
+    else
+        echo "no profile selected"
+        return 1
+    fi
+}
+
+_profile $@
