@@ -53,7 +53,7 @@ function _profile() {
         return 0
     elif [ "$selectedProfile" == "work" ] ; then
         echo Setting up work profile.
-        
+
         git config user.email 'gno@one.com'
 
         return 0
