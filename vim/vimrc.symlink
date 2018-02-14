@@ -63,11 +63,6 @@ au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.json set ft=javascript
 au BufNewFile,BufRead *.cjson set ft=javascript
 
-" Add SnipMate
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-
 " Improved javascript mode
 Bundle "pangloss/vim-javascript"
 
