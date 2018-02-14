@@ -177,7 +177,7 @@ set showmatch " show matching brackets
 
 " turn off sound on errors
 set noerrorbells
-set novisualbell
+set visualbell
 set t_vb=
 set tm=500
 
