@@ -43,7 +43,7 @@ function ps1_node_version {
     local firstNvmRc=$(nvm_find_nvmrc)
     local projectVersion=""
     if [ "$firstNvmRc" != "" ] ; then
-        projectVersion=$(nvm_format_version $(cat $firstNvmRc))
+        projectVersion=$(nvm_ensure_version_prefix $(cat $firstNvmRc))
     fi
 
 
@@ -51,7 +51,12 @@ function ps1_node_version {
     then
         if [ "$projectVersion" != "" ]
         then
-            if [ "$nvmVersion" != "$projectVersion" ]
+            # The $projectVersion variable might be a partial version (v9) if
+            # the nvmrc file only contained a major version, due to the use of
+            # nvm_ensure_version_prefix instead of nvm_format_version.
+            #   It's done to not complain when a project has a .nvmrc with the
+            # content `8` and you are running node version 8.9.4.
+            if ! [[ "$nvmVersion" =~ ^"$projectVersion" ]]
             then
                 echo "\[\033[1m\033[31m\033[38m\] node $nvmVersion\[\033[39m\033[22m\]"
 # Uncomment the following lines to show the node version when it is correct
