@@ -33,19 +33,7 @@ function p() {
         # Go to the first folder in the filtered list of folders
         local destination=`echo "$projects" | head -n 1`
         if [ -z $destination ]; then
-            # If we dont have a match use z to try to make a guess of what you meant
-            # and if the z command is not defined, just go to the projects dir.
-            if [ -z "`type -t z`" ]; then
-                p_cd $PROJECTS_DIR
-            else
-                local z_guess=$(z -e $@)
-                if [ -z $z_guess ] ; then
-                    echo "No match for: $@"
-                else
-                    echo "Jumping to z-match: $z_guess"
-                    p_cd $z_guess
-                fi
-            fi
+            p_cd $PROJECTS_DIR
         else
             p_cd $PROJECTS_DIR/$destination
         fi
