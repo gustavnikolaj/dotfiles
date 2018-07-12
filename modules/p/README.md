@@ -67,3 +67,33 @@ It also supports tab completion:
 module-a   module-b
 ```
 
+## Tips
+
+### Automatically load the projects node version with
+[nvm](https://github.com/creationix/nvm) when swapping to the project.
+
+Put the following snippet in your .bashrc file:
+
+```sh
+load-nvmrc() {
+    if [ -f .nvmrc ] ; then
+        nvm use || nvm install
+    elif [[ $(nvm version) != $(nvm version default) ]] ; then
+        echo "nvm: Reverting to default node version."
+        nvm use default
+    fi
+}
+
+export PHOOK_CD=$PHOOK_CD:load-nvmrc
+```
+
+1. First we define a function called `load-nvmrc` which will load the
+   appropriate node version from a `.nvmrc` file in the current working
+   directory.
+2. Then we export a `PHOOK_CD` environment variable and extend it with a
+   reference to the `load-nvmrc` function.
+
+If you want your shell to load the node version if started in a folder with a
+`.nvmrc` file, you can call the load-nvmrc file just after defining it.
+
+
