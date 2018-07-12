@@ -60,4 +60,10 @@ you into the `PROJECTS_DIR`.
 ~/Projects $
 ```
 
+It also supports tab completion:
+
+```
+~ $ p mod
+module-a   module-b
+```
 
