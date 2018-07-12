@@ -16,7 +16,7 @@ function p_cd() {
 function p() {
     if [ -z $1 ]; then
         # If none arguments or the first argument was empty, go to the projects dir
-        cd $PROJECTS_DIR
+        p_cd $PROJECTS_DIR
     else
         # Find all folders in PROJECTS_DIR
         local projects="`find $PROJECTS_DIR -mindepth 1 -maxdepth 1 -type d -exec basename {} \;`"
