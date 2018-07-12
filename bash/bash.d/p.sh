@@ -8,8 +8,8 @@ function p_set_title() {
 function p_cd() {
     cd $1
     if [ "$PHOOK_CD" != "" ] ; then
-        local mails=$(echo $PHOOK_CD | tr ":" "\n")
-        for hook in $mails; do eval $hook $1 ; done
+        local hooks=$(echo $PHOOK_CD | tr ":" "\n")
+        for hook in $hooks; do eval $hook $1 ; done
     fi
 }
 
