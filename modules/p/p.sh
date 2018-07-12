@@ -1,4 +1,4 @@
-export PROJECTS_DIR=~/Projects
+export PROJECTS_DIR="${PROJECTS_DIR:=~/Projects}"
 export PHOOK_CD=p_set_title:$PHOOK_CD
 
 function p_set_title() {
