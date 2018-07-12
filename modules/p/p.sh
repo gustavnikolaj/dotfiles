@@ -58,12 +58,3 @@ function _projects_complete_() {
     COMPREPLY=($(compgen -W "$projectdirs" -- "${word}"))
 }
 complete -F _projects_complete_ p
-
-function mkp() {
-    p
-    mkdir $1
-    p $1
-    npm init -y
-    git init
-    echo /node_modules > .gitignore
-}
