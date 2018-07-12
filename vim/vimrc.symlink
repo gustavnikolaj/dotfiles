@@ -248,7 +248,7 @@ map <C-l> <C-W>l
 set laststatus=2
 
 " Format the status line
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ %{fugitive#statusline()}
+set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l/%L\ [%4v]\ %{fugitive#statusline()}
 
 
 " Run a given vim command on the results of fuzzy selecting from a given shell
