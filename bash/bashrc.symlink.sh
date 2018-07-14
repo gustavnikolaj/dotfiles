@@ -13,8 +13,8 @@ function sourceFiles() {
 #DOTFILES_DIR=$(cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))/.. && pwd)
 DOTFILES_DIR=~/dotfiles
 
-# XXX: Remove the following line
-sourceFiles $(find $DOTFILES_DIR/bash/bash.d -type f | grep -v bash.d/local.sh)
+# Load bash options
+source $DOTFILES_DIR/bash/bash-options.sh
 
 # Add custom bin folders to $PATH
 export PATH="$HOME/.local/bin:$PATH"
