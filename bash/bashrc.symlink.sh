@@ -20,6 +20,9 @@ sourceFiles $(find $DOTFILES_DIR/bash/bash.d -type f | grep -v bash.d/local.sh)
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
+# Load the prompt
+source $DOTFILES_DIR/modules/prompt/prompt.sh
+
 # Load and configure p.sh
 export PROJECTS_DIR=~/Projects
 source $DOTFILES_DIR/modules/p/p.sh
