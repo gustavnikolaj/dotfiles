@@ -16,6 +16,10 @@ DOTFILES_DIR=~/dotfiles
 # XXX: Remove the following line
 sourceFiles $(find $DOTFILES_DIR/bash/bash.d -type f | grep -v bash.d/local.sh)
 
+# Add custom bin folders to $PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+
 # Load and configure p.sh
 export PROJECTS_DIR=~/Projects
 source $DOTFILES_DIR/modules/p/p.sh
