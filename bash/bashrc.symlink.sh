@@ -16,6 +16,10 @@ DOTFILES_DIR=~/dotfiles
 # XXX: Remove the following line
 sourceFiles $(find $DOTFILES_DIR/bash/bash.d -type f | grep -v bash.d/local.sh)
 
+# Load and configure p.sh
+export PROJECTS_DIR=~/Projects
+source $DOTFILES_DIR/modules/p/p.sh
+
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
 
