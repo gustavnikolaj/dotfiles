@@ -42,9 +42,11 @@ if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
     alias pbpaste='xclip -selection clipboard -o'
 fi
 
-# Load bash autocompletion on macos installed through brew
-# $ brew install bash-completion
-[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+# Load bash autocompletion
+[ -f /etc/bash_completion ] && source /etc/bash_completion
+# macos version - depends on brew installation. $ brew install bash-completion
+[ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
+
 
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")

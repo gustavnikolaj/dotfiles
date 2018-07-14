@@ -19,9 +19,6 @@ shopt -s cdspell
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# add tab completion
-[ -f /etc/bash_completion ] && source /etc/bash_completion
-
 # Set default editor to vim
 export EDITOR='vim'
 
