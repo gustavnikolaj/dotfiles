@@ -20,6 +20,11 @@ sourceFiles $(find $DOTFILES_DIR/bash/bash.d -type f | grep -v bash.d/local.sh)
 export PROJECTS_DIR=~/Projects
 source $DOTFILES_DIR/modules/p/p.sh
 
+# title script: set the title of the terminal
+function title {
+    printf "\033]0;%s\007" "$1"
+}
+
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
 
