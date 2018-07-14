@@ -32,6 +32,12 @@ function title {
     printf "\033]0;%s\007" "$1"
 }
 
+# Polyfill pbpaste / pbcopy from macos using xclip
+if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
+
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
 
