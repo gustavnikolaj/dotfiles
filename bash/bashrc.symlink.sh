@@ -28,5 +28,5 @@ function title {
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
 
-# Make sure to source the local stuff last
-sourceFiles $DOTFILES_DIR/bash/bash.d/local.sh
+# Load any local customizations from /.bash_local if it exists
+[ -f ~/.bash_local ] && source ~/.bash_local
