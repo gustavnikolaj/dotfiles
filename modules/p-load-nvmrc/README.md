@@ -1,5 +1,4 @@
-# Automatically load the projects node version with
- when swapping to the project.
+# Load the projects node version with when swapping to the project
 
 Automatically loads the configurated node version through
 [nvm](https://github.com/creationix/nvm) when navigating to a project using
