@@ -27,6 +27,10 @@ source $DOTFILES_DIR/modules/prompt/prompt.sh
 export PROJECTS_DIR=~/Projects
 source $DOTFILES_DIR/modules/p/p.sh
 
+# Load and configure scratch
+export SCRATCH_DIR=~/Scratch
+source $DOTFILES_DIR/modules/scratch/scratch.sh
+
 # title script: set the title of the terminal
 function title {
     printf "\033]0;%s\007" "$1"
@@ -37,6 +41,10 @@ if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
     alias pbcopy='xclip -selection clipboard'
     alias pbpaste='xclip -selection clipboard -o'
 fi
+
+# Load bash autocompletion on macos installed through brew
+# $ brew install bash-completion
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
