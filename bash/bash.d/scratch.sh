@@ -1,4 +1,4 @@
-export SCRATCH_DIR=~/Scratch
+export SCRATCH_DIR="${SCRATCH_DIR:=~/Scratch}"
 
 function scratch() {
     if [ -z $1 ]; then
