@@ -48,26 +48,12 @@ Bundle 'quanganhdo/grb256'
 color grb256
 set background=dark
 
-" solarized colorscheme
-"Bundle 'altercation/vim-colors-solarized'
-"color solarized
-"set background=light
-
-" less syntax highlightning
-Bundle 'groenewege/vim-less'
-
-" less files
-au BufNewFile,BufRead *.less set filetype=less
-
 " json syntax highlighting
 au BufNewFile,BufRead *.json set ft=javascript
 au BufNewFile,BufRead *.cjson set ft=javascript
 
 " Improved javascript mode
 Bundle "pangloss/vim-javascript"
-
-" vim tmux integration
-Bundle 'christoomey/vim-tmux-navigator'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax highlightning customizations
