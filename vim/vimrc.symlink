@@ -93,18 +93,6 @@ set autoread
 set hidden
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gVim settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("gui_running")
-    set guioptions+=LlRrb " Add all scrollbars
-    set guioptions-=LlRrb " Remove all scrollbars
-    set guioptions-=M     " Remove Menu
-    set guioptions-=T     " Remove Toolbar
-    set guioptions-=t     " Remove tearoffmenus
-    set guifont=Monaco\ 10
-endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=","
