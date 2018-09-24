@@ -49,6 +49,9 @@ $if mode=emacs
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 
+"\e[1;3D": backward-word
+"\e[1;3C": forward-word
+
 $if term=rxvt
 "\e[7~": beginning-of-line
 "\e[8~": end-of-line
