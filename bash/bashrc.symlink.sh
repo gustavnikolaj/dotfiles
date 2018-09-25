@@ -38,7 +38,9 @@ function title {
 
 # If running kitty set terminal to use UTF-8 (does not happen by default)
 if [ ! -z ${KITTY_WINDOW_ID+x} ] ; then
-  export LC_CTYPE=UTF-8
+  if [ "${OSTYPE//[0-9.]/}" == "darwin" ] ; then 
+    export LC_CTYPE=UTF-8
+  fi
 fi
 
 # Polyfill pbpaste / pbcopy from macos using xclip
