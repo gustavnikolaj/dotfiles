@@ -43,6 +43,11 @@ if [ ! -z ${KITTY_WINDOW_ID+x} ] ; then
   fi
 fi
 
+if [ -e $HOME/.rbenv ] ; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
+
 # Polyfill pbpaste / pbcopy from macos using xclip
 if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
     alias pbcopy='xclip -selection clipboard'
