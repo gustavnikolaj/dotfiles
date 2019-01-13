@@ -1,9 +1,5 @@
 function parse_git_dirty() {
-    if [ "${OSTYPE//[0-9.]/}" == "darwin" -o "$(git --version)" == "git version 2.17.1" ] ; then
-        [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo "*"
-    else
-        [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
-    fi
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo "*"
 }
 
 function parse_git_branch() {
