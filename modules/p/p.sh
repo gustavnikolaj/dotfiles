@@ -46,3 +46,27 @@ function _projects_complete_() {
     COMPREPLY=($(compgen -W "$projectdirs" -- "${word}"))
 }
 complete -F _projects_complete_ p
+
+function pclone() {
+    local GIT_REF=${1##*:} 
+    local GIT_HOST=${1%:$GIT_REF}
+
+    if [ "git@github.com" != "${GIT_HOST}" ] ; then
+        echo Unsupported git url.
+        echo pclone only supports git@github.com
+        return 1
+    fi
+
+    local GIT_REPO_ORG_NAME=${GIT_REF%.git}
+    local GIT_REPO_NAME=${GIT_REPO_ORG_NAME##*/}
+    local CLONE_DEST=${PROJECTS_DIR}/${GIT_REPO_NAME}
+
+
+    if [ -e $CLONE_DEST ] ; then
+        echo ${CLONE_DEST} already exists.
+        return 1
+    fi
+
+    git clone $1 $CLONE_DEST
+    p_cd $CLONE_DEST
+}
