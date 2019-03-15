@@ -15,6 +15,10 @@ listed out below.
 - [scratch](./modules/scratch): Bash function to create and navigate scratchpad-folders.
 - [prompt](./modules/prompt): Bash prompt.
 
+## Tips
+
+- [Use VS Code as the $EDITOR from the integrated shell](./vscode-as-git-editor.md)
+
 ## Installation
 
 Clone this repo into a folder named dotfiles in your home directory.
