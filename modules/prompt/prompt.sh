@@ -39,7 +39,7 @@ function ps1_node_version {
     local firstNvmRc=$(nvm_find_nvmrc)
     local projectVersion=""
     if [ "$firstNvmRc" != "" ] ; then
-        projectVersion=$(nvm_ensure_version_prefix $(cat $firstNvmRc))
+        projectVersion=$(nvm_ensure_version_prefix $(cat "$firstNvmRc"))
     fi
 
 
