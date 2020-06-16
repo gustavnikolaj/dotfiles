@@ -31,6 +31,9 @@ source $DOTFILES_DIR/modules/p/p.sh
 export SCRATCH_DIR=~/Scratch
 source $DOTFILES_DIR/modules/scratch/scratch.sh
 
+# Load and configure ocp.sh
+source $DOTFILES_DIR/modules/ocp/ocp.sh
+
 # title script: set the title of the terminal
 function title {
     printf "\033]0;%s\007" "$1"
