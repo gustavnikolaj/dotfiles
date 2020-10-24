@@ -19,7 +19,7 @@ function p() {
         p_cd $PROJECTS_DIR
     else
         # Find all folders in PROJECTS_DIR
-        local projects="`find $PROJECTS_DIR -mindepth 1 -maxdepth 1 -type d -exec basename {} \;`"
+        local projects="$(ls -p ${PROJECTS_DIR} | grep /$ | sed -e 's/\/$//;')"
 
         # For each argument, grep for folders that match that argument in the remaining folders
         for arg in $@
