@@ -34,6 +34,10 @@ source $DOTFILES_DIR/modules/scratch/scratch.sh
 # Load and configure ocp.sh
 source $DOTFILES_DIR/modules/ocp/ocp.sh
 
+# Setup go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 # title script: set the title of the terminal
 function title {
     printf "\033]0;%s\007" "$1"
