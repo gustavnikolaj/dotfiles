@@ -18,7 +18,7 @@ function parse_dir_name() {
 # print a green $ if not root and a red # if root
 # useful when doing sudo -s
 function ps1_shell_indicator() {
-    if [ "`whoami`" == "root" ]
+    if [ "$USER" == "root" ]
     then
         echo "\[\033[31m\033[1m\]#\[\033[22m\033[39m\]"
     else
