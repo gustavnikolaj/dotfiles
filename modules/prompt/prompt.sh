@@ -11,7 +11,7 @@ function parse_dir_name() {
     then
         echo "~"
     else
-        basename "$PWD"
+        echo "${PWD##*/}"
     fi
 }
 
