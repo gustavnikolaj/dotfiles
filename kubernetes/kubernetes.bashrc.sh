@@ -37,3 +37,7 @@ apiVersion: v1
 kind: Config
 current-context: ""
 EOF
+
+kubectl-global-config() {
+    export KUBECONFIG="${HOME}/.kube/config"
+}
