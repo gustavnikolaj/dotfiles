@@ -31,9 +31,6 @@ source $DOTFILES_DIR/modules/p/p.sh
 export SCRATCH_DIR=~/Scratch
 source $DOTFILES_DIR/modules/scratch/scratch.sh
 
-# Load and configure ocp.sh
-source $DOTFILES_DIR/modules/ocp/ocp.sh
-
 # Setup go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
