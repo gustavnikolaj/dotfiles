@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+PERSONAL_BRANCH_PREFIX=gno-
+
+# Custom git command for deleting branches locally or remote with my personal prefix.
+
+set -euo pipefail
+IFS=$'\n\t'
+
+LOCAL_BRANCHES_TO_DELETE=$(git for-each-ref --format='%(refname:short)' refs/heads | grep ^$PERSONAL_BRANCH_PREFIX || true)
+
+NUMBER_OF_BRANCHES=$(echo $LOCAL_BRANCHES_TO_DELETE | wc -w)
+
+if [ $NUMBER_OF_BRANCHES == 0 ] ; then
+    echo "No branches to delete..."
+    false
+fi
+
+BRANCH_OR_BRANCHES=branch
+
+if [ $NUMBER_OF_BRANCHES -gt 1] ; then
+    BRANCH_OR_BRANCHES=branches
+fi
+
+echo "Deleting the following $NUMBER_OF_BRANCHES $BRANCH_OR_BRANCHES..."
+
+for BRANCH in $LOCAL_BRANCHES_TO_DELETE ; do
+    echo - $BRANCH
+done
+
+
+read -p "Do you want to proceed? [y/N] " response
+
+case "$response" in
+    [yY][eE][sS]|[yY]) 
+        echo "Proceeding..."
+        ;;
+    *)
+        echo "Operation cancelled."
+        false
+        ;;
+esac
+
+git branch -D ${LOCAL_BRANCHES_TO_DELETE}
+
