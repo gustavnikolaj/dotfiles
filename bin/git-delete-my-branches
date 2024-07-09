@@ -18,7 +18,7 @@ fi
 
 BRANCH_OR_BRANCHES=branch
 
-if [ $NUMBER_OF_BRANCHES -gt 1] ; then
+if [ $NUMBER_OF_BRANCHES -gt 1 ] ; then
     BRANCH_OR_BRANCHES=branches
 fi
 
