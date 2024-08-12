@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+PREFER_SSH_CLONE=true
+
+# Custom git command for cloning repositories to the right place
+
+# Clone into the following directory - use pwd unless the $PROJECTS_DIR from
+# p.sh is set, if so, use that directory instead.
+CLONE_INTO_DIR=${PROJECTS_DIR:-$(pwd)}
+
+if [ $# -ne 1 ]; then
+    echo "Error: Exactly one argument is required." >&2
+    false
+fi
+
+CLONE_SOURCE=$1
+
+CLONE_SOURCE_TYPE=invalid
+CLONE_SOURCE_HOSTNAME=
+REPO_PATH=
+
+if [[ "$CLONE_SOURCE" =~ ^git@ ]]; then
+    CLONE_SOURCE_TYPE=ssh
+
+    # Extract everything after ':' and before '.git'
+    REPO_PATH=${CLONE_SOURCE#*:}
+    REPO_PATH=${REPO_PATH%.git}
+elif [[ "$CLONE_SOURCE" =~ ^https: ]]; then
+    CLONE_SOURCE_TYPE=https
+
+    # Remove everything after '?' including '?'
+    REPO_PATH=${CLONE_SOURCE%%\?*}
+
+    # In a string https://github.com/foo/bar/asdfadsfafa;
+    # extract everything after https://hostname.com/ and before the 5th /
+    # or the end of the string. In cut speak - use / as the delimiter and take
+    # fields 4 and 5.
+    # Leaving us with foo/bar
+    REPO_PATH=$(echo "$REPO_PATH" | cut -d'/' -f4-5)
+else
+    echo "Error: Argument does not match the required syntax." >&2
+    false
+fi
+
+# Replace /'s in the REPO_PATH
+REPO_PATH=${REPO_PATH//\//--}
+
+ACTUAL_CLONE_SOURCE=$CLONE_SOURCE
+CLONE_DESTINATION=$(realpath $CLONE_INTO_DIR/${REPO_PATH})
+
+if [ "$CLONE_SOURCE_TYPE" == "https" ] && [ "$PREFER_SSH_CLONE" == "true" ] ; then
+    CLONE_URL_REPO_PATH=${CLONE_SOURCE%%\?*}
+    CLONE_URL_REPO_PATH=$(echo "$CLONE_URL_REPO_PATH" | cut -d'/' -f4-5)
+
+    CLONE_URL_HOSTNAME=$(echo "$CLONE_SOURCE" | cut -d'/' -f3)
+
+    ACTUAL_CLONE_SOURCE="git@${CLONE_URL_HOSTNAME}:${CLONE_URL_REPO_PATH}.git"
+fi
+
+if [ -d "$CLONE_DESTINATION" ]; then
+    echo ""
+    echo "Repository is already cloned!"
+    echo ""
+    echo $CLONE_DESTINATION
+    false
+else
+    echo ""
+    echo "Cloning into ${CLONE_DESTINATION} ..."
+
+    if [ "$CLONE_SOURCE_TYPE" == "https" ] && [ "$PREFER_SSH_CLONE" == "true" ] ; then
+        echo " ... using source ${ACTUAL_CLONE_SOURCE}"
+    fi
+    echo ""
+    
+    git clone ${ACTUAL_CLONE_SOURCE} ${CLONE_DESTINATION}
+
+    echo ""
+    cd ${CLONE_DESTINATION}
+fi
+
