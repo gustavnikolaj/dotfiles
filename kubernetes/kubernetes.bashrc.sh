@@ -21,7 +21,7 @@ kubectl-get-context() {
     echo CLUSTER=$cluster
 }
 
-alias kubectl-set-context="kubectl config use-context \$(kubectl config get-contexts --no-headers -o name | fzf)"
+alias kubectl-set-context="kubectl config use-context \"\$(kubectl config get-contexts --no-headers -o name | fzf)\""
 # alias kubectl-get-context="kubectl config current-context"
 
 
