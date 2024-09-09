@@ -27,6 +27,10 @@ source $DOTFILES_DIR/modules/prompt/prompt.sh
 export PROJECTS_DIR=~/Projects
 source $DOTFILES_DIR/modules/p/p.sh
 
+# Load and configure p2.sh
+export P2_DIR=~/Projects
+source $DOTFILES_DIR/modules/p2/p2.sh
+
 # Load and configure scratch
 export SCRATCH_DIR=~/Scratch
 source $DOTFILES_DIR/modules/scratch/scratch.sh
