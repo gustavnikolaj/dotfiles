@@ -268,3 +268,5 @@ endfunction
 
 " Fuzzy select a buffer. Open the selected buffer with :b.
 nnoremap <leader>b :call SelectaBuffer()<cr>
+
+let g:ctrlp_max_files=0
