@@ -8,6 +8,7 @@ return {
 			--})
 		end
 	},
+    "rmehri01/onenord.nvim",
 	"quanganhdo/grb256",
 	"Jorenar/vim-darkness",
 	"jaredgorski/fogbell.vim",

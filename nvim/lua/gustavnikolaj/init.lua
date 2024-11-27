@@ -15,7 +15,8 @@ require('gustavnikolaj.set')
 --vim.cmd('colorscheme fogbell_lite')
 -- no color collection https://github.com/mcchrish/vim-no-color-collections
 
-vim.cmd("colorscheme default")
+-- vim.cmd("colorscheme default")
+vim.cmd("colorscheme onenord")
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
