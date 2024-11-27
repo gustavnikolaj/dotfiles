@@ -4,9 +4,18 @@ return {
 	dependencies = { 'nvim-lua/plenary.nvim' },
 	config = function()
 		-- Example: Configure Telescope defaults
-		require("telescope").setup{
-			defaults = {
-				-- Your telescope config goes here
+        require("telescope").setup{
+            defaults = {
+                mappings = {
+                    i = { -- Insert mode mappings
+                        ["<C-j>"] = require("telescope.actions").move_selection_next,
+                        ["<C-k>"] = require("telescope.actions").move_selection_previous,
+                    },
+                    n = { -- Normal mode mappings
+                        ["<C-j>"] = require("telescope.actions").move_selection_next,
+                        ["<C-k>"] = require("telescope.actions").move_selection_previous,
+                    },
+                },
 			}
 		}
 
