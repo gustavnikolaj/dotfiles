@@ -21,4 +21,9 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "markdown",
     command = "setlocal wrap"
 })
-        
+
+-- Ignore case in searches
+vim.o.ignorecase = true
+-- Override 'ignorecase' if the search contains uppercase
+vim.o.smartcase = true
+
