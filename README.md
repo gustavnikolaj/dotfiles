@@ -24,21 +24,25 @@ listed out below.
 Clone this repo into a folder named dotfiles in your home directory.
 
 ```
-~ $ git clone git@github.com/gustavnikolaj/dotfiles.git
+$ git clone git@github.com/gustavnikolaj/dotfiles.git $HOME/dotfiles
 ```
 
 After cloning it, run the install script:
 
 ```
-~ $ ./dotfiles/scripts/install
+$ bash $HOME/dotfiles/scripts/install-dotfiles.sh
 ```
 
 That will install dependencies and symlink in the relevant files.
 
-## Conventions
+## Implementation Notes
 
-- Files named `*.bashrc.sh` will be sourced by the main `.bashrc` file at load
-  time.
-- Files named `*.symlink.sh` will be symlinked into the home directory as a dot
-  file at install time (when running the install script). E.g.
-  `bashrc.symlink.sh -> ~/.bashrc`.
+A select few files are symlinked to the home directory, such as `.bashrc` and
+`.inputrc`.
+
+My bash setup is modularized and there are two ways that I load things. Either
+explicitly, by sourcing files directly - such as the modularized bits in the
+modules folder - or automatically. Automatic loading is based on the convention
+that any files in the `$HOME/dotfiles` directory with a name matching
+`*.bashrc.sh` will be loaded.
+
