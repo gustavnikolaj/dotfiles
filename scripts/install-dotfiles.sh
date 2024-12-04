@@ -33,3 +33,10 @@ _symlink() {
 _symlink $DOTFILES_DIR/.bashrc $HOME/.bashrc
 _symlink $DOTFILES_DIR/.inputrc $HOME/.inputrc
 
+
+# Install links to XDG_CONFIG_HOME
+mkdir -p $XDG_CONFIG_HOME
+for CONFIG_PATH in $XDG_CONFIG_MODULES ; do
+    CONFIG_BASENAME=$(basename $CONFIG_PATH)
+    _symlink $CONFIG_PATH $XDG_CONFIG_HOME/$CONFIG_BASENAME
+done
