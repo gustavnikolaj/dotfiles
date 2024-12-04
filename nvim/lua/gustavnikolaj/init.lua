@@ -28,3 +28,5 @@ vim.o.ignorecase = true
 -- Override 'ignorecase' if the search contains uppercase
 vim.o.smartcase = true
 
+-- Never use windows line endings
+vim.opt.fileformat = "unix"
