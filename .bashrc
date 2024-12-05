@@ -18,7 +18,7 @@ source $DOTFILES_DIR/bash/bash-options.sh
 
 # Add custom bin folders to $PATH
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
+export PATH="$DOTFILES_DIR/bin:$PATH"
 
 # Load the prompt
 source $DOTFILES_DIR/modules/prompt/prompt.sh
