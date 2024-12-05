@@ -40,3 +40,5 @@ for CONFIG_PATH in $XDG_CONFIG_MODULES ; do
     CONFIG_BASENAME=$(basename $CONFIG_PATH)
     _symlink $CONFIG_PATH $XDG_CONFIG_HOME/$CONFIG_BASENAME
 done
+
+bash $DOTFILES_DIR/nvm/nvm.install.sh
