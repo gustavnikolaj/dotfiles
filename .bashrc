@@ -4,12 +4,6 @@ case $- in
       *) return;;
 esac
 
-function sourceFiles() {
-  for file in $@ ; do
-    source $file
-  done
-}
-
 #DOTFILES_DIR=$(cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))/.. && pwd)
 DOTFILES_DIR=~/dotfiles
 
@@ -18,7 +12,7 @@ source $DOTFILES_DIR/bash/bash-options.sh
 
 # Add custom bin folders to $PATH
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
+export PATH="$DOTFILES_DIR/bin:$PATH"
 
 # Load the prompt
 source $DOTFILES_DIR/modules/prompt/prompt.sh
@@ -63,9 +57,13 @@ fi
 # macos version - depends on brew installation. $ brew install bash-completion
 [ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
 
+# Load dotfiles completion
+source $DOTFILES_DIR/bash/npm-completion-fix.sh
+source $DOTFILES_DIR/bash/bash-completion.sh
 
-# Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
-sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
+# Load other bash files
+source $DOTFILES_DIR/bash/kubernetes.sh
+source $DOTFILES_DIR/nvm/nvm.sh
 
 # Load any local customizations from /.bash_local if it exists
 [ -f ~/.bash_local ] && source ~/.bash_local

@@ -1,7 +1,3 @@
-# Unset colon as a wordbreaking character to allow autocompleting
-# npm run-scripts with colons in them.
-export COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
-
 # The following snippet has been generated with npm 3.8.3
 ###-begin-npm-completion-###
 #

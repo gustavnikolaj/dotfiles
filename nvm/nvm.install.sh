@@ -18,3 +18,9 @@ if [ -f $NVM_DIR/nvm.sh ] ; then
 else
   git clone https://github.com/creationix/nvm.git $NVM_DIR
 fi
+
+if ! command -v nvm &> /dev/null; then
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+fi
+
+nvm install --lts
