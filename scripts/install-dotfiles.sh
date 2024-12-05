@@ -10,6 +10,10 @@ XDG_CONFIG_MODULES=$(find $DOTFILES_DIR/.config -maxdepth 1 -mindepth 1 -type d)
 
 cd $DIR
 
+_print_divider() {
+    echo "====================================================="
+}
+
 _symlink() {
     local source=$1
     local dest=$2
@@ -30,9 +34,17 @@ _symlink() {
     fi
 }
 
+_print_divider
+echo "Symlinking files"
+_print_divider
+
 _symlink $DOTFILES_DIR/.bashrc $HOME/.bashrc
 _symlink $DOTFILES_DIR/.inputrc $HOME/.inputrc
 
+echo -e "\n"
+_print_divider
+echo "Symlinking XDG_CONFIG_HOME dirs"
+_print_divider
 
 # Install links to XDG_CONFIG_HOME
 mkdir -p $XDG_CONFIG_HOME
@@ -41,4 +53,13 @@ for CONFIG_PATH in $XDG_CONFIG_MODULES ; do
     _symlink $CONFIG_PATH $XDG_CONFIG_HOME/$CONFIG_BASENAME
 done
 
+echo -e "\n"
+_print_divider
+echo "Installing nvm"
+_print_divider
+
 bash $DOTFILES_DIR/nvm/nvm.install.sh
+
+echo -e "\n"
+_print_divider
+echo "Done!"
