@@ -63,6 +63,7 @@ source $DOTFILES_DIR/bash/bash-completion.sh
 
 # Load other bash files
 source $DOTFILES_DIR/bash/kubernetes.sh
+source $DOTFILES_DIR/bash/pf.sh
 source $DOTFILES_DIR/nvm/nvm.sh
 
 # Load any local customizations from /.bash_local if it exists
