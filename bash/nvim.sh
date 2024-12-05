@@ -2,5 +2,6 @@
 if command -v nvim &> /dev/null
 then
     export EDITOR='nvim'
+    alias vi=nvim
 fi
 

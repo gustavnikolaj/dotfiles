@@ -61,11 +61,11 @@ fi
 source $DOTFILES_DIR/bash/npm-completion-fix.sh
 source $DOTFILES_DIR/bash/bash-completion.sh
 
+# Load any local customizations from /.bash_local if it exists
+[ -f ~/.bash_local ] && source ~/.bash_local
+
 # Load other bash files
 source $DOTFILES_DIR/bash/kubernetes.sh
 source $DOTFILES_DIR/bash/nvim.sh
 source $DOTFILES_DIR/bash/pf.sh
 source $DOTFILES_DIR/nvm/nvm.sh
-
-# Load any local customizations from /.bash_local if it exists
-[ -f ~/.bash_local ] && source ~/.bash_local
