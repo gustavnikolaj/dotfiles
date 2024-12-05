@@ -1,7 +1,7 @@
 {
   "fogbell.vim": { "branch": "master", "commit": "274cc13184f6a7d0589650c0763c94cef431b319" },
   "grb256": { "branch": "master", "commit": "3115044059b3adcd12ea525994de6a255a8bf783" },
-  "lazy.nvim": { "branch": "main", "commit": "56ead98e05bb37a4ec28930a54d836d033cf00f2" },
+  "lazy.nvim": { "branch": "main", "commit": "3388a26417c48b15d5266d954f62a4d47fe99490" },
   "neoformat": { "branch": "master", "commit": "d9d3311097eacdba9bd7a425b267d304b509e7ea" },
   "nofrils": { "branch": "master", "commit": "bad6e490846e098866136ef20fff31e99f428bb9" },
   "nvim-autopairs": { "branch": "master", "commit": "b464658e9b880f463b9f7e6ccddd93fb0013f559" },
