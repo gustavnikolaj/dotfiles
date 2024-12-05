@@ -63,6 +63,10 @@ fi
 # macos version - depends on brew installation. $ brew install bash-completion
 [ -f /usr/local/etc/bash_completion ] && source /usr/local/etc/bash_completion
 
+# Load dotfiles completion
+source $DOTFILES_DIR/bash/npm-completion-fix.sh
+source $DOTFILES_DIR/bash/bash-completion.sh
+
 
 # Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
 sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
