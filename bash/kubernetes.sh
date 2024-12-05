@@ -3,9 +3,6 @@ then
     return
 fi
 
-
-source <(kubectl completion bash)
-
 kubectl-get-context() {
     local context=$(kubectl config current-context)
 
