@@ -19,7 +19,7 @@ shopt -s cdspell
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Set default editor to vim
+# Set fallback value for EDITOR, might be overridden later
 export EDITOR='vim'
 
 # don't put duplicate lines or lines starting with space in the history.
