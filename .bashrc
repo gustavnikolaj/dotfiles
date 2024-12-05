@@ -4,12 +4,6 @@ case $- in
       *) return;;
 esac
 
-function sourceFiles() {
-  for file in $@ ; do
-    source $file
-  done
-}
-
 #DOTFILES_DIR=$(cd $(dirname $(readlink -f ${BASH_SOURCE[0]}))/.. && pwd)
 DOTFILES_DIR=~/dotfiles
 
@@ -70,9 +64,6 @@ source $DOTFILES_DIR/bash/bash-completion.sh
 # Load other bash files
 source $DOTFILES_DIR/bash/kubernetes.sh
 source $DOTFILES_DIR/nvm/nvm.sh
-
-# Load the *.bashrc.sh files from the topic folders in the DOTFILES_DIR
-sourceFiles $(find $DOTFILES_DIR -type f -name "*.bashrc.sh")
 
 # Load any local customizations from /.bash_local if it exists
 [ -f ~/.bash_local ] && source ~/.bash_local
