@@ -1,6 +1,9 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+-- map ; to :
+vim.keymap.set("n", ";", ":")
+
 -- Smart way to move between windows
 vim.keymap.set('n', '<C-j>', '<C-W>j', { silent = true })
 vim.keymap.set('n', '<C-k>', '<C-W>k', { silent = true })
