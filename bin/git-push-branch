@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Custom git command to push the current branch
+#
+# Similar to running this:
+# git push origin $(git branch --show-current)
+
+set -euo pipefail
+IFS=$'\n\t'
+
+# Default values
+FORCE_FLAG=""
+
+# Parse options
+while getopts ":f" opt; do
+  case $opt in
+    f)
+      FORCE_FLAG="-f"
+      ;;
+    *)
+      echo "Usage: $0 [-f]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+PUSH_BRANCH_REMOTE=$(git remote)
+if [ "$PUSH_BRANCH_REMOTE" != "origin" ] ; then
+    echo "This script only works with a single remote called origin."
+    if [ "$PUSH_BRANCH_REMOTE" == "" ] ; then
+        echo "This repository has no remotes."
+    else
+        echo "This repository has more than one remote or a remote not called origin."
+    fi
+    false
+fi
+
+git push $FORCE_FLAG origin $(git branch --show-current)
