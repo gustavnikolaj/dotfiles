@@ -34,13 +34,6 @@ function title {
     printf "\033]0;%s\007" "$1"
 }
 
-# If running kitty set terminal to use UTF-8 (does not happen by default)
-if [ ! -z ${KITTY_WINDOW_ID+x} ] ; then
-  if [ "${OSTYPE//[0-9.]/}" == "darwin" ] ; then 
-    export LC_CTYPE=UTF-8
-  fi
-fi
-
 # Polyfill pbpaste / pbcopy from macos using xclip
 if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
     alias pbcopy='xclip -selection clipboard'
