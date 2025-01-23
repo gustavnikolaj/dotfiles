@@ -40,6 +40,7 @@ _print_divider
 
 _symlink $DOTFILES_DIR/.bashrc $HOME/.bashrc
 _symlink $DOTFILES_DIR/.inputrc $HOME/.inputrc
+_symlink $DOTFILES_DIR/asdf/tool-versions $HOME/.tool-versions
 
 echo -e "\n"
 _print_divider
@@ -59,6 +60,13 @@ echo "Installing nvm"
 _print_divider
 
 bash $DOTFILES_DIR/nvm/nvm.install.sh
+
+
+echo -e "\n"
+_print_divider
+echo "Installing asdf"
+_print_divider
+bash $DOTFILES_DIR/asdf/asdf.install.sh
 
 echo -e "\n"
 _print_divider
