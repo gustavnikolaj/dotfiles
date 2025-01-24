@@ -21,8 +21,15 @@ install dirmngr
 install gpg
 install curl
 install gawk
+install unzip
 
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf plugin-add helm https://github.com/Antiarchitect/asdf-helm.git
+asdf plugin-add golang https://github.com/asdf-community/asdf-golang
+asdf plugin-add yq https://github.com/sudermanjr/asdf-yq.git
+asdf plugin-add jq https://github.com/lsanwick/asdf-jq.git
+asdf plugin-add kubectl https://github.com/asdf-community/asdf-kubectl.git
+asdf plugin add awscli https://github.com/MetricMike/asdf-awscli.git
 
 asdf install
 
