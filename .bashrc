@@ -57,4 +57,5 @@ source $DOTFILES_DIR/bash/kubernetes.sh
 source $DOTFILES_DIR/bash/nvim.sh
 source $DOTFILES_DIR/bash/pf.sh
 source $DOTFILES_DIR/nvm/nvm.sh
+source $DOTFILES_DIR/asdf/asdf.sh
 source $DOTFILES_DIR/bash/work-dotfiles-hook.sh
