@@ -2,6 +2,10 @@
     email = gustavnikolaj@gmail.com
     name = Gustav Nikolaj
 
+# the included files will be ignored silently if they do not exist.
+[include]
+    path=~/work-dotfiles/.gitconfig
+
 [alias]
     # add everything
     aa = add .

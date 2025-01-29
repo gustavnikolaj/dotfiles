@@ -14,10 +14,3 @@ WORKDOTFILES_HOOK=$WORKDOTFILES_DIR/hook.sh
 if [ -f $WORKDOTFILES_HOOK ] ; then
     source $WORKDOTFILES_HOOK
 fi
-
-# Some of the tricks that I pull in my work dotfiles include:
-#
-# 1. Setting a GIT_CONFIG environment variable which takes presedence over the
-#    one included in this repository. Primarily to avoid having to juggle
-#    multiple profiles and accidentically commit with my private name and
-#    email.
