@@ -1,3 +1,10 @@
+# NOTE: This file contains a bunch of unstaged changes as I am currently evaluating how
+#       using a more default git setup would work for me. I don't use most of the aliases
+#       any way, with the exception of hist and s. And it seems that for the most part,
+#       the values that I set are dated back from before the release of git 2.0, and that
+#       the default configuration is very much in line with most of the other configuration
+#       options that I set.
+
 [user]
     email = gustavnikolaj@gmail.com
     name = Gustav Nikolaj
@@ -8,90 +15,90 @@
 
 [alias]
     # add everything
-    aa = add .
+    # aa = add .
     # View the SHA, description, and history graph of the latest 20 commits
-    l = log --pretty=oneline -n 20 --graph
+    # l = log --pretty=oneline -n 20 --graph
     # View the current working tree status using the short format
-    s = status -s
-    st = status
+    # s = status -s
+    # st = status
     # Diff
-    d = diff --patch-with-stat
-    cdiff = diff --cached --patch-with-stat
-    cd = diff --cached --patch-with-stat
+    # d = diff --patch-with-stat
+    # cdiff = diff --cached --patch-with-stat
+    # cd = diff --cached --patch-with-stat
     # commit
-    ci = commit
+    # ci = commit
     # commit with message
-    cm = commit -m
+    # cm = commit -m
     # checkout
-    co = checkout
+    # co = checkout
     # Show verbose output about tags, branches or remotes
-    tags = tag -l
-    branches = branch -a
-    remotes = remote -v
+    # tags = tag -l
+    # branches = branch -a
+    # remotes = remote -v
     # pretty history
     hist = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
-    amend = commit --amend
-    amendf = commit --amend --no-edit
+    # amend = commit --amend
+    # amendf = commit --amend --no-edit
 
 [pull]
     # Only pull branches that have been set up to track a remote branch.
-    default = current
+    # default = current
     # Why You Should Use git pull –ff-only
     # https://blog.sffc.xyz/post/185195398930/why-you-should-use-git-pull-ff-only-git-is-a
-    ff = only
+    # ff = only
 [push]
     # Only push branches that have been set up to track a remote branch.
-    default = simple
+    # default = simple
 
 [core]
     # Use custom `.gitignore` and `.gitattributes`
-    excludesfile = ~/.gitignore
-    attributesfile = ~/.gitattributes
+#    excludesfile = ~/.gitignore
+#    attributesfile = ~/.gitattributes
     # Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
     #whitespace = space-before-tab,indent-with-non-tab,trailing-space
 
-[color]
-    # Use colors in Git commands that are capable of colored output when outputting to the terminal
-    ui = auto
-[color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
-[color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
-[color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
-[merge]
-    # Include summaries of merged commits in newly created merge commit messages
-    log = true
+#[color]
+#    # Use colors in Git commands that are capable of colored output when outputting to the terminal
+#    ui = auto
+#[color "branch"]
+#    current = yellow reverse
+#    local = yellow
+#    remote = green
+#[color "diff"]
+#    meta = yellow bold
+#    frag = magenta bold
+#    old = red bold
+#    new = green bold
+#[color "status"]
+#    added = yellow
+#    changed = green
+#    untracked = cyan
+#[merge]
+#    # Include summaries of merged commits in newly created merge commit messages
+#    log = true
 
 # Use `origin` as the default remote on the `master` branch in all cases
-[branch "master"]
-    remote = origin
-    merge = refs/heads/master
+#[branch "master"]
+#    remote = origin
+#    merge = refs/heads/master
 
 # URL shorthands
-[url "git@github.com:"]
-    insteadOf = "gh:"
-    pushInsteadOf = "github:"
-    pushInsteadOf = "git://github.com/"
-[url "git://github.com/"]
-    insteadOf = "github:"
-[url "git@gist.github.com:"]
-    insteadOf = "gst:"
-    pushInsteadOf = "gist:"
-    pushInsteadOf = "git://gist.github.com/"
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
-[credential]
-	helper = cache
-
-[fetch]
-    prune = true
-[init]
-	defaultBranch = master
+#[url "git@github.com:"]
+#    insteadOf = "gh:"
+#    pushInsteadOf = "github:"
+#    pushInsteadOf = "git://github.com/"
+#[url "git://github.com/"]
+#    insteadOf = "github:"
+#[url "git@gist.github.com:"]
+#    insteadOf = "gst:"
+#    pushInsteadOf = "gist:"
+#    pushInsteadOf = "git://gist.github.com/"
+#[url "git://gist.github.com/"]
+#	insteadOf = "gist:"
+#[credential]
+#	helper = cache
+#
+#[fetch]
+#    prune = true
+#[init]
+#	defaultBranch = master
