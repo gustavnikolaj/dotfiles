@@ -40,6 +40,8 @@ if ! command -v pbcopy > /dev/null 2>&1; then # has pbcopy
     alias pbpaste='xclip -selection clipboard -o'
 fi
 
+source $DOTFILES_DIR/bash/deno.sh
+
 # Load bash autocompletion
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 # macos version - depends on brew installation. $ brew install bash-completion
