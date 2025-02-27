@@ -63,6 +63,10 @@
     # Use multiple columns - e.g. when listing branches
     ui = auto
 
+[diff]
+    # More modern and improved diffing algorithm
+    algorithm = histogram
+
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
