@@ -46,7 +46,9 @@
     meta = yellow bold
     frag = cyan
     old = red bold
+    oldMoved = red dim
     new = green bold
+    newMoved = green dim
 [color "status"]
     added = yellow
     changed = green
@@ -66,6 +68,8 @@
 [diff]
     # More modern and improved diffing algorithm
     algorithm = histogram
+    # Color moved lines of the diff differently than the actually added parts
+    colorMoved = zebra
 
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
