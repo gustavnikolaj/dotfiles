@@ -1,10 +1,3 @@
-# NOTE: This file contains a bunch of unstaged changes as I am currently evaluating how
-#       using a more default git setup would work for me. I don't use most of the aliases
-#       any way, with the exception of hist and s. And it seems that for the most part,
-#       the values that I set are dated back from before the release of git 2.0, and that
-#       the default configuration is very much in line with most of the other configuration
-#       options that I set.
-
 [user]
     email = gustavnikolaj@gmail.com
     name = Gustav Nikolaj
@@ -14,13 +7,8 @@
     path=~/work-dotfiles/.gitconfig
 
 [alias]
-    # add everything
-    # aa = add .
-    # View the SHA, description, and history graph of the latest 20 commits
-    # l = log --pretty=oneline -n 20 --graph
     # View the current working tree status using the short format
     # s = status -s
-    # st = status
     # Diff
     # d = diff --patch-with-stat
     # cdiff = diff --cached --patch-with-stat
@@ -51,9 +39,6 @@
     # default = simple
 
 [core]
-    # Use custom `.gitignore` and `.gitattributes`
-#    excludesfile = ~/.gitignore
-#    attributesfile = ~/.gitattributes
     # Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
     #whitespace = space-before-tab,indent-with-non-tab,trailing-space
 
@@ -82,19 +67,6 @@
 #    remote = origin
 #    merge = refs/heads/master
 
-# URL shorthands
-#[url "git@github.com:"]
-#    insteadOf = "gh:"
-#    pushInsteadOf = "github:"
-#    pushInsteadOf = "git://github.com/"
-#[url "git://github.com/"]
-#    insteadOf = "github:"
-#[url "git@gist.github.com:"]
-#    insteadOf = "gst:"
-#    pushInsteadOf = "gist:"
-#    pushInsteadOf = "git://gist.github.com/"
-#[url "git://gist.github.com/"]
-#	insteadOf = "gist:"
 #[credential]
 #	helper = cache
 #
