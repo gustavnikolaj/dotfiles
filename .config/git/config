@@ -74,6 +74,9 @@
     # Include summaries of merged commits in newly created merge commit messages
     log = true
 
+[push]
+    autoSetupRemote = true
+
 #[fetch]
 #    prune = true
 
