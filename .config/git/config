@@ -58,6 +58,9 @@
     # Sort by version refname instead of sorting alphabetically
     sort = version:refname
 
+[commit]
+	verbose = true
+
 [column]
     # Use multiple columns - e.g. when listing branches
     ui = auto
