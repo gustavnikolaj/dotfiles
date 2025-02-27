@@ -52,6 +52,9 @@
     changed = green
     untracked = cyan
 
+[branch]
+    sort = -committerdate
+
 [column]
     # Use multiple columns - e.g. when listing branches
     ui = auto
