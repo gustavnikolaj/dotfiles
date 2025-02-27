@@ -55,6 +55,10 @@
 [branch]
     sort = -committerdate
 
+[tag]
+    # Sort by version refname instead of sorting alphabetically
+    sort = version:refname
+
 [column]
     # Use multiple columns - e.g. when listing branches
     ui = auto
