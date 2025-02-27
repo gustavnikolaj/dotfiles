@@ -34,9 +34,6 @@
     # Why You Should Use git pull –ff-only
     # https://blog.sffc.xyz/post/185195398930/why-you-should-use-git-pull-ff-only-git-is-a
     ff = only
-[push]
-    # Only push branches that have been set up to track a remote branch.
-    # default = simple
 
 [color "branch"]
     current = yellow
