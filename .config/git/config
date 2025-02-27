@@ -77,8 +77,8 @@
 [push]
     autoSetupRemote = true
 
-#[fetch]
-#    prune = true
+[fetch]
+    prune = true
 
 [init]
 	defaultBranch = master
