@@ -52,6 +52,10 @@
     changed = green
     untracked = cyan
 
+[column]
+    # Use multiple columns - e.g. when listing branches
+    ui = auto
+
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
