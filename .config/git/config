@@ -69,5 +69,6 @@
 
 #[fetch]
 #    prune = true
-#[init]
-#	defaultBranch = master
+
+[init]
+	defaultBranch = master
