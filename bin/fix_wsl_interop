@@ -1,0 +1,21 @@
+#!/bin/bash
+# 
+# Fix WSLInterop without restarting wsl.
+#
+# Sometimes, particularly when running kitchen dokken the compatibility layer
+# between the WSL Linux side and Windows binaries break. When it works you can
+# execute windows binaries (which I rely on for e.g. ssh.exe).
+# 
+# Reinitializing it like done in this below script causes it to start working
+# again.
+#
+# It seems to happen for me after using kitchen-dokken to test chef cookbooks
+# in docker containers. I am using kitchen in WSL running Ubuntu 24.04 on
+# Windows 11. I am running Docker Desktop for Windows, with the WSL integration
+# enabled, which means that the Docker daemon is itself running inside another
+# WSL instance instead of as a daemon on the Windows side.
+
+echo "Fixing WSLInterop..."
+sudo umount /proc/sys/fs/binfmt_misc 2>/dev/null
+sudo mount -t binfmt_misc binfmt_misc /proc/sys/fs/binfmt_misc
+echo ':WSLInterop:M::MZ::/init:PF' | sudo tee /proc/sys/fs/binfmt_misc/register
