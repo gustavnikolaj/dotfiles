@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Custom git script for helping out with managing multiple profiles. Currently
+# has my own profiles hardcoded.
+#
+# Depends on fzf: https://github.com/junegunn/fzf
+
+source "$(git --exec-path)/git-sh-setup"
+
+confirm_stubborn() {
+    local prompt="$1"
+    local response
+    while true; do
+        read -rp "$prompt [y/n] " response
+        case "$response" in
+            [Yy]) return 0 ;;
+            [Nn]) return 1 ;;
+            *) echo "Please enter 'y' or 'n'." ;;
+        esac
+    done
+}
+
+function _find_branch {
+    # checking that we're in a git repo.
+    git status --porcelain > /dev/null
+    local status=$?
+    if [ $status -ne 0 ]; then
+        echo "Not a git repository." >&2
+        return 128;
+    fi
+
+    local branches=$(git for-each-ref --sort=-committerdate --format="%(refname:short)" refs/heads/)
+    local selectedBranch
+
+    if [ -z $1 ] ; then
+        selectedBranch=$(echo "$branches" | fzf)
+    else
+        local targets=$branches
+        # For each argument, grep for branches that match that argument in the remaining branches
+        for arg in $@
+        do
+            targets=$(echo "$targets" | grep "$arg")
+        done
+
+        # Sort the branches after lenght of the name.
+        targets=$(echo "$targets" | awk '{print length, $0}' | sort -n | cut -d " " -f2-)
+
+        # Go to the first folder in the filtered list of folders
+        selectedBranch=$(echo "$targets" | head -n 1)
+    fi
+
+    if [ "$selectedBranch" == "" ] ; then
+        echo "No branch selected."
+        return 1
+    fi
+
+    read -rp "Press Enter to switch to \"$selectedBranch\": "
+
+    git switch $selectedBranch
+}
+
+_find_branch $@
