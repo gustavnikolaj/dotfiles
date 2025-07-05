@@ -55,11 +55,4 @@ done
 
 echo -e "\n"
 _print_divider
-echo "Installing nvm"
-_print_divider
-
-bash $DOTFILES_DIR/nvm/nvm.install.sh
-
-echo -e "\n"
-_print_divider
 echo "Done!"
