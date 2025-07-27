@@ -29,6 +29,16 @@ vim.keymap.set('n', 'k', 'gk', { silent = true })
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
+-- TODO: <leader>pp is awkward for pasting, but <leader>p is used as part of
+-- the pf, pb, pv chords for opening files. Lazyvim uses <leader>ff instead of
+-- my pf variant, but pressing the same button twice is awkward as well.
+-- I could use <leader>j as a prefix for file finding instead? or just start
+-- relying on Ctrl-P instead.
+
+-- <leader>p will paste from system clipboard
+vim.keymap.set({"n", "v"}, "<leader>pp", [["+p]])
+-- vim.keymap.set("n", "<leader>P", [["+P]])
+
 -- shift+j without moving the cursor
 vim.keymap.set("n", "J", "mzJ`z")
 
