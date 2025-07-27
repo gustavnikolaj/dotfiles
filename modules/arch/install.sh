@@ -17,6 +17,10 @@ for f in install/*.sh; do
   source "$f"
 done
 
+# Config
+source install/config/login.sh
+source install/config/plymouth.sh
+
 # Ensure locate is up to date now that everything has been installed
 sudo updatedb
 
