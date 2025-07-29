@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # install base deps
 sudo apt install curl
 
@@ -31,4 +33,10 @@ if ! command -v 1password ; then
     sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
     curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
     sudo apt update && sudo apt install 1password
+fi
+
+if ! command -v uwsm ; then
+  echo "Missing uwsm binary"
+  echo "Go build it! https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#1-building-and-installing" 
+  false
 fi
