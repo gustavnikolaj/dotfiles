@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# install base deps
+sudo apt install curl
+
 # install base sway setup
 sudo apt install sway xwayland sway-backgrounds waybar wofi wl-clipboard
 
@@ -12,4 +15,10 @@ if ! command -v nvidia-smi ; then
 	echo "need to do nvidia setup"
 fi
 
-
+# install brave
+if ! command -v brave-browser ; then
+    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    sudo curl -fsSLo /etc/apt/sources.list.d/brave-browser-release.sources https://brave-browser-apt-release.s3.brave.com/brave-browser.sources
+    sudo apt update
+    sudo apt install brave-browser
+fi
