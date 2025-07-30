@@ -71,3 +71,15 @@ if ! fc-list | grep -qi "iA Writer Mono S"; then
   fc-cache
   cd -
 fi        
+
+# nvim
+
+if ! command -v nvim ; then
+    rm -rf ~/.local/opt/nvim
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+    mkdir -p ~/.local/{opt,bin}
+    tar -xzf nvim-linux-x86_64.tar.gz -C ~/.local/opt
+    mv ~/.local/opt/nvim-linux-x86_64 ~/.local/opt/nvim
+    rm nvim-linux-x86_64.tar.gz
+    ln -sf ~/.local/opt/nvim/bin/nvim ~/.local/bin/nvim
+fi
