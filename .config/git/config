@@ -71,7 +71,8 @@
     # Color moved lines of the diff differently than the actually added parts
     colorMoved = zebra
     renames = true
-    mnemonicPrefix = true
+    #mnemonicPrefix = true # i/w instead of a/b
+    noprefix = true # no a/b nor i/w
 
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
