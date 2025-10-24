@@ -8,3 +8,5 @@ SHELL := /bin/bash # Instruct make to use the bash shell.
 install-applications:
 	bash install/mimetypes.sh
 	bin/refresh-applications
+
+install: install-applications install-uwsm-env install-kanshi
