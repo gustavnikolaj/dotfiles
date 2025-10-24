@@ -1,0 +1,11 @@
+#!/bin/bash
+url="$1"
+web_url="https://outlook.office.com/mail/"
+
+# Handle mailto: URLs
+if [[ $url =~ ^mailto: ]]; then
+  email=$(echo "$url" | sed 's/mailto://')
+  web_url="https://outlook.office.com/mail/deeplink/compose?to=$email"
+fi
+
+exec omarchy-launch-webapp "$web_url"

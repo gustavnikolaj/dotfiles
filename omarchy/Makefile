@@ -23,3 +23,8 @@ uninstall-kanshi:
 	rm =f "$(DST_KANSHI_CONFIG)"
 	rm -f "$(DST_KANSHI_UNIT)"
 	systemctl --user daemon-reload
+
+.PHONY: install-applications
+install-applications:
+bash install/mimetypes.sh
+	bin/refresh-applications

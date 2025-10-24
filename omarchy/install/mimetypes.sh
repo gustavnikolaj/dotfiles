@@ -1,0 +1,1 @@
+xdg-mime default Outlook.desktop x-scheme-handler/mailto

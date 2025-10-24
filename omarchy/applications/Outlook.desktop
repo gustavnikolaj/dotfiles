@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Outlook
+Comment=Outlook
+Exec=gnomarchy-webapp-handler-outlook %u
+Terminal=false
+Type=Application
+Icon=/home/gno/.local/share/icons/hicolor/48x48/apps/Outlook.png
+StartupNotify=true
+MimeType=x-scheme-handler/mailto
