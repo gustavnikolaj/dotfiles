@@ -1,0 +1,5 @@
+######################################################################
+# Extension from dotfiles. Source: __FILE__
+
+# Ensure dotfiles/omarchy/bins are in the path
+export PATH=$HOME/dotfiles/omarchy/bin:$PATH
