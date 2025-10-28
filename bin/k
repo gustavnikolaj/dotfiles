@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+# k is a convenience script for kubernetes, for when you are working across
+# multiple clusters and namespaces.
+#
+# - k will delegate to kubernetes for unrecognized commands.
+# - k will prompt the user to select a cluster and a namespace if one is not yet active
+# - `k current` will output the current if any is set
+#
+# Caveats:
+# - k currently does not handle multiple different users in your kubeconfig
+# - k assumes that you have a temporary KUBECONFIG file per shell session. *1
+#
+# 1: see https://github.com/gustavnikolaj/dotfiles/blob/master/bash/kubernetes.sh
+
+set -euo pipefail
+IFS=$'\n\t'
+
+delegate_to_kubectl=true
+output_current_context=false
+
+# Check if first argument is "reset"
+if [ $# -gt 0 ] && [ "$1" = "reset" ]; then
+  # Reset should not have any additional arguments
+  if [ $# -gt 1 ]; then
+    >&2 echo "Error: 'reset' does not accept additional arguments"
+    false
+  fi
+
+  # Suppress output if successful, but if failing log an error message and exit
+  if ! kubectl config unset current-context &> /dev/null; then
+    >&2 echo "Failed to unset current-context"
+    false
+  fi
+
+  delegate_to_kubectl=false
+fi
+
+
+current_context=$(kubectl config view --minify -o jsonpath='{.current-context}' 2> /dev/null || true)
+
+# Check if first argument is "current"
+if [ $# -gt 0 ] && [ "$1" = "current" ]; then
+  # current should not have any additional arguments
+  if [ $# -gt 1 ]; then
+    >&2 echo "Error: 'current' does not accept additional arguments"
+    false
+  fi
+
+  if [[ "" == "$current_context" ]] ; then
+    >&2 echo "Error: No context set."
+    false
+  fi
+
+  output_current_context=true
+  delegate_to_kubectl=false
+fi
+
+
+if [[ "" == "$current_context" ]] ; then
+	# current-context is not set
+
+  # check users
+  users=$(kubectl config view -o jsonpath='{.users[*].name}')
+  # check how many users we have and exit with error if we have more than one defined
+  user_count=$(echo "$users" | wc -w)
+  if [ "$user_count" -ne 1 ]; then
+    >&2 echo "The script only works if you have exactly one user defined in kube config."
+    false
+  fi
+
+  user=$users
+
+  # list clusters, and have the user select one
+  clusters=$(kubectl config view -o jsonpath='{.clusters[*].name}' | tr ' ' '\n')
+  my_cluster=$(fzf <<<"$clusters")
+
+  # Suppress output if successful, but if failing log an error message and exit
+  if ! kubectl config set-context k-tmp-context --cluster=$my_cluster --user=$user &> /dev/null; then
+    >&2 echo "Failed to set new context k-tmp-context"
+    false
+  fi
+
+  # Suppress output if successful, but if failing log an error message and exit
+  if ! kubectl config use-context k-tmp-context &> /dev/null; then
+    >&2 echo "Failed to use new context k-tmp-context"
+    false
+  fi
+
+  namespaces=$(kubectl get namespaces -o jsonpath='{.items[*].metadata.name}' | tr ' ' '\n')
+  my_namespace=$(fzf <<<"$namespaces" )
+
+  # Suppress output if successful, but if failing log an error message and exit
+  if ! kubectl config set-context k-tmp-context --namespace=$my_namespace &> /dev/null; then
+    >&2 echo "Failed to set namespace on new context k-tmp-context"
+    false
+  fi
+
+  output_current_context=true
+fi
+
+
+k_namespace=$(kubectl config view --minify -o jsonpath='{.contexts[0].context.namespace}')
+k_cluster=$(kubectl config view --minify -o jsonpath='{.contexts[0].context.cluster}')
+
+if [ "$output_current_context" == "true" ] && [ $# -eq 0 ] ; then
+  # If this is the case, then k was called standalone without args and without a
+  # current context - no point in delegating.
+  delegate_to_kubectl=false
+fi
+
+if [ "$output_current_context" == "true" ] ; then
+  >&2 echo "> " $k_namespace in $k_cluster
+fi
+
+if [ "$delegate_to_kubectl" == "true" ] ; then
+  exec kubectl $@
+fi
