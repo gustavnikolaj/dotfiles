@@ -1,0 +1,18 @@
+#!/bin/bash
+
+EXTRAS="dotfiles"
+
+PROJECTS=$(ls -1t ~/Projects | while IFS= read -r f; do echo "~/Projects/$f" ; done)
+WORKSPACES=$(ls -1t $HOME | grep code-workspace | while IFS= read -r f; do echo "~/$f" ; done)
+_EXTRAS="$(while IFS= read -r f; do echo "~/$f" ; done <<<"$EXTRAS")"
+
+OPTIONS="$PROJECTS
+$WORKSPACES
+$_EXTRAS
+"
+
+choice=$(walker --dmenu --width 844 --maxheight 300 --minheight 300 -p "Open..." <<<"$OPTIONS")
+
+if [[ "" != "$choice" ]] ; then
+    code -- "${choice/#\~/$HOME}"
+fi
