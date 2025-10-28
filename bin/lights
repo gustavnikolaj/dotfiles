@@ -43,26 +43,6 @@ set_lighting() {
     }' > /dev/null
 }
 
-
-scene_night() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 2 344
-    done
-}
-
-scene_dark() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 3 344
-    done
-}
-
-scene_day() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 78 266
-    done
-}
-
-
 lights_off() {
     for ip in "${LIGHTS[@]}"; do
         set_light_off $ip
@@ -74,11 +54,6 @@ lights_on() {
         set_light_on $ip
     done
 }
-
-# scene_night
-# lights_on
-# lights_off
-
 
 is_lit() {
     curl -s --request GET http://$1:9123/elgato/lights --header 'Accept: application/json' | jq '.lights[0].on'
@@ -102,31 +77,31 @@ lights_toggle() {
 
 scene_night() {
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 3 143
+        set_lighting $ip 1 3 335
     done
 }
 
 scene_evening() {
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 10 165
+        set_lighting $ip 1 10 316
     done
 }
 
 scene_cloudy() {
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 20 170
+        set_lighting $ip 1 20 311
     done
 }
 
 scene_day() {
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 40 195
+        set_lighting $ip 1 40 288
     done
 }
 
 scene_sunny() {
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 90 235
+        set_lighting $ip 1 90 251
     done
 }
 
@@ -174,11 +149,11 @@ case "$mode" in
 esac
 
 # Name      Temperature     Brightness  Calc-temp
-# Dark      2900K           3 %         143
-# Night     3300K           10%         165
-# Cloudy    3400K           20%         170
-# Day       3900K           40%         195
-# Sunny     4700K           90%         235
+# Dark      2900K           3 %         335
+# Night     3300K           10%         316
+# Cloudy    3400K           20%         311
+# Day       3900K           40%         288
+# Sunny     4700K           90%         251
 
 # https://github.com/adamesch/elgato-key-light-api/blob/master/resources/lights/README.md
 
