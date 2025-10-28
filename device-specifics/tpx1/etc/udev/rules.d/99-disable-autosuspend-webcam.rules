@@ -1,0 +1,8 @@
+# Disable autosuspend of external webcam Razer Kiyo Pro
+# 
+# To remove this later:
+# sudo rm /etc/udev/rules.d/99-disable-autosuspend-webcam.rules
+# sudo udevadm control --reload
+# sudo udevadm trigger
+
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="0e05", TEST=="power/control", ATTR{power/control}="on"

@@ -1,0 +1,17 @@
+# Disable the ethernet usb device in my Dell monitor.
+#
+# The monitor has a USB hub which can be used as a KVM and reasign the attached
+# devices based on which input is selected. It switches between my laptop dock,
+# and my desktop which both have individual ethernet cables.
+# 
+# The ethernet device is using a lot of bandwidth and seems to be quite
+# unstable. I am already pushing it in terms of bandwidth, so disabling this
+# unused device helps a lot. It was also problem on Windows and it caused a
+# sound to trigger each time the device reconnected - this is where I initially
+# was clued in to the cause. Linux seems to be much less tolerant with USB
+# devices and until I disabled the ethernet port I had a few incidents where
+# all USB devices would stop working until a reboot.
+#
+# To undo this change, remove the file from /etc/udev/rules.d/ and reboot.
+
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="1100", RUN+="/bin/sh -c 'echo $kernel > /sys/bus/usb/drivers/usb/unbind'"
