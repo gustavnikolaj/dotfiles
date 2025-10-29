@@ -11,3 +11,9 @@ install-applications:
 	bin/refresh-applications
 
 install: install-applications install-uwsm-env install-kanshi
+
+/home/gno/.config/hypr/hyprland.conf: config/hypr/hyprland.conf
+	install -Dm644 "$<" "$@"
+
+.PHONY: hypr
+hypr: /home/gno/.config/hypr/hyprland.conf
