@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Handle optional parameter
+mode="${1:-default}"
+
+case "$mode" in
+    meeting-evening)
+        # Evening call settings
+        lights evening
+        brightness dim
+        ;;
+    meeting)
+        # Day call settings
+        lights cloudy
+        brightness bright
+        ;;
+    default)
+        # Not on call
+        lights off
+        brightness bright
+        ;;
+esac

@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+
+LIGHTS=(
+    10.0.0.60
+    10.0.0.61
+)
+
+# set -x
+
+# curl -s --request GET http://${LIGHTS[0]}:9123/elgato/lights --header 'Accept: application/json' | jq .
+# curl -s --request GET http://${LIGHTS[0]}:9123/elgato/accessory-info --header 'Accept: application/json' | jq .
+# curl -s --request GET http://${LIGHTS[0]}:9123/elgato/settings --header 'Accept: application/json' | jq .
+# curl -s --request POST http://${LIGHTS[0]}:9123/elgato/identify --header 'Accept: application/json' | jq .
+
+
+set_light_on() {
+    local ip=$1
+    curl -s --request PUT http://$ip:9123/elgato/lights --header 'Accept: application/json' --data-raw '{
+        "numberOfLights": 1,
+        "lights": [ { "on": 1 } ]
+    }' > /dev/null
+}
+
+set_light_off() {
+    local ip=$1
+    curl -s --request PUT http://$ip:9123/elgato/lights --header 'Accept: application/json' --data-raw '{
+        "numberOfLights": 1,
+        "lights": [ { "on": 0 } ]
+    }' > /dev/null
+}
+
+# set_light_on ${LIGHTS[0]}
+# set_light_off ${LIGHTS[0]}
+
+set_lighting() {
+    local ip=$1
+    local on=$2
+    local brightness=$3
+    local temperature$4
+    curl -s --request PUT http://$ip:9123/elgato/lights --header 'Accept: application/json' --data-raw '{
+        "numberOfLights": 1,
+        "lights": [ { "on": '$2', "brightness": '$3', "temperature": '$4' } ]
+    }' > /dev/null
+}
+
+lights_off() {
+    for ip in "${LIGHTS[@]}"; do
+        set_light_off $ip
+    done
+}
+
+lights_on() {
+    for ip in "${LIGHTS[@]}"; do
+        set_light_on $ip
+    done
+}
+
+is_lit() {
+    curl -s --request GET http://$1:9123/elgato/lights --header 'Accept: application/json' | jq '.lights[0].on'
+}
+
+# is_lit
+
+lights_toggle() {
+    local lights_on=0
+    
+    for ip in "${LIGHTS[@]}"; do
+        (( lights_on += $(is_lit "$ip") ))
+    done
+
+    if (( lights_on > 0 )); then
+        lights_off
+    else
+        lights_on
+    fi
+}
+
+scene_night() {
+    for ip in "${LIGHTS[@]}"; do
+        set_lighting $ip 1 3 335
+    done
+}
+
+scene_evening() {
+    for ip in "${LIGHTS[@]}"; do
+        set_lighting $ip 1 10 316
+    done
+}
+
+scene_cloudy() {
+    for ip in "${LIGHTS[@]}"; do
+        set_lighting $ip 1 20 311
+    done
+}
+
+scene_day() {
+    for ip in "${LIGHTS[@]}"; do
+        set_lighting $ip 1 40 288
+    done
+}
+
+scene_sunny() {
+    for ip in "${LIGHTS[@]}"; do
+        set_lighting $ip 1 90 251
+    done
+}
+
+# Handle optional parameter
+mode="${1:-toggle}"
+
+case "$mode" in
+    night)
+        scene_night
+        ;;
+    evening)
+        scene_evening
+        ;;
+    cloudy)
+        scene_cloudy
+        ;;
+    day)
+        scene_day
+        ;;
+    sunny)
+        scene_sunny
+        ;;
+    toggle)
+        lights_toggle
+        ;;
+    off)
+        lights_off
+        ;;
+    on)
+        lights_on
+        ;;
+    help)
+        echo "Usage: $0 [night,evening,cloudy,day,sunny, toggle]"
+        echo "  night   - Preset"
+        echo "  evening - Preset"
+        echo "  cloudy  - Preset"
+        echo "  day     - Preset"
+        echo "  sunny   - Preset"
+        echo "  on      - Turn lights on with previous values."
+        echo "  off     - Turn lights off"
+        echo "  toggle  - Toggle lights on and off (default)"
+        echo "  help    - This page"
+        exit 1
+        ;;
+esac
+
+# Name      Temperature     Brightness  Calc-temp
+# Dark      2900K           3 %         335
+# Night     3300K           10%         316
+# Cloudy    3400K           20%         311
+# Day       3900K           40%         288
+# Sunny     4700K           90%         251
+
+# https://github.com/adamesch/elgato-key-light-api/blob/master/resources/lights/README.md
+
+# Temperature scale 143 - 344
+# Brightness scale 0 to 100
+
+# (*) Attempting to set a light's brightness to a low value like 2 may not do
+# anything.
+
+# (**) The 'Control Center' UI only allows color temperature changes from 2900K
+# - 7000K in 50K increments. To convert the values used by the API to Kelvin
+# (like it is displayed in the Elgato application), divide by 0.05
+# (e.g. 143 / 0.05 = 2860 ≈ 2900K). To covert from Kelvin to API values,
+# multiply by 0.05 (e.g. 7000K ≈ 6880 * 0.05 = 344)
+
+# Make a toggle on/off
+# Make scene commands
+# I want to compose high-level scenes out of this, that also adjust
+# lighting on the monitor.

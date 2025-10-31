@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+# Toggle the brightness of an attached display
+#
+# Install dependencies:
+# sudo pacman -S ddcutil
+# sudo modprobe i2c-dev
+
+brightness_steps=( 10 40 70 )
+
+# Handle optional parameter
+mode="${1:-cycle}"
+
+case "$mode" in
+    dim)
+        # Set to first value (dimmest)
+        next_value="${brightness_steps[0]}"
+        ;;
+    medium)
+        # Set to middle value
+        middle_index=$(( ${#brightness_steps[@]} / 2 ))
+        next_value="${brightness_steps[$middle_index]}"
+        ;;
+    bright)
+        # Set to last value (brightest)
+        last_index=$(( ${#brightness_steps[@]} - 1 ))
+        next_value="${brightness_steps[$last_index]}"
+        ;;
+    cycle)
+        # Get current brightness value (extract the number from ddcutil output)
+        current_value=$(ddcutil --display 1 getvcp 10 | grep -oP 'current value =\s+\K\d+')
+
+        # Find the index of current_value in brightness_steps
+        current_index=-1
+        for i in "${!brightness_steps[@]}"; do
+            if [[ "${brightness_steps[$i]}" -eq "$current_value" ]]; then
+                current_index=$i
+                break
+            fi
+        done
+
+        # Get the next value (wrap around to 0 if at the end)
+        if [[ $current_index -eq -1 ]]; then
+            # Current value not in array, use first step
+            next_value="${brightness_steps[0]}"
+        else
+            next_index=$(( (current_index + 1) % ${#brightness_steps[@]} ))
+            next_value="${brightness_steps[$next_index]}"
+        fi
+
+        echo "Current brightness: $current_value"
+        ;;
+    *)
+        # Check if the argument is a number between 1 and 100
+        if [[ "$mode" =~ ^[0-9]+$ ]] && [[ "$mode" -ge 1 ]] && [[ "$mode" -le 100 ]]; then
+            next_value="$mode"
+        else
+            echo "Usage: $0 [dim|medium|bright|cycle|1-100]"
+            echo "  dim    - Set to minimum brightness (${brightness_steps[0]})"
+            echo "  medium - Set to medium brightness (${brightness_steps[$(( ${#brightness_steps[@]} / 2 ))]})"
+            echo "  bright - Set to maximum brightness (${brightness_steps[$(( ${#brightness_steps[@]} - 1 ))]})"
+            echo "  cycle  - Cycle to next brightness level (default)"
+            echo "  1-100  - Set to specific brightness value"
+            exit 1
+        fi
+        ;;
+esac
+
+echo "Setting brightness: $next_value"
+
+# Set the new brightness
+ddcutil --display 1 setvcp 10 "$next_value"

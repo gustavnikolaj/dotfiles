@@ -1,0 +1,13 @@
+[Unit]
+Description=Kanshi (Wayland output auto-config)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kanshi
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

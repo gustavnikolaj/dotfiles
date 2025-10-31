@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Copy and sync icon files
+mkdir -p ~/.local/share/icons/hicolor/48x48/apps/
+cp ~/dotfiles/omarchy/applications/icons/*.png ~/.local/share/icons/hicolor/48x48/apps/
+cp ~/dotfiles/omarchy/applications/icons/*.png ~/.local/share/applications/icons/
+gtk-update-icon-cache ~/.local/share/icons/hicolor &>/dev/null
+
+# Copy .desktop declarations
+mkdir -p ~/.local/share/applications
+cp ~/dotfiles/omarchy/applications/*.desktop ~/.local/share/applications/
+
+update-desktop-database ~/.local/share/applications
