@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if (($# == 0)); then
+  echo "Usage: gnomarchy-launch-or-focus [window-pattern] [launch-command]"
+  exit 1
+fi
+
+WINDOW_PATTERN="$1"
+LAUNCH_COMMAND="${2:-"uwsm-app -- $WINDOW_PATTERN"}"
+WINDOW_ADDRESSES=$(hyprctl clients -j | jq -r --arg p "$WINDOW_PATTERN" '.[]|select((.class|test("\\b" + $p + "\\b";"i")) or (.title|test("\\b" + $p + "\\b";"i")))|.address')
+WINDOW_COUNT=$(echo "$WINDOW_ADDRESSES" | grep -c "^0x")
+
+if [ "$WINDOW_COUNT" -eq 1 ]; then
+  # If there is only one window, just focus it
+  hyprctl dispatch focuswindow "address:$WINDOW_ADDRESSES"
+elif [ "$WINDOW_COUNT" -gt 1 ]; then
+  CURRENT_WINDOW_ADDRESS=$(hyprctl activewindow -j | jq -r '.address')
+  # Find the index of the current window in the list
+  WINDOW_ARRAY=($WINDOW_ADDRESSES)
+  CURRENT_INDEX=-1
+  for i in "${!WINDOW_ARRAY[@]}"; do
+    if [ "${WINDOW_ARRAY[$i]}" = "$CURRENT_WINDOW_ADDRESS" ]; then
+      CURRENT_INDEX=$i
+      break
+    fi
+  done
+  # Calculate target index (next window, wrap around if needed)
+  TARGET_INDEX=$(( (CURRENT_INDEX + 1) % ${#WINDOW_ARRAY[@]} ))
+  hyprctl dispatch focuswindow "address:${WINDOW_ARRAY[$TARGET_INDEX]}"
+else
+  # Launch the application - there are no windows
+  eval exec $LAUNCH_COMMAND
+fi
