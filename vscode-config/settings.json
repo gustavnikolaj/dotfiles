@@ -1,0 +1,33 @@
+{
+  "workbench.colorTheme": "GitHub Light Monochrome",
+  "update.mode": "none",
+  "debug.javascript.codelens.npmScripts": "never",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.minimap.enabled": false,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "makefile.configureOnOpen": false,
+  "remote.autoForwardPortsSource": "hybrid", // Might be WSL specific
+  "terminal.integrated.allowChords": false,
+  "workbench.startupEditor": "none",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "terminal.integrated.env.linux": {
+    "GUSTAVNIKOLAJ_VSCODE": "yes"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
