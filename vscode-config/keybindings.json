@@ -31,5 +31,11 @@
         // keybindings) and I use that in the terminal all the time.
         "key": "ctrl+e",
         "command": "-workbench.action.quickOpen"
+    },
+    {
+        // This keybind is on ctrl+shift+5 on Linux :exploding_head:
+        "key": "ctrl+\\",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
     }
 ]
