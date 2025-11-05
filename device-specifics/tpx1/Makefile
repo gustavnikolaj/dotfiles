@@ -1,10 +1,10 @@
 default:
 
-$(HOME)/.config/wireplumber/wireplumber.conf.d/50-device-names.conf: config/wireplumber/wireplumber.conf.d/50-device-names.conf
+$(HOME)/.config/wireplumber/wireplumber.conf.d/%.conf: config/wireplumber/wireplumber.conf.d/%.conf
 	install -Dm644 "$(<)" "$@"
-	systemctl --user restart wireplumber
 
-wireplumber: $(HOME)/.config/wireplumber/wireplumber.conf.d/50-device-names.conf
+wireplumber: $(HOME)/.config/wireplumber/wireplumber.conf.d/50-device-names.conf $(HOME)/.config/wireplumber/wireplumber.conf.d/51-disable-unused-devices.conf
+	systemctl --user restart wireplumber
 
 /etc/udev/rules.d:
 	sudo mkdir -p $@
