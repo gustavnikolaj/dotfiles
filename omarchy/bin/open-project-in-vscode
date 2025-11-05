@@ -11,6 +11,9 @@ $WORKSPACES
 $_EXTRAS
 "
 
+# Remove empty lines as that breaks walker
+OPTIONS=$(echo "$OPTIONS" | sed '/^$/d')
+
 choice=$(walker --dmenu --width 844 --maxheight 300 --minheight 300 -p "Open..." <<<"$OPTIONS")
 
 if [[ "" != "$choice" ]] ; then
