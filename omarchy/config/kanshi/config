@@ -13,6 +13,12 @@ profile office6_3_1 {
     output DP-6 enable mode 2560x1440 position 0,0
 }
 
+profile office6_esben {
+    output eDP-1 disable
+    output DP-6 disable
+    output DP-5 enable mode 2560x1440 position 0,0
+}
+
 profile mobile {
     output eDP-1 enable mode 1920x1200 position 0,0
 }
