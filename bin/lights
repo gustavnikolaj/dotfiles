@@ -93,6 +93,12 @@ scene_cloudy() {
     done
 }
 
+scene_cloudy_warm() {
+    for ip in "${LIGHTS[@]}"; do
+        set_lighting $ip 1 20 335
+    done
+}
+
 scene_day() {
     for ip in "${LIGHTS[@]}"; do
         set_lighting $ip 1 40 288
@@ -117,6 +123,9 @@ case "$mode" in
         ;;
     cloudy)
         scene_cloudy
+        ;;
+    cloudy-warm)
+        scene_cloudy_warm
         ;;
     day)
         scene_day

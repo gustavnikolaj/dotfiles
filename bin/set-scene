@@ -14,6 +14,16 @@ case "$mode" in
         lights cloudy
         brightness bright
         ;;
+    meeting-winter)
+        # Day call settings
+        lights cloudy-warm
+        brightness 30
+        ;;
+    -h)
+        echo "meeting"
+        echo "meeting-evening"
+        echo "default <or empty>"
+        ;;
     default)
         # Not on call
         lights off
