@@ -29,5 +29,26 @@
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "extensions.ignoreRecommendations": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "claudeCode.preferredLocation": "panel",
+
+  "editor.fontFamily": "Lilex, monospace",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "300",
+  "editor.fontSize": 16,
+  "editor.lineHeight": 24,
+  "editor.letterSpacing": 0.2,
+  "terminal.integrated.suggest.enabled": false,
+
+//   "editor.fontFamily": "Lilex, 'Lilex Nerd Font', monospace",
+// "editor.fontLigatures": true,
+// "editor.fontSize": 14,
+// "editor.lineHeight": 22,
+// "editor.letterSpacing": 0.2,
+// "editor.fontWeight": "300",
+// "editor.smoothScrolling": true,
+// "editor.minimap.enabled": false
 }

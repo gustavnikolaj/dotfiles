@@ -1,46 +1,55 @@
 // Place your key bindings in this file to override the defaults
 [
-    {
-        "key": "shift+enter",
-        "command": "workbench.action.terminal.sendSequence",
-        "args": {
-            "text": "\\\r\n"
-        },
-        "when": "terminalFocus"
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "\\\r\n"
     },
-    // Ctrl + P is used to jump to navigate the history (emacs style
+    "when": "terminalFocus"
+  },
+  // Ctrl + P is used to jump to navigate the history (emacs style
+  // keybindings) and I use that in the terminal all the time.
+  {
+    "key": "ctrl+p",
+    "command": "-workbench.action.quickOpen",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": { "text": "\u0010" }, // ASCII Ctrl+P
+    "when": "terminalFocus"
+  },
+  {
+    // This rule will unbind the Ctrl + E shortcut. If there are other
+    // commands bound to Ctrl + E, you can add similar rules for each
+    // command by replacing workbench.action.quickOpen with the appropriate
+    // command ID.
+    //
+    // Ctrl + E is used to jump to the end of the line (emacs style
     // keybindings) and I use that in the terminal all the time.
-    {
-        "key": "ctrl+p",
-        "command": "-workbench.action.quickOpen",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "ctrl+p",
-        "command": "workbench.action.terminal.sendSequence",
-        "args": { "text": "\u0010" }, // ASCII Ctrl+P
-        "when": "terminalFocus"
-    },
-    {
-        // This rule will unbind the Ctrl + E shortcut. If there are other
-        // commands bound to Ctrl + E, you can add similar rules for each
-        // command by replacing workbench.action.quickOpen with the appropriate
-        // command ID.
-        //
-        // Ctrl + E is used to jump to the end of the line (emacs style
-        // keybindings) and I use that in the terminal all the time.
-        "key": "ctrl+e",
-        "command": "-workbench.action.quickOpen"
-    },
-    {
-        // This keybind is on ctrl+shift+5 on Linux :exploding_head:
-        "key": "ctrl+\\",
-        "command": "workbench.action.terminal.split",
-        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
-    },
-    {
-        "key": "ctrl+/",
-        "command": "editor.action.commentLine",
-        "when": "editorTextFocus && !editorReadonly"
-    }
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    // This keybind is on ctrl+shift+5 on Linux :exploding_head:
+    "key": "ctrl+\\",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+  },
+  {
+    "key": "ctrl+/",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  // {
+  //   "key": "ctrl+`",
+  //   "command": "workbench.action.terminal.toggleTerminal"
+  // }
+  {
+    "key": "ctrl+`",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  }
 ]
