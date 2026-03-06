@@ -1,0 +1,1 @@
+cp ~/.local/share/omarchy/config/hypr/input.conf ~/dotfiles/omarchy/config/hypr/input.conf
