@@ -20,6 +20,6 @@ install-kanshi: $(DST_KANSHI_CONFIG) $(DST_KANSHI_UNIT)
 
 uninstall-kanshi:
 	systemctl --user disable --now kanshi.service || true
-	rm =f "$(DST_KANSHI_CONFIG)"
+	rm -f "$(DST_KANSHI_CONFIG)"
 	rm -f "$(DST_KANSHI_UNIT)"
 	systemctl --user daemon-reload
