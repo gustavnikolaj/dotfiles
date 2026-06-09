@@ -11,11 +11,14 @@
 # was implicated in incidents where all USB devices stopped working until a
 # reboot. Since the NIC is unused, we unbind it.
 #
-# NOTE: the match is by USB *port path* (KERNEL), NOT by idVendor/idProduct,
-# because this NIC is an RTL8153 (0bda:8153) - the SAME VID:PID as the DOCK's
-# ethernet at 2-1.4.4.3, which must stay up. The port path 2-1.1.1.3 is the
-# monitor NIC (behind the Generic-hub chain on bus 2). idVendor/idProduct are
-# kept as an extra guard.
+# NOTE: the match is by USB *serial number*, NOT by port path or idVendor alone.
+# This NIC is an RTL8153 (0bda:8153) - the SAME VID:PID as the DOCK's ethernet,
+# which must stay up. They can only be told apart by serial (or product string):
+#   monitor NIC: serial 001000001, product "USB 10/100/1000 LAN"   <- disable this
+#   dock NIC   : serial 321601A34, product "Realtek LAN"           <- keep up
+# Port path is NOT usable: the Thunderbolt dock re-assigns its USB devices to a
+# different bus/path on every reconnect (seen jumping 2-1.1.1.3 -> 3-3.3.1.3),
+# so a KERNEL==<path> match breaks on replug. Serial is topology-independent.
 #
 # We DEAUTHORIZE the device (ATTR{authorized}="0") rather than unbinding it.
 # Reason: the RTL8153's usb_device binds to the "r8152-cfgselector" driver, not
@@ -24,10 +27,10 @@
 # loads no driver and creates no netdev. It re-applies on every "add", so a
 # re-enumeration storm just gets it deauthorized again each time.
 #
-# If the dock/monitor cabling or port layout changes, re-check the path with:
-#   readlink -f /sys/class/net/eth*/device   (find the 2-1.1.1.3-style path)
+# If the monitor NIC is ever replaced, re-check its serial with:
+#   for d in /sys/bus/usb/devices/*; do grep -q 8153 "$d/idProduct" 2>/dev/null \
+#     && echo "$d $(cat $d/serial) $(cat $d/product)"; done
 #
-# To undo this change, remove the file from /etc/udev/rules.d/ and reboot
-# (or: echo 1 | sudo tee /sys/bus/usb/devices/2-1.1.1.3/authorized).
+# To undo this change, remove the file from /etc/udev/rules.d/ and replug/reboot.
 
-ACTION=="add", SUBSYSTEM=="usb", KERNEL=="2-1.1.1.3", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{authorized}="0"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{serial}=="001000001", ATTR{authorized}="0"
