@@ -16,6 +16,8 @@ wireplumber: $(HOME)/.config/wireplumber/wireplumber.conf.d/50-device-names.conf
 
 /etc/udev/rules.d/99-disable-monitor-ethernet.rules: etc/udev/rules.d/99-disable-monitor-ethernet.rules
 	sudo install -Dm644 "$<" "$@"
-	@echo Reboot for the change to take effect.
+	sudo udevadm control --reload
+	# rule matches ACTION=="add"; default trigger action is "change", so force add
+	sudo udevadm trigger --action=add --subsystem-match=usb
 
 udev: /etc/udev/rules.d/99-disable-monitor-ethernet.rules /etc/udev/rules.d/99-disable-autosuspend-webcam.rules

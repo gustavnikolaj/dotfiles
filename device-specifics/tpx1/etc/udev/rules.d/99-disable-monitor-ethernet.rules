@@ -1,17 +1,33 @@
-# Disable the ethernet usb device in my Dell monitor.
+# Disable the vestigial built-in ethernet NIC inside my Dell monitor.
 #
-# The monitor has a USB hub which can be used as a KVM and reasign the attached
-# devices based on which input is selected. It switches between my laptop dock,
-# and my desktop which both have individual ethernet cables.
-# 
-# The ethernet device is using a lot of bandwidth and seems to be quite
-# unstable. I am already pushing it in terms of bandwidth, so disabling this
-# unused device helps a lot. It was also problem on Windows and it caused a
-# sound to trigger each time the device reconnected - this is where I initially
-# was clued in to the cause. Linux seems to be much less tolerant with USB
-# devices and until I disabled the ethernet port I had a few incidents where
-# all USB devices would stop working until a reboot.
+# The monitor has a USB hub used as a KVM, sharing keyboard/peripherals between
+# my laptop dock and my desktop based on the selected input. That KVM hub is the
+# source of the deep USB nesting on this machine.
 #
-# To undo this change, remove the file from /etc/udev/rules.d/ and reboot.
+# The monitor's built-in RJ45 has never had a cable in it - my wired networking
+# uses separate cables to the dock and to the desktop. But the monitor's USB NIC
+# is unstable: it re-enumerates repeatedly (on Windows it popped in and out of
+# Device Manager over and over, with a connect sound each time). That bus churn
+# was implicated in incidents where all USB devices stopped working until a
+# reboot. Since the NIC is unused, we unbind it.
+#
+# NOTE: the match is by USB *port path* (KERNEL), NOT by idVendor/idProduct,
+# because this NIC is an RTL8153 (0bda:8153) - the SAME VID:PID as the DOCK's
+# ethernet at 2-1.4.4.3, which must stay up. The port path 2-1.1.1.3 is the
+# monitor NIC (behind the Generic-hub chain on bus 2). idVendor/idProduct are
+# kept as an extra guard.
+#
+# We DEAUTHORIZE the device (ATTR{authorized}="0") rather than unbinding it.
+# Reason: the RTL8153's usb_device binds to the "r8152-cfgselector" driver, not
+# the generic "usb" driver, so the old `echo ... > drivers/usb/unbind` trick
+# silently failed. authorized=0 is driver-independent and stronger - the device
+# loads no driver and creates no netdev. It re-applies on every "add", so a
+# re-enumeration storm just gets it deauthorized again each time.
+#
+# If the dock/monitor cabling or port layout changes, re-check the path with:
+#   readlink -f /sys/class/net/eth*/device   (find the 2-1.1.1.3-style path)
+#
+# To undo this change, remove the file from /etc/udev/rules.d/ and reboot
+# (or: echo 1 | sudo tee /sys/bus/usb/devices/2-1.1.1.3/authorized).
 
-ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="1100", RUN+="/bin/sh -c 'echo $kernel > /sys/bus/usb/drivers/usb/unbind'"
+ACTION=="add", SUBSYSTEM=="usb", KERNEL=="2-1.1.1.3", ATTR{idVendor}=="0bda", ATTR{idProduct}=="8153", ATTR{authorized}="0"
