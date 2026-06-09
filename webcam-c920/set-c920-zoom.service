@@ -1,0 +1,6 @@
+[Unit]
+Description=Set Logitech C920 webcam zoom level
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/set-c920-zoom

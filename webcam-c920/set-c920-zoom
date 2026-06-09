@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Set Logitech C920 zoom_absolute whenever the camera appears.
+# Triggered by udev -> systemd (see config/udev + config/systemd).
+# Idempotent and safe to run by hand.
+set -euo pipefail
+
+ZOOM=150
+SERIAL="5B1C877F"
+# udev creates this stable symlink for the *capture* interface (index0).
+# Using by-id makes this immune to /dev/videoN renumbering.
+BYID="/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_${SERIAL}-video-index0"
+
+log() { logger -t set-c920-zoom "$*"; echo "set-c920-zoom: $*"; }
+
+# udev's "add" event can fire a moment before the device node / by-id
+# symlink is fully ready, so retry for a few seconds.
+for attempt in $(seq 1 10); do
+    if [[ -e "$BYID" ]] && \
+       v4l2-ctl -d "$BYID" --set-ctrl "zoom_absolute=${ZOOM}" 2>/dev/null; then
+        now=$(v4l2-ctl -d "$BYID" --get-ctrl zoom_absolute 2>/dev/null | awk '{print $2}')
+        log "set zoom_absolute=${ZOOM} on ${BYID} (now=${now})"
+        exit 0
+    fi
+    sleep 0.5
+done
+
+log "ERROR: could not set zoom on ${BYID} after retries"
+exit 1

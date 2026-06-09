@@ -1,0 +1,5 @@
+# Logitech C920: set zoom_absolute on connect.
+# Matches only this camera (046d:082d, not the Unifying Receiver) and only its
+# capture node (index 0 -- the metadata node at index 1 has no zoom control).
+# Hands off to systemd so the work survives past the udev event lifetime.
+ACTION=="add", SUBSYSTEM=="video4linux", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="082d", ATTR{index}=="0", TAG+="systemd", ENV{SYSTEMD_WANTS}+="set-c920-zoom.service"
