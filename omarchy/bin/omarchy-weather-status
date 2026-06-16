@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# omarchy:summary=Returns a formatted weather status string with temperature and wind speed.
+#
+# Local override of the stock omarchy-weather-status. This dir is ahead of
+# ~/.local/share/omarchy/bin on PATH, so this shadows the upstream script and
+# survives `omarchy update`. Differences from upstream:
+#   - wttr.in query adds the `M` flag, so wind is reported in m/s, not km/h.
+#   - Location can be pinned via a config file (IP geolocation is unreliable on
+#     some ISPs). Set a city in ~/.config/omarchy/weather-location; leave the
+#     file empty/absent to auto-detect from IP.
+#   - When auto-detecting, %l returns raw lat,lon coordinates, so the place name
+#     is recovered from the j1 JSON's nearest area.
+
+location_file="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/weather-location"
+
+# First non-empty, non-comment line of the config file wins, then $WTTR_LOCATION.
+location=""
+if [[ -r $location_file ]]; then
+  location=$(grep -m1 -vE '^\s*(#|$)' "$location_file" 2>/dev/null | sed 's/^\s*//;s/\s*$//')
+fi
+location="${location:-$WTTR_LOCATION}"
+
+base="https://wttr.in"
+if [[ -n $location ]]; then
+  encoded=$(printf '%s' "$location" | jq -sRr @uri)
+  base="https://wttr.in/$encoded"
+fi
+
+weather=$(curl -fsS --max-time 4 "$base?format=%l|%t|%w&M" 2>/dev/null | tr -d '\n')
+
+if [[ -z $weather ]]; then
+  echo "Weather unavailable"
+  exit 1
+fi
+
+IFS='|' read -r place temperature wind <<< "$weather"
+temperature=${temperature#+}
+
+# wttr.in's %l returns raw "lat,lon" coordinates when auto-detecting from IP.
+# When it does, fall back to the named nearest area from the j1 JSON.
+if [[ $place =~ ^-?[0-9]+(\.[0-9]+)?,-?[0-9]+(\.[0-9]+)?$ ]]; then
+  area=$(curl -fsS --max-time 4 "$base?format=j1" 2>/dev/null \
+    | jq -r '.nearest_area[0].areaName[0].value // empty' 2>/dev/null)
+  [[ -n $area ]] && place=$area
+fi
+
+place=${place%%,*}
+place=${place^}
+
+echo "$(omarchy-weather-icon)    $place  ·  Temp $temperature  ·  Wind $wind"
