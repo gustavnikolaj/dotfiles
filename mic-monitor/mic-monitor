@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+# Low-latency software monitoring for a USB mic that has no hardware monitor jack.
+#
+# The Svive USB condenser mic (31b2:0011) is capture-only: it exposes no USB
+# playback endpoint, so it cannot feed headphones itself. This routes the mic
+# into a separate headphone DAC via a PipeWire loopback, at a small enough
+# quantum that the delay stops being distracting. See README.md for the why.
+#
+# Idempotent and safe to run by hand.
+set -uo pipefail
+
+# Node names, from `mic-monitor nodes`. Override via env if the hardware changes.
+SOURCE="${MIC_MONITOR_SOURCE:-alsa_input.usb-DCMT_Technology_USB_Condenser_Microphone_214b206000000178-00.mono-fallback}"
+SINK="${MIC_MONITOR_SINK:-alsa_output.usb-FiiO_DigiHug_USB_Audio-01.analog-stereo}"
+
+# Graph quantum in frames. The dominant latency knob: total round trip is
+# roughly 2 graph legs + 2 ALSA legs, so ~4x this. 128 @ 48kHz => ~9-11ms.
+# Lower is tighter but risks xruns; verify with `mic-monitor check`.
+QUANTUM="${MIC_MONITOR_QUANTUM:-128}"
+RATE="${MIC_MONITOR_RATE:-48000}"
+
+# Monitor-only gain, applied to the loopback's playback stream. Values above 1.0
+# are amplification, which PipeWire allows on a stream. This deliberately does
+# not touch the mic source or the DAC sink volume: those would change what
+# listeners hear and how loud all your other audio is, respectively.
+GAIN="${MIC_MONITOR_GAIN:-1.2}"
+
+NAME=mic-monitor
+PIDFILE="${XDG_RUNTIME_DIR:-/tmp}/$NAME.pid"
+
+# pw-loopback wants milliseconds; the props want frames/rate. Derive both from
+# QUANTUM so it stays the single knob.
+latency_ms() { awk -v q="$QUANTUM" -v r="$RATE" 'BEGIN { printf "%.3f", (q / r) * 1000 }'; }
+
+# Run from a keybind there is no terminal to print to, so mirror the state to a
+# desktop notification instead. The synchronous hint makes mako replace the
+# previous one rather than stacking a queue on repeated toggles.
+notify() {
+    [[ -t 1 ]] && return 0
+    command -v notify-send >/dev/null 2>&1 || return 0
+    notify-send --app-name=mic-monitor --expire-time=1500 \
+        --hint=string:x-canonical-private-synchronous:mic-monitor "$@" 2>/dev/null || true
+}
+
+# Track the process by pid rather than by pattern. `pgrep -f pw-loopback` also
+# matches any shell whose own command line happens to contain that string, which
+# would make `stop` kill innocent bystanders.
+# PipeWire node ids are assigned per session and change on every restart, so the
+# gain has to be applied against a freshly resolved id, never a cached one.
+node_id() {
+    command -v jq >/dev/null 2>&1 || return 1
+    pw-dump 2>/dev/null \
+        | jq -r --arg n "$1" 'first(.[] | select(.info.props."node.name" == $n) | .id) // empty'
+}
+
+apply_gain() {
+    local id
+    id=$(node_id "$NAME.output") || { echo "$NAME: jq required to set gain" >&2; return 1; }
+    [[ -n $id ]] || { echo "$NAME: could not find $NAME.output to set gain" >&2; return 1; }
+    wpctl set-volume "$id" "$GAIN" 2>/dev/null \
+        || { echo "$NAME: failed to set gain to $GAIN" >&2; return 1; }
+}
+
+running() {
+    local pid
+    pid=$(cat "$PIDFILE" 2>/dev/null) || return 1
+    [[ -n ${pid//[^0-9]/} && $pid =~ ^[0-9]+$ ]] || return 1
+    # Confirm the pid was not recycled by some unrelated process.
+    [[ $(cat "/proc/$pid/comm" 2>/dev/null) == pw-loopback ]] || { rm -f "$PIDFILE"; return 1; }
+}
+
+start() {
+    running && { echo "$NAME: already on"; return 0; }
+
+    local args=(
+        --name="$NAME"
+        --latency="$(latency_ms)"
+        --channels=2
+        --capture="$SOURCE"
+        --playback="$SINK"
+        --capture-props="node.name=$NAME.input node.description=Mic Monitor Input node.latency=$QUANTUM/$RATE"
+        --playback-props="node.name=$NAME.output node.description=Mic Monitor Output node.latency=$QUANTUM/$RATE"
+    )
+
+    # setsid detaches from the terminal, so a monitor started from a shell or a
+    # keybind survives that shell exiting. The inner bash records its own pid and
+    # then execs, so PIDFILE is correct whether or not setsid forks.
+    setsid bash -c 'echo $$ >"$1"; shift; exec pw-loopback "$@"' \
+        "$NAME" "$PIDFILE" "${args[@]}" >/dev/null 2>&1 &
+
+    # pw-loopback needs a moment to connect to both ends before it settles.
+    local _
+    for _ in $(seq 1 20); do
+        if running; then
+            apply_gain || true # a failed gain is not worth refusing to monitor over
+            echo "$NAME: on (quantum $QUANTUM/$RATE, ~$(latency_ms)ms per leg, gain $GAIN)"
+            notify "Mic monitor on" "gain $GAIN, ~$(latency_ms)ms per leg"
+            return 0
+        fi
+        sleep 0.1
+    done
+
+    echo "$NAME: failed to start" >&2
+    echo "check that these nodes exist (see \`$NAME nodes\`):" >&2
+    echo "  source: $SOURCE" >&2
+    echo "  sink:   $SINK" >&2
+    return 1
+}
+
+stop() {
+    running || { echo "$NAME: already off"; return 0; }
+    kill "$(cat "$PIDFILE")" 2>/dev/null
+    rm -f "$PIDFILE"
+    echo "$NAME: off"
+    notify "Mic monitor off"
+}
+
+# List candidate node names, for when the mic or DAC gets replaced.
+nodes() {
+    command -v jq >/dev/null 2>&1 || { echo "$NAME: jq is required for 'nodes'" >&2; return 1; }
+    local dump
+    dump=$(pw-dump 2>/dev/null)
+    echo "== sources (mics) =="
+    jq -r '.[] | select(.info.props."media.class" == "Audio/Source")
+        | "  \(.info.props."node.name")\n      \(.info.props."node.description")"' <<<"$dump"
+    echo "== sinks (outputs) =="
+    jq -r '.[] | select(.info.props."media.class" == "Audio/Sink")
+        | "  \(.info.props."node.name")\n      \(.info.props."node.description")"' <<<"$dump"
+}
+
+# Read or change the monitor gain live, so it can be tuned by ear while talking.
+# Not persisted: set MIC_MONITOR_GAIN or edit GAIN above to make it stick.
+gain() {
+    running || { echo "$NAME: not running" >&2; return 1; }
+    local id
+    id=$(node_id "$NAME.output") || { echo "$NAME: jq required for 'gain'" >&2; return 1; }
+    [[ -n $id ]] || { echo "$NAME: could not find $NAME.output" >&2; return 1; }
+
+    if [[ -z ${1:-} ]]; then
+        echo "gain: $(wpctl get-volume "$id" 2>/dev/null | awk '{print $2}') (default $GAIN)"
+        return 0
+    fi
+
+    GAIN="$1"
+    apply_gain && echo "$NAME: gain $GAIN"
+}
+
+# Show the actual running quantum and xrun counters. ERR should stay flat; a
+# climbing ERR means QUANTUM is too low for this USB topology.
+check() {
+    running || echo "$NAME: not running (showing device nodes only)"
+    echo "sampling 5s -- err should stay flat:"
+    # Match on the configured node names rather than hardcoded device strings, so
+    # this keeps working after SOURCE/SINK are pointed at replacement hardware.
+    pw-top -b -n 5 2>/dev/null \
+        | grep -F -e "$NAME" -e "$SOURCE" -e "$SINK" \
+        | awk '$1 == "R" { printf "  id=%-5s quantum=%-6s err=%-4s %s\n", $2, $3, $9, $NF }'
+}
+
+case "${1:-toggle}" in
+    on | start) start ;;
+    off | stop) stop ;;
+    toggle) running && stop || start ;;
+    status) running && echo on || echo off ;;
+    nodes) nodes ;;
+    check) check ;;
+    gain) gain "${2:-}" ;;
+    *)
+        echo "usage: $NAME [on|off|toggle|status|gain [N]|nodes|check]" >&2
+        exit 2
+        ;;
+esac
