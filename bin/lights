@@ -13,20 +13,22 @@ LIGHTS=(
 # curl -s --request POST http://${LIGHTS[0]}:9123/elgato/identify --header 'Accept: application/json' | jq .
 
 
-set_light_on() {
+# PUT a light payload. Warns and succeeds if the light is unreachable, so one
+# offline light does not fail the whole run.
+light_put() {
     local ip=$1
-    curl -s --request PUT http://$ip:9123/elgato/lights --header 'Accept: application/json' --data-raw '{
-        "numberOfLights": 1,
-        "lights": [ { "on": 1 } ]
-    }' > /dev/null
+    local payload=$2
+    curl -s -f -m 3 --request PUT http://$ip:9123/elgato/lights \
+        --header 'Accept: application/json' --data-raw "$payload" > /dev/null \
+        || echo "lights: $ip unreachable" >&2
+}
+
+set_light_on() {
+    light_put "$1" '{ "numberOfLights": 1, "lights": [ { "on": 1 } ] }'
 }
 
 set_light_off() {
-    local ip=$1
-    curl -s --request PUT http://$ip:9123/elgato/lights --header 'Accept: application/json' --data-raw '{
-        "numberOfLights": 1,
-        "lights": [ { "on": 0 } ]
-    }' > /dev/null
+    light_put "$1" '{ "numberOfLights": 1, "lights": [ { "on": 0 } ] }'
 }
 
 # set_light_on ${LIGHTS[0]}
@@ -36,11 +38,11 @@ set_lighting() {
     local ip=$1
     local on=$2
     local brightness=$3
-    local temperature$4
-    curl -s --request PUT http://$ip:9123/elgato/lights --header 'Accept: application/json' --data-raw '{
-        "numberOfLights": 1,
-        "lights": [ { "on": '$2', "brightness": '$3', "temperature": '$4' } ]
-    }' > /dev/null
+    local temperature=$4
+    light_put "$ip" "{
+        \"numberOfLights\": 1,
+        \"lights\": [ { \"on\": $on, \"brightness\": $brightness, \"temperature\": $temperature } ]
+    }"
 }
 
 lights_off() {
@@ -55,20 +57,26 @@ lights_on() {
     done
 }
 
+# Prints 1 if lit, 0 if off or unreachable.
 is_lit() {
-    curl -s --request GET http://$1:9123/elgato/lights --header 'Accept: application/json' | jq '.lights[0].on'
+    local n
+    n=$(curl -s -f -m 3 --request GET http://$1:9123/elgato/lights --header 'Accept: application/json' \
+        | jq -r '.lights[0].on // empty')
+    echo "${n:-0}"
 }
 
 # is_lit
 
 lights_toggle() {
-    local lights_on=0
-    
+    local lit_count=0
+    local n
+
     for ip in "${LIGHTS[@]}"; do
-        (( lights_on += $(is_lit "$ip") ))
+        n=$(is_lit "$ip")
+        (( lit_count += ${n:-0} ))
     done
 
-    if (( lights_on > 0 )); then
+    if (( lit_count > 0 )); then
         lights_off
     else
         lights_on
