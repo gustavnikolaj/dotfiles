@@ -24,3 +24,12 @@ o.window("^(slack)$", { workspace = "51" })
 -- running one.
 o.bind("SUPER + SHIFT + R", "Obsidian", { launch = "obsidian", focus = "^md\\.obsidian\\.Obsidian$" })
 o.window("^md\\.obsidian\\.Obsidian$", { workspace = "52" })
+
+-- Toggle the Elgato key lights. ~/dotfiles/bin/lights defaults to toggle when
+-- called with no arguments.
+--
+-- Resolved off ~/dotfiles/omarchy/bin, which is prepended to the session PATH
+-- by ~/.config/uwsm/env.d/99-omarchy-upgrade-env and holds a symlink to the
+-- real script. ~/dotfiles/bin itself is only on the interactive shell PATH, so
+-- a bare `lights` would otherwise silently do nothing here.
+o.bind("F7", "Key lights", "lights")
