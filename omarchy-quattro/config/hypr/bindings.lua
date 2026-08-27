@@ -48,3 +48,81 @@ o.bind("F8", "Mic monitor", "mic-monitor toggle")
 -- binding: that opens a coding agent in a terminal and has no notion of the
 -- current selection.
 o.bind("F10", "Improve selection (AI)", "improve-selection")
+
+-- ─── BEGIN vim-style SUPER + HJKL navigation ─────────────────────────────────
+--
+-- Everything down to the END fence is one unit. Quattro has no plugin
+-- mechanism for shipping a self-contained bundle of bindings, so it lives
+-- inline here; if one ever lands, move the whole fenced block rather than
+-- picking it apart. Ported from the pre-quattro
+-- ~/dotfiles/omarchy/config/hypr/vim-navigation.conf.
+--
+-- What it does: mirror Omarchy's SUPER + arrow bindings on hjkl. The arrow
+-- keys keep working as alternatives. Workspace switching is deliberately not
+-- part of this and stays numeric (SUPER + 1..0, SUPER + TAB, SUPER + scroll).
+--
+-- Three upstream defaults sit on J, K and L and have to move first. Finding a
+-- home for the third one costs a fourth relocation:
+--
+--   SUPER + J            Toggle window split      ->  SUPER + Y
+--   SUPER + L            Toggle workspace layout  ->  SUPER + U
+--   SUPER + K            Keybindings              ->  SUPER + SLASH
+--   SUPER + SLASH        Monitor scaling up       ->  dropped
+--   SUPER + ALT + SLASH  Monitor scaling down     ->  dropped
+--
+-- Dropping monitor scaling is the same trade the Omarchy 3 config made. It is
+-- still reachable from the display menu on SUPER + CTRL + D.
+--
+-- Simpler than the .conf version was: quattro binds monitor scaling by the
+-- SLASH name, so the old code:61 keycode unbinds and the case-sensitive
+-- "SUPER, Slash" duplicate are no longer needed.
+--
+-- hl.unbind clears every bind on a chord, including ones set earlier in this
+-- file, so all the unbinds come before the rebinds.
+
+hl.unbind("SUPER + J")
+hl.unbind("SUPER + K")
+hl.unbind("SUPER + L")
+hl.unbind("SUPER + SLASH")
+hl.unbind("SUPER + ALT + SLASH")
+
+o.bind("SUPER + Y", "Toggle window split", hl.dsp.layout("togglesplit"))
+o.bind("SUPER + U", "Toggle workspace layout", "omarchy-hyprland-workspace-layout-toggle")
+o.bind("SUPER + SLASH", "Keybindings", "omarchy-menu-keybindings")
+
+-- Focus movement, mirroring SUPER + arrows.
+o.bind("SUPER + H", "Move focus left", hl.dsp.focus({ direction = "l" }))
+o.bind("SUPER + J", "Move focus down", hl.dsp.focus({ direction = "d" }))
+o.bind("SUPER + K", "Move focus up", hl.dsp.focus({ direction = "u" }))
+o.bind("SUPER + L", "Move focus right", hl.dsp.focus({ direction = "r" }))
+
+-- Window swapping, mirroring SUPER + SHIFT + arrows.
+o.bind("SUPER + SHIFT + H", "Swap window left", hl.dsp.window.swap({ direction = "l" }))
+o.bind("SUPER + SHIFT + J", "Swap window down", hl.dsp.window.swap({ direction = "d" }))
+o.bind("SUPER + SHIFT + K", "Swap window up", hl.dsp.window.swap({ direction = "u" }))
+o.bind("SUPER + SHIFT + L", "Swap window right", hl.dsp.window.swap({ direction = "r" }))
+
+-- Extensions, left off. These mirror three more sets of arrow bindings, but
+-- each costs relocations that have not felt worth it so far. Conflicts below
+-- are current as of quattro.
+--
+-- Move into group, mirrors SUPER + ALT + arrows.
+-- Displaces SUPER + ALT + K (Tmux keybindings).
+-- o.bind("SUPER + ALT + H", "Move window to group on left", hl.dsp.window.move({ into_group = "l" }))
+-- o.bind("SUPER + ALT + J", "Move window to group below", hl.dsp.window.move({ into_group = "d" }))
+-- o.bind("SUPER + ALT + K", "Move window to group above", hl.dsp.window.move({ into_group = "u" }))
+-- o.bind("SUPER + ALT + L", "Move window to group on right", hl.dsp.window.move({ into_group = "r" }))
+--
+-- Move workspace to monitor, mirrors SUPER + SHIFT + ALT + arrows.
+-- No conflicts, all four chords are free.
+-- o.bind("SUPER + SHIFT + ALT + H", "Move workspace to left monitor", hl.dsp.workspace.move({ monitor = "l" }))
+-- o.bind("SUPER + SHIFT + ALT + J", "Move workspace to below monitor", hl.dsp.workspace.move({ monitor = "d" }))
+-- o.bind("SUPER + SHIFT + ALT + K", "Move workspace to above monitor", hl.dsp.workspace.move({ monitor = "u" }))
+-- o.bind("SUPER + SHIFT + ALT + L", "Move workspace to right monitor", hl.dsp.workspace.move({ monitor = "r" }))
+--
+-- Group navigation, mirrors SUPER + CTRL + LEFT/RIGHT.
+-- Displaces SUPER + CTRL + H (Hardware menu) and SUPER + CTRL + L (Lock system).
+-- o.bind("SUPER + CTRL + H", "Move grouped window focus left", hl.dsp.group.prev())
+-- o.bind("SUPER + CTRL + L", "Move grouped window focus right", hl.dsp.group.next())
+--
+-- ─── END vim-style SUPER + HJKL navigation ───────────────────────────────────
