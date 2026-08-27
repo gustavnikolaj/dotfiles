@@ -39,3 +39,12 @@ o.bind("F7", "Key lights", "lights")
 -- ~/.local/bin, which the session PATH does not have, so the keybind resolves
 -- it through the symlink at omarchy/bin/mic-monitor.
 o.bind("F8", "Mic monitor", "mic-monitor toggle")
+
+-- Rewrite the highlighted text with an AI model and paste it back over the
+-- selection. See ~/dotfiles/omarchy/bin/improve-selection. Sibling to F9
+-- dictation, which stays an Omarchy default.
+--
+-- Not made redundant by quattro's new SUPER + SHIFT + CTRL + A "Agent"
+-- binding: that opens a coding agent in a terminal and has no notion of the
+-- current selection.
+o.bind("F10", "Improve selection (AI)", "improve-selection")
