@@ -33,3 +33,9 @@ o.window("^md\\.obsidian\\.Obsidian$", { workspace = "52" })
 -- real script. ~/dotfiles/bin itself is only on the interactive shell PATH, so
 -- a bare `lights` would otherwise silently do nothing here.
 o.bind("F7", "Key lights", "lights")
+
+-- Toggle software monitoring of the Svive USB mic into the FiiO DAC. See
+-- ~/dotfiles/mic-monitor/README.md. Same PATH story as F7: the script lives in
+-- ~/.local/bin, which the session PATH does not have, so the keybind resolves
+-- it through the symlink at omarchy/bin/mic-monitor.
+o.bind("F8", "Mic monitor", "mic-monitor toggle")
