@@ -1,8 +1,8 @@
-# Symlinks everything in config/hypr/ into ~/.config/hypr/.
-# To manage a new file: copy it into config/hypr/, then run `make install`.
+# Symlinks everything in config/<app>/ into ~/.config/<app>/.
+# To manage a new file: copy it into config/<app>/, then run `make install`.
 
-HYPR_SRC := $(wildcard config/hypr/*)
-HYPR_DST := $(patsubst config/hypr/%,$(HOME)/.config/hypr/%,$(HYPR_SRC))
+SRC := $(wildcard config/*/*)
+DST := $(patsubst config/%,$(HOME)/.config/%,$(SRC))
 
 .PHONY: default install status
 
@@ -10,17 +10,18 @@ default: status
 	@echo
 	@echo "Run 'make install' to (re)create the symlinks."
 
-install: $(HYPR_DST)
+install: $(DST)
 
-$(HOME)/.config/hypr/%: config/hypr/%
+$(HOME)/.config/%: config/%
+	@mkdir -p $(dir $@)
 	ln -sfn $(CURDIR)/$< $@
 
 status:
 	@echo "Managed here:"
-	@if [ -z "$(HYPR_SRC)" ]; then echo "  (nothing yet)"; \
-	else for f in $(HYPR_SRC); do \
-	  d="$(HOME)/.config/hypr/$$(basename $$f)"; \
-	  if [ -L "$$d" ]; then echo "  linked   $$(basename $$f)"; \
-	  elif [ -e "$$d" ]; then echo "  NOT LINK $$(basename $$f)  (real file in ~/.config/hypr)"; \
-	  else echo "  missing  $$(basename $$f)"; fi; \
+	@if [ -z "$(SRC)" ]; then echo "  (nothing yet)"; \
+	else for f in $(SRC); do \
+	  r="$${f#config/}"; d="$(HOME)/.config/$$r"; \
+	  if [ -L "$$d" ]; then echo "  linked   $$r"; \
+	  elif [ -e "$$d" ]; then echo "  NOT LINK $$r  (real file in ~/.config)"; \
+	  else echo "  missing  $$r"; fi; \
 	done; fi
