@@ -5,6 +5,23 @@ LIGHTS=(
     10.0.0.61
 )
 
+# The presets, and the single source of truth for them: dispatch, --help and
+# the shell completion all read this table.
+#
+# Temperature is the raw Elgato API value, which is mireds, so Kelvin is
+# 1000000 / value (143 = 7000K, 344 = 2900K). usage() derives its Kelvin
+# column from that.
+#
+# name|brightness %|temperature|description
+PRESETS=(
+    "night|3|335|dim, late evening"
+    "evening|10|316|evening"
+    "cloudy|20|311|overcast day"
+    "cloudy-warm|20|335|overcast day, warm"
+    "day|40|288|daylight"
+    "sunny|90|251|bright sun"
+)
+
 # set -x
 
 # curl -s --request GET http://${LIGHTS[0]}:9123/elgato/lights --header 'Accept: application/json' | jq .
@@ -83,94 +100,105 @@ lights_toggle() {
     fi
 }
 
-scene_night() {
+# An unreachable light reads as off, same as is_lit and lights_toggle treat it.
+lights_status() {
+    local ip
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 3 335
+        if [[ "$(is_lit "$ip")" == "1" ]]; then
+            echo "$ip: on"
+        else
+            echo "$ip: off"
+        fi
     done
 }
 
-scene_evening() {
+# Echo the PRESETS row for a preset name, or return 1 if there is no such
+# preset.
+preset_fields() {
+    local preset
+    for preset in "${PRESETS[@]}"; do
+        if [[ "${preset%%|*}" == "$1" ]]; then
+            echo "$preset"
+            return 0
+        fi
+    done
+    return 1
+}
+
+apply_preset() {
+    local row name brightness temperature description ip
+    row=$(preset_fields "$1") || return 1
+    IFS='|' read -r name brightness temperature description <<< "$row"
+
     for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 10 316
+        set_lighting "$ip" 1 "$brightness" "$temperature"
     done
 }
 
-scene_cloudy() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 20 311
+usage() {
+    local preset name brightness temperature description kelvin
+
+    echo "Usage: ${0##*/} [preset|command]"
+    echo
+    echo "Control the Elgato key lights. With no argument, toggles them."
+    echo
+    echo "Presets:"
+    for preset in "${PRESETS[@]}"; do
+        IFS='|' read -r name brightness temperature description <<< "$preset"
+        # Mireds to Kelvin, rounded to the nearest 50 as the Elgato UI shows it.
+        kelvin=$(( (1000000 / temperature + 25) / 50 * 50 ))
+        printf '  %-13s %3s%%  %5sK  %s\n' "$name" "$brightness" "$kelvin" "$description"
     done
+    echo
+    echo "Commands:"
+    printf '  %-13s %s\n' \
+        "toggle" "Toggle the lights on and off (default)" \
+        "on" "Turn on, keeping the last brightness and temperature" \
+        "off" "Turn off" \
+        "status" "Print each light's on/off state" \
+        "help" "This page"
 }
 
-scene_cloudy_warm() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 20 335
+# Bare names, for the shell completion in
+# ~/dotfiles/bash/completion.d/lights-completion.sh.
+list_options() {
+    local preset
+    for preset in "${PRESETS[@]}"; do
+        echo "${preset%%|*}"
     done
-}
-
-scene_day() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 40 288
-    done
-}
-
-scene_sunny() {
-    for ip in "${LIGHTS[@]}"; do
-        set_lighting $ip 1 90 251
-    done
+    printf '%s\n' toggle on off status help
 }
 
 # Handle optional parameter
 mode="${1:-toggle}"
 
 case "$mode" in
-    night)
-        scene_night
-        ;;
-    evening)
-        scene_evening
-        ;;
-    cloudy)
-        scene_cloudy
-        ;;
-    cloudy-warm)
-        scene_cloudy_warm
-        ;;
-    day)
-        scene_day
-        ;;
-    sunny)
-        scene_sunny
-        ;;
     toggle)
         lights_toggle
-        ;;
-    off)
-        lights_off
         ;;
     on)
         lights_on
         ;;
-    help)
-        echo "Usage: $0 [night,evening,cloudy,day,sunny, toggle]"
-        echo "  night   - Preset"
-        echo "  evening - Preset"
-        echo "  cloudy  - Preset"
-        echo "  day     - Preset"
-        echo "  sunny   - Preset"
-        echo "  on      - Turn lights on with previous values."
-        echo "  off     - Turn lights off"
-        echo "  toggle  - Toggle lights on and off (default)"
-        echo "  help    - This page"
-        exit 1
+    off)
+        lights_off
+        ;;
+    status)
+        lights_status
+        ;;
+    -h|--help|help)
+        usage
+        ;;
+    --list)
+        list_options
+        ;;
+    *)
+        apply_preset "$mode" || {
+            echo "lights: unknown option '$mode'" >&2
+            usage >&2
+            exit 1
+        }
         ;;
 esac
-
-# Name      Temperature     Brightness  Calc-temp
-# Dark      2900K           3 %         335
-# Night     3300K           10%         316
-# Cloudy    3400K           20%         311
-# Day       3900K           40%         288
-# Sunny     4700K           90%         251
 
 # https://github.com/adamesch/elgato-key-light-api/blob/master/resources/lights/README.md
 
@@ -181,12 +209,8 @@ esac
 # anything.
 
 # (**) The 'Control Center' UI only allows color temperature changes from 2900K
-# - 7000K in 50K increments. To convert the values used by the API to Kelvin
-# (like it is displayed in the Elgato application), divide by 0.05
-# (e.g. 143 / 0.05 = 2860 ≈ 2900K). To covert from Kelvin to API values,
-# multiply by 0.05 (e.g. 7000K ≈ 6880 * 0.05 = 344)
+# - 7000K in 50K increments. The API value is mireds: Kelvin = 1000000 / value
+# (143 = 7000K, 344 = 2900K), and back again the same way.
 
-# Make a toggle on/off
-# Make scene commands
 # I want to compose high-level scenes out of this, that also adjust
 # lighting on the monitor.

@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
+usage() {
+    echo "Usage: ${0##*/} [scene]"
+    echo
+    echo "Set the key lights and the monitor brightness together."
+    echo
+    echo "Scenes:"
+    printf '  %-16s %s\n' \
+        "meeting" "On a call, daytime" \
+        "meeting-evening" "On a call, evening" \
+        "meeting-winter" "On a call, daytime, warmer and dimmer" \
+        "default" "Not on a call: lights off, monitor bright (default)" \
+        "help" "This page"
+}
+
+# Bare names, for the shell completion in
+# ~/dotfiles/bash/completion.d/lights-completion.sh.
+list_options() {
+    printf '%s\n' meeting meeting-evening meeting-winter default help
+}
+
 # Handle optional parameter
 mode="${1:-default}"
 
@@ -19,14 +39,20 @@ case "$mode" in
         lights cloudy-warm
         brightness 30
         ;;
-    -h)
-        echo "meeting"
-        echo "meeting-evening"
-        echo "default <or empty>"
-        ;;
     default)
         # Not on call
         lights off
         brightness bright
+        ;;
+    -h|--help|help)
+        usage
+        ;;
+    --list)
+        list_options
+        ;;
+    *)
+        echo "set-scene: unknown option '$mode'" >&2
+        usage >&2
+        exit 1
         ;;
 esac
