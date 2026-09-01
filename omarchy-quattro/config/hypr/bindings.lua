@@ -64,23 +64,25 @@ o.bind("F8", "Mic monitor", "mic-monitor toggle")
 -- current selection.
 o.bind("F10", "Improve selection (AI)", "improve-selection")
 
--- SUPER + horizontal scroll wheel moves between columns in the scrolling
--- layout. Ported from the pre-quattro ~/dotfiles/omarchy/config/hypr/bindings.conf:
+-- SUPER + horizontal scroll wheel moves focus left and right, exactly as
+-- SUPER + LEFT and SUPER + RIGHT do. Ported from the pre-quattro
+-- ~/dotfiles/omarchy/config/hypr/bindings.conf, which used the scrolling
+-- layout's own column commands:
 --
 --   bind = SUPER, mouse_left,  layoutmsg, move -col
 --   bind = SUPER, mouse_right, layoutmsg, move +col
 --
--- The mouse key names carry over from the .conf syntax unchanged. layoutmsg
--- becomes hl.dsp.layout, which takes the whole message as a single string.
+-- Those only did anything on a workspace whose layout is scrolling, so the
+-- scroll wheel was dead under dwindle. hl.dsp.focus works in both: under
+-- scrolling it still walks columns, and under dwindle it moves between
+-- windows.
 --
--- Only does anything on a workspace whose layout is scrolling, which here is
--- set per workspace by SUPER + U and remembered in
--- ~/.local/state/omarchy/workspace-layouts. Inert under dwindle.
+-- The mouse key names carry over from the .conf syntax unchanged.
 --
 -- Vertical SUPER + scroll is untouched and stays on Omarchy's default
 -- workspace switching.
-o.bind("SUPER + mouse_left", "Focus column left", hl.dsp.layout("move -col"))
-o.bind("SUPER + mouse_right", "Focus column right", hl.dsp.layout("move +col"))
+o.bind("SUPER + mouse_left", "Focus left window", hl.dsp.focus({ direction = "l" }))
+o.bind("SUPER + mouse_right", "Focus right window", hl.dsp.focus({ direction = "r" }))
 
 -- ─── BEGIN vim-style SUPER + HJKL navigation ─────────────────────────────────
 --
