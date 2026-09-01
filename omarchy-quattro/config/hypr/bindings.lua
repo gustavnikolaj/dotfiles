@@ -64,6 +64,24 @@ o.bind("F8", "Mic monitor", "mic-monitor toggle")
 -- current selection.
 o.bind("F10", "Improve selection (AI)", "improve-selection")
 
+-- SUPER + horizontal scroll wheel moves between columns in the scrolling
+-- layout. Ported from the pre-quattro ~/dotfiles/omarchy/config/hypr/bindings.conf:
+--
+--   bind = SUPER, mouse_left,  layoutmsg, move -col
+--   bind = SUPER, mouse_right, layoutmsg, move +col
+--
+-- The mouse key names carry over from the .conf syntax unchanged. layoutmsg
+-- becomes hl.dsp.layout, which takes the whole message as a single string.
+--
+-- Only does anything on a workspace whose layout is scrolling, which here is
+-- set per workspace by SUPER + U and remembered in
+-- ~/.local/state/omarchy/workspace-layouts. Inert under dwindle.
+--
+-- Vertical SUPER + scroll is untouched and stays on Omarchy's default
+-- workspace switching.
+o.bind("SUPER + mouse_left", "Focus column left", hl.dsp.layout("move -col"))
+o.bind("SUPER + mouse_right", "Focus column right", hl.dsp.layout("move +col"))
+
 -- ─── BEGIN vim-style SUPER + HJKL navigation ─────────────────────────────────
 --
 -- Everything down to the END fence is one unit. Quattro has no plugin
