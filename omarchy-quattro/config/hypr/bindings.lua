@@ -25,6 +25,21 @@ o.window("^(slack)$", { workspace = "51" })
 o.bind("SUPER + SHIFT + R", "Obsidian", { launch = "obsidian", focus = "^md\\.obsidian\\.Obsidian$" })
 o.window("^md\\.obsidian\\.Obsidian$", { workspace = "52" })
 
+-- Hold a logind block inhibitor on the lid switch, so locking the screen in
+-- clamshell does not suspend the machine out from under a running agent.
+--
+-- The chain it breaks: locking blanks the displays 5s later, the Dell drops its
+-- DP link in standby, logind stops seeing an external display, and the closed
+-- lid then means suspend. See ~/dotfiles/bin/stay-docked for the long version.
+--
+-- The bar's Stay Awake coffee cup does not cover this: it only disables the
+-- shell's idle timers and never touches logind.
+--
+-- Same PATH story as F7 and F8: the script lives in ~/dotfiles/bin, which is
+-- not on the session PATH, so this resolves through the symlink at
+-- ~/dotfiles/omarchy/bin/stay-docked. Defaults to toggle with no arguments.
+o.bind("F6", "Stay docked", "stay-docked")
+
 -- Toggle the Elgato key lights. ~/dotfiles/bin/lights defaults to toggle when
 -- called with no arguments.
 --

@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+# Keep a closed-lid clamshell session alive while its external monitor sleeps.
+#
+# Locking the screen blanks every display five seconds later: omarchy.lock's
+# idleBlankTimer fires `omarchy-brightness-display off`, which is a hyprctl
+# dpms disable. The Dell U2722DE drops its DP link when it enters standby, so
+# DP-1 flips to `disconnected` and logind stops counting this machine as
+# docked. The lid has been shut the whole time, so HandleLidSwitchDocked
+# (ignore) stops applying and HandleLidSwitch (suspend) takes over. The result
+# is a suspend about a second after the monitor sleeps, which kills whatever
+# the agents were running.
+#
+# A block inhibitor on handle-lid-switch stops logind acting on the lid at all,
+# so the docked exemption lapsing no longer matters. It needs no privilege:
+# handle-lid-switch is a session-level lock, unlike a `sleep` block, which
+# wants root.
+#
+# Deliberately not the bar's Stay Awake toggle (omarchy.idle). That one only
+# cancels the shell's own screensaver and idle-lock timers and never touches
+# logind, so it cannot prevent this.
+set -uo pipefail
+
+NAME=stay-docked
+PIDFILE="${XDG_RUNTIME_DIR:-/tmp}/$NAME.pid"
+NOTIFY_ID_FILE="${XDG_RUNTIME_DIR:-/tmp}/$NAME.notify-id"
+
+# Same glyph for both states, matching the bar's own Stay Awake indicator,
+# which uses one icon and lets the label carry the state.
+GLYPH="󰅶"
+
+# Run from a keybind there is no terminal to print to, so mirror the state to a
+# desktop notification instead. Omarchy 4's Quickshell daemon has no
+# x-canonical-private-synchronous handling, unlike mako, so the dedupe that
+# mic-monitor relies on does nothing here. Keep the last id and update that
+# toast through replaces_id, so repeated toggles replace rather than stack.
+notify() {
+    [[ -t 1 ]] && return 0
+    command -v omarchy-notification-send >/dev/null 2>&1 || return 0
+
+    local previous id
+    previous=$(cat "$NOTIFY_ID_FILE" 2>/dev/null)
+    [[ $previous =~ ^[0-9]+$ ]] || previous=0
+
+    id=$(omarchy-notification-send --app-name="$NAME" -g "$GLYPH" -t 2000 \
+        -r "$previous" -p "$1" "$2" 2>/dev/null) || return 0
+    [[ $id =~ ^[0-9]+$ ]] && printf '%s\n' "$id" >"$NOTIFY_ID_FILE"
+    return 0
+}
+
+# Track the inhibitor by pid rather than by pattern, so a shell whose command
+# line happens to mention systemd-inhibit is never mistaken for the real one.
+running() {
+    local pid
+    pid=$(cat "$PIDFILE" 2>/dev/null) || return 1
+    [[ $pid =~ ^[0-9]+$ ]] || return 1
+    # Confirm the pid was not recycled by some unrelated process.
+    [[ $(cat "/proc/$pid/comm" 2>/dev/null) == systemd-inhibit ]] || { rm -f "$PIDFILE"; return 1; }
+}
+
+start() {
+    running && { echo "$NAME: already on"; return 0; }
+
+    # setsid detaches from the terminal, so an inhibitor taken from a shell or
+    # a keybind outlives that shell. The inner bash records its own pid and
+    # then execs, so PIDFILE names the systemd-inhibit holding the lock. That
+    # pid also leads the new session's process group, which is what lets stop()
+    # take the `sleep` child down with it.
+    setsid bash -c 'echo $$ >"$1"; shift; exec "$@"' \
+        "$NAME" "$PIDFILE" \
+        systemd-inhibit --what=handle-lid-switch --who="$NAME" \
+        --why="Clamshell session must outlive the monitor sleeping" \
+        --mode=block sleep infinity >/dev/null 2>&1 &
+
+    # systemd-inhibit has to reach logind and register before the lock is real.
+    local _
+    for _ in $(seq 1 20); do
+        if running; then
+            echo "$NAME: on (closed lid will not suspend)"
+            notify "Stay docked on" "Closed lid will not suspend"
+            return 0
+        fi
+        sleep 0.1
+    done
+
+    rm -f "$PIDFILE"
+    echo "$NAME: failed to take the lid inhibitor" >&2
+    notify "Stay docked failed" "Could not take the lid inhibitor"
+    return 1
+}
+
+stop() {
+    running || { echo "$NAME: already off"; return 0; }
+
+    # Kill the whole process group. systemd-inhibit holds the lock but sits
+    # waiting on a `sleep` child, so killing only the parent would strand it.
+    local pid
+    pid=$(cat "$PIDFILE")
+    kill -TERM -- "-$pid" 2>/dev/null || kill -TERM "$pid" 2>/dev/null
+    rm -f "$PIDFILE"
+
+    echo "$NAME: off (closed lid will suspend again)"
+    notify "Stay docked off" "Closed lid will suspend again"
+}
+
+# Show logind's own view rather than just this script's pidfile, for confirming
+# the lock is actually registered and not merely believed in.
+check() {
+    running && echo "$NAME: on" || echo "$NAME: off"
+    echo "logind inhibitors on the lid switch:"
+    systemd-inhibit --list 2>/dev/null \
+        | awk 'NR == 1 || $0 ~ /handle-lid-switch/ { print "  " $0 }'
+}
+
+case "${1:-toggle}" in
+    on | start) start ;;
+    off | stop) stop ;;
+    toggle) running && stop || start ;;
+    status) running && echo on || echo off ;;
+    check) check ;;
+    *)
+        echo "usage: $NAME [on|off|toggle|status|check]" >&2
+        exit 2
+        ;;
+esac
