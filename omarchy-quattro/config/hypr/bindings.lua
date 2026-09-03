@@ -4,16 +4,29 @@
 -- See current bindings and descriptions:
 --   omarchy menu keybindings --print
 
--- Slack and Obsidian each get their own workspace, numbered high (51, 52) to
--- stay clear of the 1-9 range used for regular work. The bar widget only
--- renders workspaces 1-10, so these two never show up there; reach them with
--- the bindings below, which focus the running window if there is one.
+-- Slack and Obsidian each get their own workspace, at the top of the range
+-- (9, 10) so regular work keeps 1-7, with Spotify parked by hand on 8. They
+-- used to sit on 51 and 52, well clear of everything, but the Quattro bar
+-- widget only renders workspaces 1-10, so neither ever got a tile. Numbers
+-- inside the cap buy that tile back: the widget shows 6-10 whenever they
+-- exist, and both apps run all day.
+--
+-- The cost is the label. The tiles read 9 and 0, not the S and O these had in
+-- Omarchy 3. Restoring letters needs omacom/omarchy#8804, which is stacked on
+-- #8802 (show every workspace in the bar, not only 1-10). Both are open. If
+-- #8802 lands, the 51/52 numbering becomes viable again and this can revert.
+--
+-- Scroll switching is unaffected either way. SUPER + mouse_down/up dispatches
+-- focus on workspace "e+1", which walks existing workspaces in numeric order
+-- regardless of how high they are numbered.
+--
+-- The bindings below focus the running window if there is one.
 
 -- Slack. Omarchy binds SUPER + SHIFT + G to Signal by default, so drop that
 -- binding first.
 hl.unbind("SUPER + SHIFT + G")
 o.bind("SUPER + SHIFT + G", "Slack", { launch = "slack", focus = "slack" })
-o.window("^(slack)$", { workspace = "51" })
+o.window("^(slack)$", { workspace = "9" })
 
 -- Obsidian on SUPER + SHIFT + R, in addition to Omarchy's default
 -- SUPER + SHIFT + O.
@@ -23,7 +36,7 @@ o.window("^(slack)$", { workspace = "51" })
 -- uses that stale match, so it launches a second copy instead of focusing the
 -- running one.
 o.bind("SUPER + SHIFT + R", "Obsidian", { launch = "obsidian", focus = "^md\\.obsidian\\.Obsidian$" })
-o.window("^md\\.obsidian\\.Obsidian$", { workspace = "52" })
+o.window("^md\\.obsidian\\.Obsidian$", { workspace = "10" })
 
 -- Hold a logind block inhibitor on the lid switch, so locking the screen in
 -- clamshell does not suspend the machine out from under a running agent.
