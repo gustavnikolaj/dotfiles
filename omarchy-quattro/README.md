@@ -14,9 +14,10 @@ To start managing a file:
     cp ~/.config/foot/foot.ini config/foot/
     make install
 
-`make install` symlinks each file in `config/<app>/` into `~/.config/<app>/`,
-replacing whatever is at the destination, so edits in either location are the
-same file.
+`make install` symlinks each file under `config/` into the matching path in
+`~/.config/`, replacing whatever is at the destination, so edits in either
+location are the same file. Nested paths work, so `config/uwsm/env.d/50-dotfiles`
+lands at `~/.config/uwsm/env.d/50-dotfiles`.
 
     make          # show what is managed and whether it is linked
     make install  # create/refresh the symlinks
@@ -29,5 +30,9 @@ same file.
   Re-run `make install` afterwards.
 - The terminal is foot; run `omarchy restart terminal` to reload running
   windows after a `foot.ini` change.
+- `config/uwsm/env.d/50-dotfiles` sets the session PATH. uwsm launches the
+  session and sources `~/.config/uwsm/env.d/*` from
+  `uwsm aux prepare-env`, so changes there need a full session restart --
+  `hyprctl reload` will not pick them up.
 - `reference/` (gitignored) holds the pre-quattro `.conf` files, kept only
   while porting. Delete it when done.

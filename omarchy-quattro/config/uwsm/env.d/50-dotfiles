@@ -1,0 +1,18 @@
+# Session environment for the Hyprland session. Symlinked to
+# ~/.config/uwsm/env.d/50-dotfiles by `make install`.
+#
+# uwsm launches the session: systemd --user runs
+# wayland-wm-env@hyprland.desktop.service (`uwsm aux prepare-env`), which
+# sources <config dir>/uwsm/env then <config dir>/uwsm/env.d/* for each XDG
+# config dir in increasing priority, ending at ~/.config. See
+# /usr/lib/uwsm/prepare-env.sh. Omarchy's own
+# /usr/share/omarchy/default/uwsm/env.d/10-omarchy names env.d the preferred
+# place for user overrides.
+#
+# Changes require a session restart to take effect, not just `hyprctl reload`.
+
+# Put ~/dotfiles/omarchy/bin on the session PATH. Keybindings in
+# hypr/bindings.lua call stay-docked, lights, mic-monitor and improve-selection
+# by bare name, and neither ~/dotfiles/bin nor ~/.local/bin is on the session
+# PATH -- omarchy/bin holds symlinks to them for exactly that reason.
+export PATH=$HOME/dotfiles/omarchy/bin:$PATH
