@@ -3,7 +3,7 @@ FROM ubuntu:noble
 # Update apt and install curl and git
 RUN apt update && \
     apt install -y \
-        curl git build-essential \
+        curl git build-essential unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Remove the 'ubuntu' user if it exists
