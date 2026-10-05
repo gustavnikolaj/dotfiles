@@ -38,6 +38,20 @@ o.window("^(slack)$", { workspace = "9" })
 o.bind("SUPER + SHIFT + R", "Obsidian", { launch = "obsidian", focus = "^md\\.obsidian\\.Obsidian$" })
 o.window("^md\\.obsidian\\.Obsidian$", { workspace = "10" })
 
+-- Claude takes over SUPER + SHIFT + A from Omarchy's default ChatGPT webapp,
+-- and ChatGPT moves to the free SUPER + ALT + A.
+hl.unbind("SUPER + SHIFT + A")
+o.bind("SUPER + SHIFT + A", "Claude", { webapp = "https://claude.ai" })
+o.bind("SUPER + ALT + A", "ChatGPT", { webapp = "https://chatgpt.com" })
+
+-- VS Code. SUPER + SHIFT + N picks a project to open, replacing Omarchy's
+-- generic Editor binding there (see ~/dotfiles/omarchy/bin/open-project-in-vscode),
+-- and SUPER + ALT + N focuses the running window or launches one. VS Code
+-- reports its class as Code.
+hl.unbind("SUPER + SHIFT + N")
+o.bind("SUPER + SHIFT + N", "Open project in editor", "open-project-in-vscode")
+o.bind("SUPER + ALT + N", "Editor", { launch = "code", focus = "^Code$" })
+
 -- Hold a logind block inhibitor on the lid switch, so locking the screen in
 -- clamshell does not suspend the machine out from under a running agent.
 --

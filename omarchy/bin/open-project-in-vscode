@@ -1,21 +1,18 @@
 #!/bin/bash
 
+# Pick a project, code-workspace or extra folder and open it in VS Code.
+# Uses Omarchy's own menu picker; walker is an Omarchy 3 leftover and its
+# elephant backend no longer runs under quattro.
+
 EXTRAS="dotfiles"
 
-PROJECTS=$(ls -1t ~/Projects | while IFS= read -r f; do echo "~/Projects/$f" ; done)
-WORKSPACES=$(ls -1t $HOME | grep code-workspace | while IFS= read -r f; do echo "~/$f" ; done)
-_EXTRAS="$(while IFS= read -r f; do echo "~/$f" ; done <<<"$EXTRAS")"
+options=()
+while IFS= read -r f; do options+=("~/Projects/$f"); done < <(ls -1t ~/Projects)
+while IFS= read -r f; do options+=("~/$f"); done < <(ls -1t "$HOME" | grep code-workspace)
+while IFS= read -r f; do options+=("~/$f"); done <<<"$EXTRAS"
 
-OPTIONS="$PROJECTS
-$WORKSPACES
-$_EXTRAS
-"
+choice=$(omarchy-menu-select "Open..." "${options[@]}" -- --width 844 --maxheight 300) || exit 0
 
-# Remove empty lines as that breaks walker
-OPTIONS=$(echo "$OPTIONS" | sed '/^$/d')
-
-choice=$(walker --dmenu --width 844 --maxheight 300 --minheight 300 -p "Open..." <<<"$OPTIONS")
-
-if [[ "" != "$choice" ]] ; then
-    code -- "${choice/#\~/$HOME}"
+if [[ -n "$choice" ]]; then
+  code -- "${choice/#\~/$HOME}"
 fi
