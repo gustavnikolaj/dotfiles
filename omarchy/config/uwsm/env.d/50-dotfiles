@@ -13,6 +13,8 @@
 
 # Put ~/dotfiles/omarchy/bin on the session PATH. Keybindings in
 # hypr/bindings.lua call stay-docked, lights, mic-monitor and improve-selection
-# by bare name, and neither ~/dotfiles/bin nor ~/.local/bin is on the session
-# PATH -- omarchy/bin holds symlinks to them for exactly that reason.
+# by bare name, and ~/dotfiles/bin is not on the session PATH, so omarchy/bin
+# holds symlinks to the scripts that live there. ~/.local/bin is on it, appended
+# by Omarchy's env-bootstrap, but omarchy/bin links mic-monitor too so the
+# keybinding works from a fresh clone without its make install.
 export PATH=$HOME/dotfiles/omarchy/bin:$PATH

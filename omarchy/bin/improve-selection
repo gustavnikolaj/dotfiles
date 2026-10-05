@@ -16,7 +16,8 @@
 
 set -uo pipefail
 
-# Hyprland's exec PATH is minimal and omits ~/.local/bin, where `claude` lives.
+# `claude` lives in ~/.local/bin. Omarchy's env-bootstrap now puts that on the
+# session PATH, but only at the end, so keep prepending it to be safe.
 export PATH="$HOME/.local/bin:$PATH"
 
 # Trim claude CLI startup: skip telemetry/update pings, skills, CLAUDE.md

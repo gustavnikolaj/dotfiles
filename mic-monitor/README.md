@@ -39,7 +39,7 @@ ordinary desktop audio (see below).
 ## Keybinding
 
 **F8** toggles the monitor, bound in
-`../omarchy/config/hypr/bindings.conf` next to the existing F9 (dictation) and
+`../omarchy/config/hypr/bindings.lua` next to the existing F9 (dictation) and
 F10 (AI) keys, since all three are voice-related. F8 was free, and F11/F12 were
 avoided because applications claim them for fullscreen and devtools.
 
@@ -50,11 +50,11 @@ shell's PATH:
 $ tr '\0' '\n' < /proc/$(pgrep -x Hyprland)/environ | grep ^PATH=
 ```
 
-It contains `~/dotfiles/omarchy/bin` but **not** `~/.local/bin`, so a keybind
-calling a bare `mic-monitor` would silently do nothing. Hence
-`../omarchy/bin/mic-monitor`, a *relative* symlink back to this folder, which is
-committed so a fresh clone gets a working keybind with no install step. That is
-the same reason `improve-selection` on F10 resolves.
+It starts with `~/dotfiles/omarchy/bin`. Under Omarchy 3 it did **not** contain
+`~/.local/bin`, so a keybind calling a bare `mic-monitor` silently did nothing.
+Quattro's env-bootstrap now appends `~/.local/bin`, but the keybind still goes
+through `../omarchy/bin/mic-monitor`, a *relative* symlink back to this folder.
+It is committed, so a fresh clone gets a working keybind with no install step.
 
 So there are two entry points to one script, serving two different PATHs:
 

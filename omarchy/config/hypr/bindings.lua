@@ -77,9 +77,10 @@ o.bind("F6", "Stay docked", "stay-docked")
 o.bind("F7", "Key lights", "lights")
 
 -- Toggle software monitoring of the Svive USB mic into the FiiO DAC. See
--- ~/dotfiles/mic-monitor/README.md. Same PATH story as F7: the script lives in
--- ~/.local/bin, which the session PATH does not have, so the keybind resolves
--- it through the symlink at omarchy/bin/mic-monitor.
+-- ~/dotfiles/mic-monitor/README.md. Resolves through the symlink at
+-- omarchy/bin/mic-monitor, which works without mic-monitor's own make install.
+-- The ~/.local/bin link that install creates is on the session PATH too, but
+-- comes later.
 o.bind("F8", "Mic monitor", "mic-monitor toggle")
 
 -- Rewrite the highlighted text with an AI model and paste it back over the
