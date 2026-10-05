@@ -42,6 +42,7 @@
   "editor.lineHeight": 24,
   "editor.letterSpacing": 0.2,
   "terminal.integrated.suggest.enabled": false,
+  "claudeCode.hideOnboarding": true,
 
 //   "editor.fontFamily": "Lilex, 'Lilex Nerd Font', monospace",
 // "editor.fontLigatures": true,
