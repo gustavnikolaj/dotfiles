@@ -2,3 +2,5 @@ __local
 
 **/.claude/settings.local.json
 **/.claude/worktrees/
+**/.claude/skills/local-*/
+**/.claude/skills/gno-*/
