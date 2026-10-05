@@ -40,5 +40,3 @@ lands at `~/.config/uwsm/env.d/50-dotfiles`.
 - `make applications` installs the webapps, the Outlook desktop entry and
   its `mailto:` handler from `applications/` and `install/`. It is separate
   from `make install` and only needs re-running when those change.
-- `reference/` (gitignored) holds the pre-quattro `.conf` files, kept only
-  while porting. Delete it when done.
