@@ -57,7 +57,7 @@ o.bind("F6", "Stay docked", "stay-docked")
 -- called with no arguments.
 --
 -- Resolved off ~/dotfiles/omarchy/bin, which is prepended to the session PATH
--- by ~/.config/uwsm/env.d/99-omarchy-upgrade-env and holds a symlink to the
+-- by ~/.config/uwsm/env.d/50-dotfiles and holds a symlink to the
 -- real script. ~/dotfiles/bin itself is only on the interactive shell PATH, so
 -- a bare `lights` would otherwise silently do nothing here.
 o.bind("F7", "Key lights", "lights")
@@ -78,8 +78,8 @@ o.bind("F8", "Mic monitor", "mic-monitor toggle")
 o.bind("F10", "Improve selection (AI)", "improve-selection")
 
 -- SUPER + horizontal scroll wheel moves focus left and right, exactly as
--- SUPER + LEFT and SUPER + RIGHT do. Ported from the pre-quattro
--- ~/dotfiles/omarchy/config/hypr/bindings.conf, which used the scrolling
+-- SUPER + LEFT and SUPER + RIGHT do. Ported from the Omarchy 3
+-- config/hypr/bindings.conf (now only in git history), which used the scrolling
 -- layout's own column commands:
 --
 --   bind = SUPER, mouse_left,  layoutmsg, move -col
@@ -102,8 +102,8 @@ o.bind("SUPER + mouse_right", "Focus right window", hl.dsp.focus({ direction = "
 -- Everything down to the END fence is one unit. Quattro has no plugin
 -- mechanism for shipping a self-contained bundle of bindings, so it lives
 -- inline here; if one ever lands, move the whole fenced block rather than
--- picking it apart. Ported from the pre-quattro
--- ~/dotfiles/omarchy/config/hypr/vim-navigation.conf.
+-- picking it apart. Ported from the Omarchy 3
+-- config/hypr/vim-navigation.conf (now only in git history).
 --
 -- What it does: mirror Omarchy's SUPER + arrow bindings on hjkl. The arrow
 -- keys keep working as alternatives. Workspace switching is deliberately not

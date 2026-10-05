@@ -1,4 +1,4 @@
-# omarchy-quattro
+# omarchy
 
 Config for Omarchy 4.x (quattro), whose Hyprland setup uses Lua
 (`hyprland.lua`) instead of the old `hyprland.conf`.
@@ -34,5 +34,11 @@ lands at `~/.config/uwsm/env.d/50-dotfiles`.
   session and sources `~/.config/uwsm/env.d/*` from
   `uwsm aux prepare-env`, so changes there need a full session restart --
   `hyprctl reload` will not pick them up.
+- `bin/` is on the session PATH (see `50-dotfiles`), so keybindings and
+  desktop entries can call its scripts by bare name. Several entries are
+  relative symlinks to scripts living elsewhere in the repo.
+- `make applications` installs the webapps, the Outlook desktop entry and
+  its `mailto:` handler from `applications/` and `install/`. It is separate
+  from `make install` and only needs re-running when those change.
 - `reference/` (gitignored) holds the pre-quattro `.conf` files, kept only
   while porting. Delete it when done.
