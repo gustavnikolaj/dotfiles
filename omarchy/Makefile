@@ -6,7 +6,7 @@
 
 SRC := $(shell find config -type f ! -name .gitkeep 2>/dev/null | sort)
 
-.PHONY: default install status applications
+.PHONY: default install status
 
 default: status
 	@echo
@@ -36,11 +36,3 @@ status:
 	  elif [ -e "$$d" ]; then echo "  NOT LINK $$r  (real file in ~/.config)"; \
 	  else echo "  missing  $$r"; fi; \
 	done; fi
-
-# Webapps, the Outlook desktop entry and its mailto: handler. Not part of
-# install: these copy files rather than link them, and talk to Omarchy's
-# webapp installer, so run them only when applications/ or install/ change.
-applications:
-	bash install/mimetypes.sh
-	bash install/webapps.sh
-	bin/refresh-applications

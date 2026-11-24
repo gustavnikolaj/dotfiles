@@ -37,6 +37,3 @@ lands at `~/.config/uwsm/env.d/50-dotfiles`.
 - `bin/` is on the session PATH (see `50-dotfiles`), so keybindings and
   desktop entries can call its scripts by bare name. Several entries are
   relative symlinks to scripts living elsewhere in the repo.
-- `make applications` installs the webapps, the Outlook desktop entry and
-  its `mailto:` handler from `applications/` and `install/`. It is separate
-  from `make install` and only needs re-running when those change.
